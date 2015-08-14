@@ -1,0 +1,172 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    >
+
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/item_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimaryDark">
+
+        <ImageButton
+            android:id="@+id/make_deposit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector"
+            android:src="@drawable/ic_deposit"
+            android:contentDescription="@string/make_deposit_hint"
+            android:layout_gravity="right"
+            android:layout_marginRight="10dp"
+            android:clickable="true"
+            android:longClickable="true"
+            android:onClick="onMakeDepositClick"
+            />
+
+
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="455dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/budget_card"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:clickable="true"
+            android:onClick="onOverviewClick"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:id="@+id/title"
+                    android:text="@string/overview_text"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/budgeted"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    />
+
+                <TextView
+                    android:id="@+id/spent"
+                    android:gravity="center"
+                    android:textColor="@color/darkred"
+                    android:layout_gravity="center"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    />
+
+                <View
+                    android:layout_width="200dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_gravity="center"
+                    android:background="#DADADA"
+                    />
+
+                <TextView
+                    android:id="@+id/remaining"
+                    android:gravity="center"
+                    android:textColor="@color/darkgreen"
+                    android:layout_gravity="center"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    />
+
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/item_history"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="250dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                >
+
+                <TextView
+                    android:id="@+id/item_history_title"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:text="@string/history_text"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/item_history_placeholder"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:text="@string/no_history_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/item_history_title"
+                    android:layout_alignParentStart="true" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/item_history_recycler"
+                    android:scrollbars="vertical"
+                    android:layout_below="@+id/item_history_title"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"/>
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#DADADA"/>
+
+    <TextView
+        android:id="@+id/add_expense_button"
+        android:background="@drawable/selector"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:text="@string/add_new_expense_text"
+        android:clickable="true"
+        android:longClickable="true"
+        android:onClick="onAddExpenseClick"
+        />
+
+</LinearLayout>

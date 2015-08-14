@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.byteshaft.mybudget" >
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.byteshaft.mybudget.activities.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.byteshaft.mybudget.activities.items.AddItemActivity"
+            android:label="@string/title_activity_item"
+            >
+        </activity>
+        <activity
+            android:name="com.byteshaft.mybudget.activities.items.ItemHistoryActivity"
+            android:label="@string/title_activity_item_history" >
+        </activity>
+        <activity
+            android:name="com.byteshaft.mybudget.activities.items.AddExpenseActivity"
+            android:label="@string/title_activity_expense" >
+        </activity>
+        <activity
+            android:name="com.byteshaft.mybudget.activities.AdjustBudgetActivity"
+            android:label="@string/title_activity_adjust_budget" >
+        </activity>
+        <activity
+            android:name="com.byteshaft.mybudget.activities.items.AdjustItemActivity"
+            android:label="@string/title_activity_adjust_item" >
+        </activity>
+        <activity
+            android:name="com.byteshaft.mybudget.activities.items.AdjustExpenseActivity"
+            android:label="@string/title_activity_adjust_expense" >
+        </activity>
+        <activity
+            android:name="com.byteshaft.mybudget.activities.goals.GoalsActivity"
+            android:label="@string/title_activity_goals" >
+        </activity>
+        <activity
+            android:name="com.byteshaft.mybudget.activities.goals.AddGoalActivity"
+            android:label="@string/title_activity_add_goal" >
+        </activity>
+        <activity
+            android:name="com.byteshaft.mybudget.activities.goals.GoalHistoryActivity"
+            android:label="@string/title_activity_goal_history" >
+        </activity>
+        <activity
+            android:name="com.byteshaft.mybudget.activities.items.MakeDepositActivity"
+            android:label="@string/title_activity_make_deposit" >
+        </activity>
+        <activity
+            android:name="com.byteshaft.mybudget.activities.goals.AdjustGoalActivity"
+            android:label="@string/title_activity_adjust_goal" >
+        </activity>
+        <activity
+            android:name="com.byteshaft.mybudget.activities.goals.AdjustDepositActivity"
+            android:label="@string/title_activity_adjust_deposit" >
+        </activity>
+    </application>
+
+</manifest>
