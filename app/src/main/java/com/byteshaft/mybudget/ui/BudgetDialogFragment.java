@@ -11,10 +11,6 @@ import android.widget.EditText;
 
 import com.byteshaft.mybudget.R;
 
-/**
- * Created by joshuapancho on 3/01/15.
- */
-
 /*
     Dialog fragment to prompt user for a budget if one does not already exist
  */
@@ -30,7 +26,6 @@ public class BudgetDialogFragment extends DialogFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-
         try {
             mListener = (BudgetDialogListener) activity;
         } catch (ClassCastException e) {
@@ -62,10 +57,7 @@ public class BudgetDialogFragment extends DialogFragment {
     }
 
     public int getBudget() {
-
         return budget;
 
     }
-
-
 }

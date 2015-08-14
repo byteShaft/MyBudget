@@ -12,9 +12,6 @@ import java.util.ArrayList;
 import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.containers.LineItem;
 
-/**
- * Created by joshuapancho on 4/01/15.
- */
 
 /*
     RecyclerView Adapter that displays line items in MainActivity

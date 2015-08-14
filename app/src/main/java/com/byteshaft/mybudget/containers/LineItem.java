@@ -1,8 +1,5 @@
 package com.byteshaft.mybudget.containers;
 
-/**
- * Created by joshuapancho on 3/01/15.
- */
 
 /*
     Holds info about an item.

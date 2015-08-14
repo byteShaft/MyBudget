@@ -11,10 +11,6 @@ import java.util.ArrayList;
 import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.containers.Expense;
 
-/**
- * Created by joshuapancho on 5/01/15.
- */
-
 /*
     RecyclerView Adapter that lists expenses for a line item in ItemHistoryActivity
  */

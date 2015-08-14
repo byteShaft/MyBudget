@@ -11,9 +11,6 @@ import java.util.ArrayList;
 import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.containers.Expense;
 
-/**
- * Created by joshuapancho on 18/01/15.
- */
 
 /*
     RecyclerView Adapter that lists deposits for a Goal

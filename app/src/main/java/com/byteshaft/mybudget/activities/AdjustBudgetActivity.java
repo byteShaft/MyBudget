@@ -23,11 +23,9 @@ public class AdjustBudgetActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adjust_budget);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.adjust_budget_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Adjust Budget");
-
         toolbar.setNavigationIcon(R.drawable.ic_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +51,7 @@ public class AdjustBudgetActivity extends AppCompatActivity {
         // check that budget does not exceed amount already allocated
         DBHelper myDb = DBHelper.getInstance(this);
 
-        if(newBudget < myDb.getTotalAllocated()) {
+        if (newBudget < myDb.getTotalAllocated()) {
             text = "New budget amount is less than amount already allocated, please try again";
             Toast.makeText(context, text, duration).show();
         } else {
@@ -62,7 +60,7 @@ public class AdjustBudgetActivity extends AppCompatActivity {
             editor.putInt("curBudget", newBudget);
             boolean result = editor.commit();
 
-            if(result) {
+            if (result) {
                 text = "Budget adjusted";
                 Toast.makeText(context, text, duration).show();
             } else {
@@ -72,7 +70,5 @@ public class AdjustBudgetActivity extends AppCompatActivity {
 
             finish();
         }
-
     }
-
 }
