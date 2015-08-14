@@ -35,7 +35,6 @@ public class AdjustBudgetActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 
     /*
@@ -44,33 +43,37 @@ public class AdjustBudgetActivity extends AppCompatActivity {
     public void onSubmit(View v) {
 
         EditText amountHolder = (EditText) findViewById(R.id.amount);
-        int newBudget = Integer.parseInt(amountHolder.getText().toString());
+        if (!amountHolder.getText().toString().isEmpty()) {
+            int newBudget = Integer.parseInt(amountHolder.getText().toString());
 
-        Context context = getApplicationContext();
-        CharSequence text;
-        int duration = Toast.LENGTH_SHORT;
+            Context context = getApplicationContext();
+            CharSequence text;
+            int duration = Toast.LENGTH_SHORT;
 
-        // check that budget does not exceed amount already allocated
-        DBHelper myDb = DBHelper.getInstance(this);
+            // check that budget does not exceed amount already allocated
+            DBHelper myDb = DBHelper.getInstance(this);
 
-        if(newBudget < myDb.getTotalAllocated()) {
-            text = "New budget amount is less than amount already allocated, please try again";
-            Toast.makeText(context, text, duration).show();
-        } else {
-            SharedPreferences prefs = getSharedPreferences(MainActivity.PREFS_NAME, 0);
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putInt("curBudget", newBudget);
-            boolean result = editor.commit();
-
-            if(result) {
-                text = "Budget adjusted";
+            if (newBudget < myDb.getTotalAllocated()) {
+                text = "New budget amount is less than amount already allocated, please try again";
                 Toast.makeText(context, text, duration).show();
             } else {
-                text = "Failed to adjust budget";
-                Toast.makeText(context, text, duration).show();
-            }
+                SharedPreferences prefs = getSharedPreferences(MainActivity.PREFS_NAME, 0);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putInt("curBudget", newBudget);
+                boolean result = editor.commit();
 
-            finish();
+                if (result) {
+                    text = "Budget adjusted";
+                    Toast.makeText(context, text, duration).show();
+                } else {
+                    text = "Failed to adjust budget";
+                    Toast.makeText(context, text, duration).show();
+                }
+
+                finish();
+            }
+        } else {
+            Toast.makeText(getApplicationContext(),"please enter any amount", Toast.LENGTH_SHORT).show();
         }
 
     }

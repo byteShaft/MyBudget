@@ -8,16 +8,10 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.byteshaft.mybudget.R;
 
-/**
- * Created by joshuapancho on 3/01/15.
- */
-
-/*
-    Dialog fragment to prompt user for a budget if one does not already exist
- */
 public class BudgetDialogFragment extends DialogFragment {
 
     public interface BudgetDialogListener {
@@ -49,13 +43,14 @@ public class BudgetDialogFragment extends DialogFragment {
                 .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-
                         Dialog myDialog = (Dialog) dialog;
                         EditText myEditText = (EditText) myDialog.findViewById(R.id.budgetDialog);
-
-                        budget = Integer.parseInt(myEditText.getText().toString());
-
-                        mListener.onDialogPositiveClick(BudgetDialogFragment.this);
+                        if (!myEditText.getText().toString().isEmpty()) {
+                            budget = Integer.parseInt(myEditText.getText().toString());
+                            mListener.onDialogPositiveClick(BudgetDialogFragment.this);
+                        } else {
+                            Toast.makeText(getActivity(),"Enter valid amount", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
         return builder.create();

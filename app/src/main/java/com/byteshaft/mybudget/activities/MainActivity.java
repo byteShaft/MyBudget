@@ -124,30 +124,22 @@ public class MainActivity extends AppCompatActivity implements BudgetDialogFragm
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
-
         SharedPreferences preferences = getSharedPreferences(PREFS_NAME, 0);
         SharedPreferences.Editor editor = preferences.edit();
-
         BudgetDialogFragment mBudgetDialog = (BudgetDialogFragment) dialog;
-
         editor.putInt("curBudget", mBudgetDialog.getBudget());
         editor.commit();
-
         curBudget = mBudgetDialog.getBudget();
-
         initCards();
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
         initCards();
     }
 
     public void initCards() {
-
         fab.show();
 
         SharedPreferences preferences = getSharedPreferences(PREFS_NAME, 0);
@@ -178,7 +170,6 @@ public class MainActivity extends AppCompatActivity implements BudgetDialogFragm
     }
 
     public void addLineItem(View v) {
-
         if(curBudget - db.getTotalAllocated() == 0) {
             Toast.makeText(getApplicationContext(), "Budget has been completely allocated", Toast.LENGTH_SHORT).show();
         } else {
@@ -189,7 +180,6 @@ public class MainActivity extends AppCompatActivity implements BudgetDialogFragm
     }
 
     public void clearBudget() {
-
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(
                 MainActivity.this);
 
@@ -274,9 +264,7 @@ public class MainActivity extends AppCompatActivity implements BudgetDialogFragm
 
     @Override
     public void onBackPressed() {
-
         exit();
-
     }
 
     @Override
