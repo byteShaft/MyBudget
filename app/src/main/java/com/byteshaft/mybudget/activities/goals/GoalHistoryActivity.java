@@ -22,7 +22,6 @@ import com.byteshaft.mybudget.adapters.DepositHistoryAdapter;
 import com.byteshaft.mybudget.containers.Goal;
 import com.byteshaft.mybudget.database.DBHelper;
 
-
 public class GoalHistoryActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
@@ -112,9 +111,9 @@ public class GoalHistoryActivity extends AppCompatActivity {
         TextView deposited = (TextView) findViewById(R.id.deposited);
         TextView remaining = (TextView) findViewById(R.id.remaining);
 
-        goal.setText("Goal: $" + Integer.toString(myGoal.getGoal()) + ".00");
-        deposited.setText("Deposited: $" + Integer.toString(myGoal.getDeposited()) + ".00");
-        remaining.setText("Remaining: $" + Integer.toString(myGoal.getGoal() - myGoal.getDeposited()) + ".00");
+        goal.setText("Goal: £" + Integer.toString(myGoal.getGoal()) + ".00");
+        deposited.setText("Deposited: £" + Integer.toString(myGoal.getDeposited()) + ".00");
+        remaining.setText("Remaining: £" + Integer.toString(myGoal.getGoal() - myGoal.getDeposited()) + ".00");
 
     }
 
