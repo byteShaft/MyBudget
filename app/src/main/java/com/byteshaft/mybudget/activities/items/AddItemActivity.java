@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.byteshaft.mybudget.R;
-import com.byteshaft.mybudget.activities.MainActivity;
 import com.byteshaft.mybudget.database.DBHelper;
 
 /*
@@ -49,7 +48,7 @@ public class AddItemActivity extends AppCompatActivity {
         CharSequence text;
         int duration = Toast.LENGTH_SHORT;
         int allocated = myDb.getTotalAllocated();
-        SharedPreferences preferences = getSharedPreferences(MainActivity.PREFS_NAME, 0);
+        SharedPreferences preferences = getSharedPreferences(HomeFragment.PREFS_NAME, 0);
         int curBudget = preferences.getInt("curBudget", 0);
 
         // basic input validation

@@ -3,7 +3,6 @@ package com.byteshaft.mybudget.activities;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -11,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.byteshaft.mybudget.R;
+import com.byteshaft.mybudget.activities.items.HomeFragment;
 import com.byteshaft.mybudget.database.DBHelper;
 /*
  Prompts user to enter a new budget. Called from MainActivity.
@@ -53,7 +53,7 @@ public class AdjustBudgetActivity extends AppCompatActivity {
             text = "New budget amount is less than amount already allocated, please try again";
             Toast.makeText(context, text, duration).show();
         } else {
-            SharedPreferences prefs = getSharedPreferences(MainActivity.PREFS_NAME, 0);
+            SharedPreferences prefs = getSharedPreferences(HomeFragment.PREFS_NAME, 0);
             SharedPreferences.Editor editor = prefs.edit();
             editor.putInt("curBudget", newBudget);
             boolean result = editor.commit();

@@ -68,5 +68,10 @@
     <string name="delete_deposit_text">Delete Deposit</string>
     <string name="add_item_text">Add new item</string>
     <string name="add_new_goal_text">Add new goal</string>
+    <string name="title_section1">Home</string>
+    <string name="title_section2">Goals</string>
+    <string name="title_section3">Contact us</string>
+    <string name="drawer_open">Menu</string>
+    <string name="drawer_close">MyBudget</string>
 
 </resources>

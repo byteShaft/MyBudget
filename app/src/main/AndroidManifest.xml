@@ -45,7 +45,7 @@
             android:label="@string/title_activity_adjust_expense" >
         </activity>
         <activity
-            android:name="com.byteshaft.mybudget.activities.goals.GoalsActivity"
+            android:name=".activities.goals.GoalsFragment"
             android:label="@string/title_activity_goals" >
         </activity>
         <activity
