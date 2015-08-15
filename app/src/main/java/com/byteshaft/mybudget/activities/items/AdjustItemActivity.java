@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -26,7 +25,6 @@ public class AdjustItemActivity extends AppCompatActivity {
     private String itemName;
     private int itemBudget;
     private int itemSpent;
-
     private DBHelper myDb;
 
     @Override
@@ -61,7 +59,6 @@ public class AdjustItemActivity extends AppCompatActivity {
         finish();
     }
 
-
     public void onSubmitClick(View v) {
 
         EditText newNameView = (EditText) findViewById(R.id.name);
@@ -75,7 +72,7 @@ public class AdjustItemActivity extends AppCompatActivity {
         String newBudgetStr = newBudgetView.getText().toString();
         int newBudget;
 
-        if(myDb.checkNameExists(newName)) {
+        if (myDb.checkNameExists(newName)) {
 
             text = "An item with that name already exists, please try again";
             Toast.makeText(context, text, duration).show();
@@ -84,13 +81,10 @@ public class AdjustItemActivity extends AppCompatActivity {
 
             text = "A name or amount must be specified!";
             Toast.makeText(context, text, duration).show();
-
-        } else if(newName.equals("") && !newBudgetStr.equals("")) { // amount but no name
+        } else if (newName.equals("") && !newBudgetStr.equals("")) { // amount but no name
             newName = itemName;
             newBudget = Integer.parseInt(newBudgetStr);
-
-            if(newBudget < itemSpent) {
-
+            if (newBudget < itemSpent) {
                 text = "New item budget exceeds amount already spent, please try again";
                 Toast.makeText(context, text, duration).show();
 
@@ -99,14 +93,10 @@ public class AdjustItemActivity extends AppCompatActivity {
                 myDb.updateItem(itemName, newName, newBudget, itemSpent);
                 setResult(Activity.RESULT_OK, new Intent().putExtra("ITEM_NAME", newName));
                 finish();
-
             }
-
-        } else if(!newName.equals("") && newBudgetStr.equals("")) { // name but no amount
+        } else if (!newName.equals("") && newBudgetStr.equals("")) { // name but no amount
             newBudget = itemBudget;
-
-            if(!(newName.replaceAll("\\s+", "")).matches("[a-zA-z]+")) {
-
+            if (!(newName.replaceAll("\\s+", "")).matches("[a-zA-z]+")) {
                 text = "Name can only contain letters, please try again";
                 Toast.makeText(context, text, duration).show();
 
@@ -115,17 +105,12 @@ public class AdjustItemActivity extends AppCompatActivity {
                 setResult(Activity.RESULT_OK, new Intent().putExtra("ITEM_NAME", newName));
                 finish();
             }
-
         } else {
             newBudget = Integer.parseInt(newBudgetStr);
-
-            if(newBudget < itemSpent) {
-
+            if (newBudget < itemSpent) {
                 text = "New item budget exceeds amount already spent, please try again";
                 Toast.makeText(context, text, duration).show();
-
-            } else if(!(newName.replaceAll("\\s+", "")).matches("[a-zA-z]+")) {
-
+            } else if (!(newName.replaceAll("\\s+", "")).matches("[a-zA-z]+")) {
                 text = "Name can only contain letters, please try again";
                 Toast.makeText(context, text, duration).show();
 
@@ -134,10 +119,8 @@ public class AdjustItemActivity extends AppCompatActivity {
                 myDb.updateItem(itemName, newName, newBudget, itemSpent);
                 setResult(Activity.RESULT_OK, new Intent().putExtra("ITEM_NAME", newName));
                 finish();
-
             }
         }
-
     }
 
     public void onDeleteItemClick(View v) {
@@ -172,9 +155,5 @@ public class AdjustItemActivity extends AppCompatActivity {
         alertDialog.setMessage("Are you sure you want to delete this item?");
         alertDialog.setTitle(R.string.app_name);
         alertDialog.show();
-
-
     }
-
-
 }
