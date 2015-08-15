@@ -111,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements BudgetDialogFragm
         if (curBudget == 0) {
             DialogFragment fragment = new BudgetDialogFragment();
             fragment.show(getSupportFragmentManager(), "budget");
+            fragment.setCancelable(false);
         } else {
             initCards();
         }
@@ -119,7 +120,6 @@ public class MainActivity extends AppCompatActivity implements BudgetDialogFragm
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
-
         SharedPreferences preferences = getSharedPreferences(PREFS_NAME, 0);
         SharedPreferences.Editor editor = preferences.edit();
         BudgetDialogFragment mBudgetDialog = (BudgetDialogFragment) dialog;
@@ -132,7 +132,6 @@ public class MainActivity extends AppCompatActivity implements BudgetDialogFragm
     @Override
     public void onResume() {
         super.onResume();
-
         initCards();
     }
 
@@ -162,9 +161,12 @@ public class MainActivity extends AppCompatActivity implements BudgetDialogFragm
     }
 
     public void addLineItem(View v) {
-
-        if (curBudget - db.getTotalAllocated() == 0) {
-            Toast.makeText(getApplicationContext(), "Budget has been completely allocated", Toast.LENGTH_SHORT).show();
+        if(curBudget - db.getTotalAllocated() == 0) {
+            Toast.makeText(getApplicationContext(),
+                    "please set budget ", Toast.LENGTH_SHORT).show();
+            DialogFragment fragment = new BudgetDialogFragment();
+            fragment.show(getSupportFragmentManager(), "budget");
+            fragment.setCancelable(false);
         } else {
             Intent intent = new Intent(this, AddItemActivity.class);
             startActivity(intent);

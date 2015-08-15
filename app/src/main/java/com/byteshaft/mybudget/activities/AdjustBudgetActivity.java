@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.database.DBHelper;
 /*
-    Prompts user to enter a new budget. Called from MainActivity.
+ Prompts user to enter a new budget. Called from MainActivity.
  */
 public class AdjustBudgetActivity extends AppCompatActivity {
 
@@ -35,8 +35,8 @@ public class AdjustBudgetActivity extends AppCompatActivity {
     }
 
     /*
-        Called by button click in layout file.
-     */
+    Called by button click in layout file.
+    */
     public void onSubmit(View v) {
 
         EditText amountHolder = (EditText) findViewById(R.id.amount);

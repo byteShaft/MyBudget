@@ -5,12 +5,16 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import com.byteshaft.mybudget.AppGlobals;
 import com.byteshaft.mybudget.containers.Expense;
 import com.byteshaft.mybudget.containers.Goal;
 import com.byteshaft.mybudget.containers.LineItem;
@@ -118,23 +122,22 @@ public class DBHelper extends SQLiteOpenHelper {
         return (int) DatabaseUtils.queryNumEntries(myDb, BUDGET_TABLE_NAME);
     }
 
-
     public void clearBudget() {
 
         SQLiteDatabase myDb = this.getWritableDatabase();
         Cursor res = myDb.rawQuery("SELECT * FROM BUDGET", null);
+        try {
+            res.moveToFirst();
 
-        res.moveToFirst();
+            while (!res.isAfterLast()) {
+                myDb.execSQL("DROP TABLE " + getTableName(res.getString(res.getColumnIndex("name"))));
+                res.moveToNext();
+            }
 
-        while (!res.isAfterLast()) {
-
-            myDb.execSQL("DROP TABLE " + getTableName(res.getString(res.getColumnIndex("name"))));
-
-            res.moveToNext();
-
+            myDb.execSQL("DROP TABLE BUDGET");
+        } catch (SQLiteException e) {
+            Log.i(AppGlobals.getLogTag(getClass()), "Table already deleted");
         }
-
-        myDb.execSQL("DROP TABLE BUDGET");
 
     }
 
