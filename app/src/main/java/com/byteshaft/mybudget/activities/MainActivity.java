@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.byteshaft.mybudget.Fragments.ContactFragment;
 import com.byteshaft.mybudget.Fragments.HomeFragment;
 import com.byteshaft.mybudget.ui.BudgetDialogFragment;
 
@@ -75,8 +77,10 @@ public class MainActivity extends AppCompatActivity implements BudgetDialogFragm
             case 1:
                 mFragment = new GoalsFragment();
                 break;
+            case 2:
+                mFragment = new ContactFragment();
+                break;
             default:
-                mFragment = new HomeFragment();
                 return;
         }
         FragmentManager fragmentManager = getSupportFragmentManager();

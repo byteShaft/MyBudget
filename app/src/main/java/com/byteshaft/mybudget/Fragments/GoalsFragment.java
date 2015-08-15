@@ -46,8 +46,7 @@ public class GoalsFragment extends Fragment {
         baseView = inflater.inflate(R.layout.activity_goals, container, false);
         Toolbar toolbar = (Toolbar) baseView.findViewById(R.id.my_toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Savings Goals");
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+        getActivity().getActionBar().setTitle("Savings Goals");
 
         mRecyclerView = (RecyclerView) baseView.findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
