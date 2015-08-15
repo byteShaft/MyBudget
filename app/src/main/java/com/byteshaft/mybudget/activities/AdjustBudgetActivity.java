@@ -21,16 +21,16 @@ public class AdjustBudgetActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adjust_budget);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.adjust_budget_toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Adjust Budget");
-        toolbar.setNavigationIcon(R.drawable.ic_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.adjust_budget_toolbar);
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setTitle("Adjust Budget");
+//        toolbar.setNavigationIcon(R.drawable.ic_back);
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
 
     }
 

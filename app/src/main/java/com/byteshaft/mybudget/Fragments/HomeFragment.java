@@ -1,6 +1,7 @@
 package com.byteshaft.mybudget.Fragments;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,11 +12,9 @@ import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,6 +22,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,7 +38,7 @@ import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class HomeFragment extends Fragment implements BudgetDialogFragment.BudgetDialogListener {
+public class HomeFragment extends Fragment implements View.OnClickListener {
 
     public final static String PREFS_NAME = "MyBudgetPrefs";
     private View baseView;
@@ -53,16 +53,18 @@ public class HomeFragment extends Fragment implements BudgetDialogFragment.Budge
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         baseView = inflater.inflate(R.layout.activity_main , container, false);
         budgetCard = (CardView) baseView.findViewById(R.id.budget_card);
+        budgetCard.setOnClickListener(this);
+        Button button = (Button) baseView.findViewById(R.id.item_placeholder);
+        button.setOnClickListener(this);
+        FloatingActionButton floatingActionButton = (FloatingActionButton) baseView.findViewById(R.id.fab);
+        floatingActionButton.setOnClickListener(this);
         budgetCard.setVisibility(View.GONE);
         setHasOptionsMenu(true);
-        SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, 0);
-        curBudget = preferences.getInt("curBudget", 0);
         View.OnLongClickListener listener = new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 Vibrator vb = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
                 vb.vibrate(1000);
-
                 Toast toast = Toast.makeText(getActivity(), v.getContentDescription(), Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 100);
                 toast.show();
@@ -104,7 +106,8 @@ public class HomeFragment extends Fragment implements BudgetDialogFragment.Budge
         fab.show();
 
         db = DBHelper.getInstance(getActivity());
-
+        SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, 0);
+        curBudget = preferences.getInt("curBudget", 0);
         if (curBudget == 0) {
             DialogFragment fragment = new BudgetDialogFragment();
             fragment.show(getFragmentManager(), "budget");
@@ -116,15 +119,9 @@ public class HomeFragment extends Fragment implements BudgetDialogFragment.Budge
     }
 
     @Override
-    public void onDialogPositiveClick(DialogFragment dialog) {
-        SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, 0);
-        SharedPreferences.Editor editor = preferences.edit();
-        BudgetDialogFragment mBudgetDialog = (BudgetDialogFragment) dialog;
-        editor.putInt("curBudget", mBudgetDialog.getBudget());
-        editor.commit();
-        curBudget = mBudgetDialog.getBudget();
-        initCards();
-
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        System.out.println("onAttach");
     }
 
     @Override
@@ -158,7 +155,7 @@ public class HomeFragment extends Fragment implements BudgetDialogFragment.Budge
 
     }
 
-    public void addLineItem(View v) {
+    public void addLineItem() {
         if(curBudget - db.getTotalAllocated() == 0) {
             Toast.makeText(getActivity(),
                     "please set budget ", Toast.LENGTH_SHORT).show();
@@ -188,7 +185,6 @@ public class HomeFragment extends Fragment implements BudgetDialogFragment.Budge
                 Toast.makeText(context, text, duration).show();
                 DialogFragment fragment = new BudgetDialogFragment();
                 fragment.show(getFragmentManager(), "budget");
-
             }
 
         });
@@ -202,18 +198,12 @@ public class HomeFragment extends Fragment implements BudgetDialogFragment.Budge
     public void onItemClick(View v) {
         RelativeLayout callHolder = (RelativeLayout) v;
         String itemName = ((TextView) callHolder.findViewById(R.id.item_name)).getText().toString();
-
         Intent intent = new Intent(getActivity(), ItemHistoryActivity.class);
         intent.putExtra("ITEM_NAME", itemName);
         startActivity(intent);
     }
 
-    public void onGoalsClick(View v) {
-        Intent intent = new Intent(getActivity(), GoalsFragment.class);
-        startActivity(intent);
-    }
-
-    public void adjustBudget(View v) {
+    public void adjustBudget() {
         Intent intent = new Intent(getActivity(), AdjustBudgetActivity.class);
         startActivity(intent);
     }
@@ -254,5 +244,24 @@ public class HomeFragment extends Fragment implements BudgetDialogFragment.Budge
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.budget_card:
+                adjustBudget();
+                break;
+            case R.id.item_placeholder:
+                addLineItem();
+                break;
+            case R.id.fab:
+                addLineItem();
+                break;
+            case R.id.item_progress:
+                onItemClick(v);
+                break;
+        }
+
     }
 }

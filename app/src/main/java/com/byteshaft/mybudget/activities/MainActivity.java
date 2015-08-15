@@ -16,12 +16,11 @@ import android.widget.ListView;
 
 import com.byteshaft.mybudget.Fragments.ContactFragment;
 import com.byteshaft.mybudget.Fragments.HomeFragment;
-import com.byteshaft.mybudget.ui.BudgetDialogFragment;
 
 import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.Fragments.GoalsFragment;
 
-public class MainActivity extends AppCompatActivity implements BudgetDialogFragment.BudgetDialogListener {
+public class MainActivity extends AppCompatActivity {
 
 
     private DrawerLayout mDrawerLayout;
@@ -92,11 +91,6 @@ public class MainActivity extends AppCompatActivity implements BudgetDialogFragm
         mDrawerList.setItemChecked(position, true);
         setTitle(mListTitles[position]);
         mDrawerLayout.closeDrawer(mDrawerList);
-    }
-
-    @Override
-    public void onDialogPositiveClick(DialogFragment dialog) {
-
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
