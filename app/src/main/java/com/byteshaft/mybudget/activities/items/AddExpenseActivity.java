@@ -13,7 +13,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import com.byteshaft.mybudget.R;
-import com.byteshaft.mybudget.activities.MainActivity;
 import com.byteshaft.mybudget.containers.LineItem;
 import com.byteshaft.mybudget.database.DBHelper;
 
@@ -103,7 +102,7 @@ public class AddExpenseActivity extends AppCompatActivity {
 
     // convenience method to handle SharedPreferences updating of "spent" value
     public void updateBudget(int spent) {
-        SharedPreferences preferences = getSharedPreferences(MainActivity.PREFS_NAME, 0);
+        SharedPreferences preferences = getSharedPreferences(HomeFragment.PREFS_NAME, 0);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt("curSpent", preferences.getInt("curSpent", 0) + spent);
         editor.commit();
