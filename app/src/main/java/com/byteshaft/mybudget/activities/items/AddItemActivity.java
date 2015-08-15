@@ -26,17 +26,6 @@ public class AddItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.item_toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Add New Item");
-        toolbar.setNavigationIcon(R.drawable.ic_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
         myDb = DBHelper.getInstance(this);
     }
 

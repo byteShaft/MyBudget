@@ -102,14 +102,13 @@
             android:layout_marginBottom="10dp"
             android:background="#DADADA" />
         
-        <TextView
+        <Button
             android:id="@+id/item_placeholder"
             android:text="@string/no_items_text"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:clickable="true"
-            android:onClick="addLineItem"/>
+            android:clickable="true"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/my_recycler_view"

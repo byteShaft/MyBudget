@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/selector"
     android:clickable="true"
-    android:onClick="onItemClick">
+    android:id="@+id/item_progress">
 
     <TextView
         android:id="@+id/item_name"
@@ -17,8 +17,10 @@
     <TextView
         android:id="@+id/prog_text"
         android:textColor="@color/black"
+        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
