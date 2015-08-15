@@ -54,6 +54,7 @@ public class HomeFragment extends Fragment implements BudgetDialogFragment.Budge
         baseView = inflater.inflate(R.layout.activity_main , container, false);
         budgetCard = (CardView) baseView.findViewById(R.id.budget_card);
         budgetCard.setVisibility(View.GONE);
+        setHasOptionsMenu(true);
         SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, 0);
         curBudget = preferences.getInt("curBudget", 0);
         View.OnLongClickListener listener = new View.OnLongClickListener() {
@@ -254,6 +255,4 @@ public class HomeFragment extends Fragment implements BudgetDialogFragment.Budge
 
         return super.onOptionsItemSelected(item);
     }
-
-
 }
