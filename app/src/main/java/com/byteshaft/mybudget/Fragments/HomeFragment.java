@@ -59,6 +59,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         FloatingActionButton floatingActionButton = (FloatingActionButton) baseView.findViewById(R.id.fab);
         floatingActionButton.setOnClickListener(this);
         budgetCard.setVisibility(View.GONE);
+        setHasOptionsMenu(true);
         View.OnLongClickListener listener = new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
