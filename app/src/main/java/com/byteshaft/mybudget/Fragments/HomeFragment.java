@@ -56,9 +56,6 @@ public class HomeFragment extends Fragment implements BudgetDialogFragment.Budge
         budgetCard.setVisibility(View.GONE);
         SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, 0);
         curBudget = preferences.getInt("curBudget", 0);
-//        Toolbar toolbar = (Toolbar) baseView.findViewById(R.id.my_toolbar);
-//        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-//        getActivity().getActionBar().setTitle("Budget");
         View.OnLongClickListener listener = new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {

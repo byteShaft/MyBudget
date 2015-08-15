@@ -44,9 +44,6 @@ public class GoalsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         baseView = inflater.inflate(R.layout.activity_goals, container, false);
-        Toolbar toolbar = (Toolbar) baseView.findViewById(R.id.my_toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        getActivity().getActionBar().setTitle("Savings Goals");
 
         mRecyclerView = (RecyclerView) baseView.findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
