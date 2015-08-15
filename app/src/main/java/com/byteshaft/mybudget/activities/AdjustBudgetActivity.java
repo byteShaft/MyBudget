@@ -12,11 +12,9 @@ import android.widget.Toast;
 
 import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.database.DBHelper;
-
 /*
     Prompts user to enter a new budget. Called from MainActivity.
  */
-
 public class AdjustBudgetActivity extends AppCompatActivity {
 
     @Override

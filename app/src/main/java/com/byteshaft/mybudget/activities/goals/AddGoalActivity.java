@@ -12,7 +12,6 @@ import android.widget.Toast;
 import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.database.DBHelper;
 
-
 public class AddGoalActivity extends AppCompatActivity {
 
     private DBHelper myDb;

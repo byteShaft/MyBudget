@@ -14,11 +14,6 @@ import java.util.Calendar;
 import com.byteshaft.mybudget.containers.Expense;
 import com.byteshaft.mybudget.containers.Goal;
 import com.byteshaft.mybudget.containers.LineItem;
-
-/**
- * Created by joshuapancho on 3/01/15.
- */
-
 /*
     Handles SQLite Database creation, updating and deletion.
 
