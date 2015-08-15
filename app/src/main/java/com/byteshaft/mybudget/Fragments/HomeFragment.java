@@ -106,7 +106,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         db = DBHelper.getInstance(getActivity());
         SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, 0);
-        curBudget = preferences.getInt("curBudget", 0)
+        curBudget = preferences.getInt("curBudget", 0);
         if (curBudget == 0) {
             DialogFragment fragment = new BudgetDialogFragment();
             fragment.show(getFragmentManager(), "budget");
