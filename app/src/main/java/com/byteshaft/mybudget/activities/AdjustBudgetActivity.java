@@ -12,22 +12,18 @@ import android.widget.Toast;
 
 import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.database.DBHelper;
-
 /*
-    Prompts user to enter a new budget. Called from MainActivity.
+ Prompts user to enter a new budget. Called from MainActivity.
  */
-
 public class AdjustBudgetActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adjust_budget);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.adjust_budget_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Adjust Budget");
-
         toolbar.setNavigationIcon(R.drawable.ic_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,47 +31,42 @@ public class AdjustBudgetActivity extends AppCompatActivity {
                 finish();
             }
         });
+
     }
 
     /*
-        Called by button click in layout file.
-     */
+    Called by button click in layout file.
+    */
     public void onSubmit(View v) {
 
         EditText amountHolder = (EditText) findViewById(R.id.amount);
-        if (!amountHolder.getText().toString().isEmpty()) {
-            int newBudget = Integer.parseInt(amountHolder.getText().toString());
+        int newBudget = Integer.parseInt(amountHolder.getText().toString());
 
-            Context context = getApplicationContext();
-            CharSequence text;
-            int duration = Toast.LENGTH_SHORT;
+        Context context = getApplicationContext();
+        CharSequence text;
+        int duration = Toast.LENGTH_SHORT;
 
-            // check that budget does not exceed amount already allocated
-            DBHelper myDb = DBHelper.getInstance(this);
+        // check that budget does not exceed amount already allocated
+        DBHelper myDb = DBHelper.getInstance(this);
 
-            if (newBudget < myDb.getTotalAllocated()) {
-                text = "New budget amount is less than amount already allocated, please try again";
+        if (newBudget < myDb.getTotalAllocated()) {
+            text = "New budget amount is less than amount already allocated, please try again";
+            Toast.makeText(context, text, duration).show();
+        } else {
+            SharedPreferences prefs = getSharedPreferences(MainActivity.PREFS_NAME, 0);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt("curBudget", newBudget);
+            boolean result = editor.commit();
+
+            if (result) {
+                text = "Budget adjusted";
                 Toast.makeText(context, text, duration).show();
             } else {
-                SharedPreferences prefs = getSharedPreferences(MainActivity.PREFS_NAME, 0);
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putInt("curBudget", newBudget);
-                boolean result = editor.commit();
-
-                if (result) {
-                    text = "Budget adjusted";
-                    Toast.makeText(context, text, duration).show();
-                } else {
-                    text = "Failed to adjust budget";
-                    Toast.makeText(context, text, duration).show();
-                }
-
-                finish();
+                text = "Failed to adjust budget";
+                Toast.makeText(context, text, duration).show();
             }
-        } else {
-            Toast.makeText(getApplicationContext(),"please enter any amount", Toast.LENGTH_SHORT).show();
+
+            finish();
         }
-
     }
-
 }

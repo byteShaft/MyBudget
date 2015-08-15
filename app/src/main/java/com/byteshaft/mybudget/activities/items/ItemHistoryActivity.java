@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -40,7 +39,6 @@ public class ItemHistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_history);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.item_toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_back);
@@ -54,10 +52,8 @@ public class ItemHistoryActivity extends AppCompatActivity {
         View.OnLongClickListener listener = new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-
                 Vibrator vb = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                 vb.vibrate(1000);
-
                 Toast toast = Toast.makeText(getApplicationContext(), v.getContentDescription(), Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 100);
                 toast.show();
@@ -66,37 +62,27 @@ public class ItemHistoryActivity extends AppCompatActivity {
         };
 
         findViewById(R.id.make_deposit_button).setOnLongClickListener(listener);
-
         mRecyclerView = (RecyclerView) findViewById(R.id.item_history_recycler);
         mRecyclerView.setHasFixedSize(true);
-
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-
         myDb = DBHelper.getInstance(this);
-
         Bundle b = getIntent().getExtras();
 
-        if(b != null) {
+        if (b != null) {
             name = b.getString("ITEM_NAME");
             getSupportActionBar().setTitle("Item: " + name);
-
             myItem = myDb.getLineItem(name);
-
-            if(myItem != null) {
+            if (myItem != null) {
                 setOverview();
                 setHistory(name);
             }
-        }
-        else {
+        } else {
             getSupportActionBar().setTitle("Item Name Not Found");
-
             Context context = getApplicationContext();
             CharSequence text = "Item name was not provided";
             int duration = Toast.LENGTH_SHORT;
-
             Toast.makeText(context, text, duration).show();
-
             finish();
         }
     }
@@ -104,7 +90,6 @@ public class ItemHistoryActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-
         setOverview();
         setHistory(name);
     }
@@ -113,17 +98,15 @@ public class ItemHistoryActivity extends AppCompatActivity {
         Sets overview card
      */
     public void setOverview() {
-
         myItem = myDb.getLineItem(name);
         itemSpent = myDb.getItemSpent(name);
 
         TextView budgeted = (TextView) findViewById(R.id.budgeted);
         TextView spent = (TextView) findViewById(R.id.spent);
         TextView remaining = (TextView) findViewById(R.id.remaining);
-
-        budgeted.setText("Budgeted: $" + Integer.toString(myItem.getBudget()) + ".00");
-        spent.setText("Spent: $" + Integer.toString(itemSpent) + ".00");
-        remaining.setText("Remaining: $" + Integer.toString(myItem.getBudget() - itemSpent) + ".00");
+        budgeted.setText("Budgeted: £" + Integer.toString(myItem.getBudget()) + ".00");
+        spent.setText("Spent: £" + Integer.toString(itemSpent) + ".00");
+        remaining.setText("Remaining: £" + Integer.toString(myItem.getBudget() - itemSpent) + ".00");
 
     }
 
@@ -131,12 +114,9 @@ public class ItemHistoryActivity extends AppCompatActivity {
         Set main content - RecyclerView of expenses
      */
     public void setHistory(String name) {
-
         TextView history = (TextView) findViewById(R.id.item_history_placeholder);
-
         ArrayList myHistory = myDb.getExpenseHistory(name);
-
-        if(myHistory.size() != 0) {
+        if (myHistory.size() != 0) {
             history.setVisibility(View.GONE);
 
             RecyclerView.Adapter mAdapter = new ItemHistoryAdapter(myHistory);
@@ -145,11 +125,7 @@ public class ItemHistoryActivity extends AppCompatActivity {
 
             history.setVisibility(View.VISIBLE);
             mRecyclerView.setAdapter(null);
-
         }
-
-
-
     }
 
     public void onAddExpenseClick(View v) {
@@ -157,7 +133,6 @@ public class ItemHistoryActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AddExpenseActivity.class);
         intent.putExtra("ITEM_NAME", name);
         startActivity(intent);
-
     }
 
     public void onMakeDepositClick(View v) {
@@ -165,7 +140,6 @@ public class ItemHistoryActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MakeDepositActivity.class);
         intent.putExtra("ITEM_NAME", name);
         startActivity(intent);
-
     }
 
     public void onOverviewClick(View v) {
@@ -177,18 +151,15 @@ public class ItemHistoryActivity extends AppCompatActivity {
         intent.putExtra("ITEM_BUDGET", myItem.getBudget());
         intent.putExtra("ITEM_SPENT", itemSpent);
         startActivityForResult(intent, REQUEST_ITEM_ADJUSTMENT);
-
     }
 
     public void onHistoryClick(View v) {
-
         TableLayout table = (TableLayout) v;
-
         String expName = ((TextView) table.findViewById(R.id.history_name)).getText().toString();
         String expDate = ((TextView) table.findViewById(R.id.history_date)).getText().toString();
         int expAmount = trimExpenseAmount(((TextView) table.findViewById(R.id.history_amount)).getText().toString());
 
-        if(expName.contains("Deposit")) {
+        if (expName.contains("Deposit")) {
 
             Intent intent = new Intent(this, AdjustDepositActivity.class);
             intent.putExtra("DEPOSIT_NAME", expName);
@@ -209,8 +180,6 @@ public class ItemHistoryActivity extends AppCompatActivity {
             startActivity(intent);
 
         }
-
-
     }
 
     @Override
@@ -221,16 +190,10 @@ public class ItemHistoryActivity extends AppCompatActivity {
 
     }
 
-
     public int trimExpenseAmount(String str) {
-
         String noDollar = str.substring(1);
         String[] noDecimals = noDollar.split("\\.");
-
         int trimmed = Integer.parseInt(noDecimals[0]);
-
         return trimmed;
-
     }
-
 }

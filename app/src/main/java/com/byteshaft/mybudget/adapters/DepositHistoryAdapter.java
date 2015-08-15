@@ -11,9 +11,6 @@ import java.util.ArrayList;
 import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.containers.Expense;
 
-/**
- * Created by joshuapancho on 18/01/15.
- */
 
 /*
     RecyclerView Adapter that lists deposits for a Goal
@@ -59,7 +56,7 @@ public class DepositHistoryAdapter extends RecyclerView.Adapter<DepositHistoryAd
 
         historyDate.setText(cur.getDate());
         historyName.setText(cur.getName());
-        historyAmount.setText("$" + Integer.toString(cur.getAmount()) + ".00");
+        historyAmount.setText("£" + Integer.toString(cur.getAmount()) + ".00");
 
     }
 

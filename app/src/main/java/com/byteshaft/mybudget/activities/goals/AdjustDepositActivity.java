@@ -63,7 +63,7 @@ public class AdjustDepositActivity extends AppCompatActivity {
         int duration = Toast.LENGTH_SHORT;
 
         // validation
-        if(newAmountStr.equals("")) {
+        if (newAmountStr.equals("")) {
 
             text = "A new amount must be specified, please try again";
             Toast.makeText(context, text, duration).show();
@@ -72,7 +72,7 @@ public class AdjustDepositActivity extends AppCompatActivity {
 
             int newAmount = Integer.parseInt(newAmountStr);
 
-            if(newAmount > (remaining + depositAmount)) {   // calculates what the remaining would be minus this item
+            if (newAmount > (remaining + depositAmount)) {   // calculates what the remaining would be minus this item
 
                 text = "Amount exceeds remaining budget for that item, please try again";
                 Toast.makeText(context, text, duration).show();
@@ -89,23 +89,16 @@ public class AdjustDepositActivity extends AppCompatActivity {
                 Toast.makeText(context, text, duration).show();
 
                 finish();
-
             }
-
         }
-
     }
 
     public void onDeleteDepositClick(View v) {
-
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(
                 AdjustDepositActivity.this);
-
         alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
                 Context context = getApplicationContext();
                 CharSequence text = "Deposit deleted";
                 int duration = Toast.LENGTH_SHORT;
@@ -117,16 +110,11 @@ public class AdjustDepositActivity extends AppCompatActivity {
 
                 Toast.makeText(context, text, duration).show();
                 finish();
-
             }
-
         });
-
         alertDialog.setNegativeButton("No", null);
         alertDialog.setMessage("Are you sure you want to delete this deposit?");
         alertDialog.setTitle(R.string.app_name);
         alertDialog.show();
-
-
     }
 }

@@ -15,7 +15,6 @@ import com.byteshaft.mybudget.R;
 
 public class BudgetDialogFragment extends DialogFragment {
 
-    public static boolean sDialogEmpty = false;
 
     public interface BudgetDialogListener {
         public void onDialogPositiveClick(DialogFragment dialog);
@@ -27,7 +26,6 @@ public class BudgetDialogFragment extends DialogFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-
         try {
             mListener = (BudgetDialogListener) activity;
         } catch (ClassCastException e) {
@@ -50,7 +48,6 @@ public class BudgetDialogFragment extends DialogFragment {
                         EditText myEditText = (EditText) myDialog.findViewById(R.id.budgetDialog);
                         if (TextUtils.isEmpty(myEditText.getText())) {
                             Toast.makeText(getActivity(), "please enter amount", Toast.LENGTH_SHORT).show();
-                            return;
                         } else {
                             budget = Integer.parseInt(myEditText.getText().toString());
                             mListener.onDialogPositiveClick(BudgetDialogFragment.this);
@@ -61,10 +58,7 @@ public class BudgetDialogFragment extends DialogFragment {
     }
 
     public int getBudget() {
-
         return budget;
 
     }
-
-
 }

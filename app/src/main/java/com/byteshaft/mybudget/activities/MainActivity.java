@@ -36,8 +36,7 @@ import java.util.ArrayList;
 import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.activities.goals.GoalsActivity;
 
-
-public class MainActivity extends AppCompatActivity implements BudgetDialogFragment.BudgetDialogListener{
+public class MainActivity extends AppCompatActivity implements BudgetDialogFragment.BudgetDialogListener {
 
     public final static String PREFS_NAME = "MyBudgetPrefs";
 
@@ -52,18 +51,14 @@ public class MainActivity extends AppCompatActivity implements BudgetDialogFragm
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         budgetCard = (CardView) findViewById(R.id.budget_card);
         budgetCard.setVisibility(View.GONE);
-
         SharedPreferences preferences = getSharedPreferences(PREFS_NAME, 0);
         curBudget = preferences.getInt("curBudget", 0);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Budget");
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
-
         View.OnLongClickListener listener = new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -85,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements BudgetDialogFragm
                 Vibrator vb = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                 vb.vibrate(1000);
 
-                String str = "Add new item - $" + Integer.toString(curBudget - db.getTotalAllocated()) + ".00 left to allocate";
+                String str = "Add new item - £" + Integer.toString(curBudget - db.getTotalAllocated()) + ".00 left to allocate";
 
                 Toast toast = Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 100);
@@ -113,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements BudgetDialogFragm
 
         db = DBHelper.getInstance(this);
 
-        if(curBudget == 0) {
+        if (curBudget == 0) {
             DialogFragment fragment = new BudgetDialogFragment();
             fragment.show(getSupportFragmentManager(), "budget");
             fragment.setCancelable(false);
@@ -142,26 +137,21 @@ public class MainActivity extends AppCompatActivity implements BudgetDialogFragm
 
     public void initCards() {
         fab.show();
-
         SharedPreferences preferences = getSharedPreferences(PREFS_NAME, 0);
         curBudget = preferences.getInt("curBudget", 0);
         db.checkBudgetIsDefined();
-
         int totalSpent = db.getTotalSpent();
-
         TextView placeholder = (TextView) findViewById(R.id.item_placeholder);
         TextView budgeted = (TextView) budgetCard.findViewById(R.id.budgeted);
         TextView spent = (TextView) budgetCard.findViewById(R.id.spent);
         TextView remaining = (TextView) budgetCard.findViewById(R.id.remaining);
-
-        budgeted.setText("Budgeted: $" + Integer.toString(curBudget) + ".00");
-        spent.setText("Spent: $" + totalSpent + ".00");
-        remaining.setText("Remaining: $" + Integer.toString(curBudget - totalSpent) + ".00");
-
+        budgeted.setText("Budgeted: £" + Integer.toString(curBudget) + ".00");
+        spent.setText("Spent: £" + totalSpent + ".00");
+        remaining.setText("Remaining: £" + Integer.toString(curBudget - totalSpent) + ".00");
         budgetCard.setVisibility(View.VISIBLE);
         placeholder.setVisibility(View.VISIBLE);
 
-        if(db.getNoRows() != 0)
+        if (db.getNoRows() != 0)
             placeholder.setVisibility(View.GONE);
 
         ArrayList myLineItems = db.getAllLineItems();
@@ -181,31 +171,24 @@ public class MainActivity extends AppCompatActivity implements BudgetDialogFragm
             Intent intent = new Intent(this, AddItemActivity.class);
             startActivity(intent);
         }
-
     }
 
     public void clearBudget() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(
                 MainActivity.this);
-
         alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
                 db.clearBudget();
-
                 SharedPreferences preferences = getSharedPreferences(PREFS_NAME, 0);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putInt("curBudget", 0);
                 editor.commit();
-
                 Context context = getApplicationContext();
                 CharSequence text = "Budget cleared";
                 int duration = Toast.LENGTH_SHORT;
-
                 Toast.makeText(context, text, duration).show();
-
                 DialogFragment fragment = new BudgetDialogFragment();
                 fragment.show(getSupportFragmentManager(), "budget");
 
@@ -217,40 +200,31 @@ public class MainActivity extends AppCompatActivity implements BudgetDialogFragm
         alertDialog.setMessage("Are you sure you want to clear your budget?\n\nAll items and expenses will be lost!");
         alertDialog.setTitle(R.string.app_name);
         alertDialog.show();
-
     }
 
     public void onItemClick(View v) {
-
         RelativeLayout callHolder = (RelativeLayout) v;
         String itemName = ((TextView) callHolder.findViewById(R.id.item_name)).getText().toString();
 
         Intent intent = new Intent(this, ItemHistoryActivity.class);
         intent.putExtra("ITEM_NAME", itemName);
         startActivity(intent);
-
     }
 
     public void onGoalsClick(View v) {
-
         Intent intent = new Intent(this, GoalsActivity.class);
         startActivity(intent);
-
     }
 
     public void adjustBudget(View v) {
-
         Intent intent = new Intent(this, AdjustBudgetActivity.class);
         startActivity(intent);
-
     }
 
     // code adapted from http://stackoverflow.com/questions/6290599/prompt-user-when-back-button-is-pressed
     private void exit() {
-
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(
                 MainActivity.this);
-
         alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
             @Override
@@ -259,12 +233,10 @@ public class MainActivity extends AppCompatActivity implements BudgetDialogFragm
             }
 
         });
-
         alertDialog.setNegativeButton("No", null);
         alertDialog.setMessage("Do you want to quit?");
         alertDialog.setTitle(R.string.app_name);
         alertDialog.show();
-
     }
 
     @Override
@@ -285,13 +257,12 @@ public class MainActivity extends AppCompatActivity implements BudgetDialogFragm
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_clear) {
             clearBudget();
             return true;
         }
-
+        
         return super.onOptionsItemSelected(item);
     }
 }

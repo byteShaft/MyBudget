@@ -11,10 +11,6 @@ import java.util.ArrayList;
 import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.containers.Expense;
 
-/**
- * Created by joshuapancho on 5/01/15.
- */
-
 /*
     RecyclerView Adapter that lists expenses for a line item in ItemHistoryActivity
  */
@@ -59,7 +55,7 @@ public class ItemHistoryAdapter extends RecyclerView.Adapter<ItemHistoryAdapter.
 
         historyDate.setText(cur.getDate());
         historyName.setText(cur.getName());
-        historyAmount.setText("$" + Integer.toString(cur.getAmount()) + ".00");
+        historyAmount.setText("£" + Integer.toString(cur.getAmount()) + ".00");
 
     }
 

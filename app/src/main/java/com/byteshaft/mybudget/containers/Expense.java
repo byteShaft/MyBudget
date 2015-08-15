@@ -1,9 +1,4 @@
 package com.byteshaft.mybudget.containers;
-
-/**
- * Created by joshuapancho on 4/01/15.
- */
-
 /*
     Holds info about an expense for a line item. Used by ItemHistoryAdapter
  */
