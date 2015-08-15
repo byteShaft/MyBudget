@@ -1,4 +1,4 @@
-package com.byteshaft.mybudget.activities.goals;
+package com.byteshaft.mybudget.Fragments;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -21,6 +21,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.byteshaft.mybudget.activities.goals.AddGoalActivity;
+import com.byteshaft.mybudget.activities.goals.GoalHistoryActivity;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -42,10 +44,6 @@ public class GoalsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         baseView = inflater.inflate(R.layout.activity_goals, container, false);
-        Toolbar toolbar = (Toolbar) baseView.findViewById(R.id.my_toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Savings Goals");
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
 
         mRecyclerView = (RecyclerView) baseView.findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);

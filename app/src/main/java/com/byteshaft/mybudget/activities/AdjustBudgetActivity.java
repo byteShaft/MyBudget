@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.byteshaft.mybudget.R;
-import com.byteshaft.mybudget.activities.items.HomeFragment;
+import com.byteshaft.mybudget.Fragments.HomeFragment;
 import com.byteshaft.mybudget.database.DBHelper;
 /*
  Prompts user to enter a new budget. Called from MainActivity.

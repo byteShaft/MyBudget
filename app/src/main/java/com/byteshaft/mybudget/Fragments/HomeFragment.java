@@ -1,4 +1,4 @@
-package com.byteshaft.mybudget.activities.items;
+package com.byteshaft.mybudget.Fragments;
 
 
 import android.app.AlertDialog;
@@ -29,7 +29,8 @@ import android.widget.Toast;
 
 import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.activities.AdjustBudgetActivity;
-import com.byteshaft.mybudget.activities.goals.GoalsFragment;
+import com.byteshaft.mybudget.activities.items.AddItemActivity;
+import com.byteshaft.mybudget.activities.items.ItemHistoryActivity;
 import com.byteshaft.mybudget.adapters.MainAdapter;
 import com.byteshaft.mybudget.database.DBHelper;
 import com.byteshaft.mybudget.ui.BudgetDialogFragment;
@@ -55,10 +56,6 @@ public class HomeFragment extends Fragment implements BudgetDialogFragment.Budge
         budgetCard.setVisibility(View.GONE);
         SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, 0);
         curBudget = preferences.getInt("curBudget", 0);
-        Toolbar toolbar = (Toolbar) baseView.findViewById(R.id.my_toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Budget");
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
         View.OnLongClickListener listener = new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {

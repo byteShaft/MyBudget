@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.byteshaft.mybudget.Fragments.GoalsFragment;
 import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.database.DBHelper;
 

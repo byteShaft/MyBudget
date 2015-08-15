@@ -12,15 +12,6 @@
         android:fitsSystemWindows="true"
         android:orientation="vertical">
 
-        <android.support.v7.widget.Toolbar
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/my_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimaryDark">
-
-        </android.support.v7.widget.Toolbar>
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -143,100 +134,4 @@
             fab:fab_colorRipple="@color/red" />
 
     </LinearLayout>
-
-    <!--<LinearLayout-->
-        <!--android:id="@+id/frame"-->
-        <!--android:layout_width="250dp"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_gravity="left|start"-->
-        <!--android:background="@color/white"-->
-        <!--android:clickable="true"-->
-        <!--android:orientation="vertical">-->
-
-        <!--<LinearLayout-->
-            <!--android:paddingTop="12dp"-->
-            <!--android:paddingBottom="12dp"-->
-            <!--android:background="@color/red"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="horizontal">-->
-
-            <!--<ImageView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:src="@drawable/ic_drawer_menu"/>-->
-
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:textStyle="bold"-->
-                <!--android:text="@string/menu"-->
-                <!--android:paddingTop="5dp"-->
-                <!--android:paddingLeft="25dp"-->
-                <!--android:textAlignment="center"-->
-                <!--android:gravity="center"-->
-                <!--/>-->
-        <!--</LinearLayout>-->
-
-        <!--<LinearLayout-->
-            <!--android:id="@+id/budgetButton"-->
-            <!--android:paddingTop="15dp"-->
-            <!--android:paddingBottom="15dp"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:background="@color/grey"-->
-            <!-->-->
-
-            <!--<ImageView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:contentDescription="@string/view_budget_hint"-->
-                <!--android:paddingLeft="2dp"-->
-                <!--android:src="@drawable/ic_budget"/>-->
-
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:textStyle="bold"-->
-                <!--android:text="@string/view_budget_hint"-->
-                <!--android:paddingTop="5dp"-->
-                <!--android:paddingLeft="23dp"-->
-                <!--android:textAlignment="center"-->
-                <!--android:gravity="center"-->
-                <!--/>-->
-        <!--</LinearLayout>-->
-
-        <!--<LinearLayout-->
-            <!--android:id="@+id/goalsButton"-->
-            <!--android:paddingTop="15dp"-->
-            <!--android:paddingBottom="15dp"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:clickable="true"-->
-            <!--android:onClick="onGoalsClick"-->
-            <!-->-->
-
-            <!--<ImageView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:contentDescription="@string/goals_text"-->
-                <!--android:paddingLeft="2dp"-->
-                <!--android:src="@drawable/ic_goals"/>-->
-
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:textStyle="bold"-->
-                <!--android:text="@string/goals_text"-->
-                <!--android:paddingTop="5dp"-->
-                <!--android:paddingLeft="23dp"-->
-                <!--android:textAlignment="center"-->
-                <!--android:gravity="center"-->
-                <!--/>-->
-        <!--</LinearLayout>-->
-
-    <!--</LinearLayout>-->
-
 </RelativeLayout>
