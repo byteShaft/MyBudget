@@ -11,8 +11,6 @@ import java.util.ArrayList;
 
 import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.containers.Goal;
-
-
 /*
     RecyclerView Adapter that lists savings goals
  */
@@ -56,7 +54,7 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.ViewHolder> {
         ProgressBar curProgBar = (ProgressBar) curGoal.findViewById(R.id.prog_bar);
 
         curTitle.setText(cur.getName());
-        curProgText.setText("$" + Integer.toString(cur.getDeposited()) + ".00/$" + Integer.toString(cur.getGoal()) + ".00");
+        curProgText.setText("£" + Integer.toString(cur.getDeposited()) + ".00/£" + Integer.toString(cur.getGoal()) + ".00");
         curProgBar.setProgress((int) progress);
 
     }

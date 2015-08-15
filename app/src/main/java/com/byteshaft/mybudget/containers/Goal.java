@@ -1,6 +1,5 @@
 package com.byteshaft.mybudget.containers;
 
-
 public class Goal {
 
     private String name;

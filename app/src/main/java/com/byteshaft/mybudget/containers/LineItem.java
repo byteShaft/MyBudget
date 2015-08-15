@@ -1,6 +1,4 @@
 package com.byteshaft.mybudget.containers;
-
-
 /*
     Holds info about an item.
  */

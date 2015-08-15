@@ -80,7 +80,7 @@ public class AddItemActivity extends AppCompatActivity {
                 } else {
                     myDb.insertLineItem(name, Integer.parseInt(amountStr), 0);
 
-                    text = "Item added. $" + Integer.toString(curBudget - myDb.getTotalAllocated()) + ".00 remaining to be allocated.";
+                    text = "Item added. £" + Integer.toString(curBudget - myDb.getTotalAllocated()) + ".00 remaining to be allocated.";
                     duration = Toast.LENGTH_LONG;
                     Toast.makeText(context, text, duration).show();
                     finish();

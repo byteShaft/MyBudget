@@ -27,7 +27,6 @@ import com.byteshaft.mybudget.activities.MainActivity;
 import com.byteshaft.mybudget.adapters.GoalAdapter;
 import com.byteshaft.mybudget.database.DBHelper;
 
-
 public class GoalsActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
