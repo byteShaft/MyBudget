@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements BudgetDialogFragm
         if(curBudget == 0) {
             DialogFragment fragment = new BudgetDialogFragment();
             fragment.show(getSupportFragmentManager(), "budget");
+            fragment.setCancelable(false);
         } else {
             initCards();
         }
@@ -171,7 +172,11 @@ public class MainActivity extends AppCompatActivity implements BudgetDialogFragm
 
     public void addLineItem(View v) {
         if(curBudget - db.getTotalAllocated() == 0) {
-            Toast.makeText(getApplicationContext(), "Budget has been completely allocated", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),
+                    "please set budget ", Toast.LENGTH_SHORT).show();
+            DialogFragment fragment = new BudgetDialogFragment();
+            fragment.show(getSupportFragmentManager(), "budget");
+            fragment.setCancelable(false);
         } else {
             Intent intent = new Intent(this, AddItemActivity.class);
             startActivity(intent);

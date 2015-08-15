@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -13,6 +14,8 @@ import android.widget.Toast;
 import com.byteshaft.mybudget.R;
 
 public class BudgetDialogFragment extends DialogFragment {
+
+    public static boolean sDialogEmpty = false;
 
     public interface BudgetDialogListener {
         public void onDialogPositiveClick(DialogFragment dialog);
@@ -45,11 +48,12 @@ public class BudgetDialogFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         Dialog myDialog = (Dialog) dialog;
                         EditText myEditText = (EditText) myDialog.findViewById(R.id.budgetDialog);
-                        if (!myEditText.getText().toString().isEmpty()) {
+                        if (TextUtils.isEmpty(myEditText.getText())) {
+                            Toast.makeText(getActivity(), "please enter amount", Toast.LENGTH_SHORT).show();
+                            return;
+                        } else {
                             budget = Integer.parseInt(myEditText.getText().toString());
                             mListener.onDialogPositiveClick(BudgetDialogFragment.this);
-                        } else {
-                            Toast.makeText(getActivity(),"Enter valid amount", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
