@@ -13,11 +13,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import com.byteshaft.mybudget.activities.items.HomeFragment;
+import com.byteshaft.mybudget.Fragments.HomeFragment;
 import com.byteshaft.mybudget.ui.BudgetDialogFragment;
 
 import com.byteshaft.mybudget.R;
-import com.byteshaft.mybudget.activities.goals.GoalsFragment;
+import com.byteshaft.mybudget.Fragments.GoalsFragment;
 
 public class MainActivity extends AppCompatActivity implements BudgetDialogFragment.BudgetDialogListener {
 

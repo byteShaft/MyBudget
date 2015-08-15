@@ -1,4 +1,4 @@
-package com.byteshaft.mybudget.activities.goals;
+package com.byteshaft.mybudget.Fragments;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -21,6 +21,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.byteshaft.mybudget.activities.goals.AddGoalActivity;
+import com.byteshaft.mybudget.activities.goals.GoalHistoryActivity;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
