@@ -40,7 +40,7 @@ public class AdjustItemActivity extends AppCompatActivity {
         itemSpent = b.getInt("ITEM_SPENT");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.adjust_item_toolbar);
-        setSupportActionBar(toolbar);
+//        setSupportActionBar(toolbar); // useless code
         getSupportActionBar().setTitle("Adjust Item: " + itemName);
 
         toolbar.setNavigationIcon(R.drawable.ic_back);

@@ -1,7 +1,10 @@
 package com.byteshaft.mybudget.adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -10,6 +13,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import com.byteshaft.mybudget.R;
+import com.byteshaft.mybudget.activities.goals.GoalHistoryActivity;
 import com.byteshaft.mybudget.containers.Goal;
 /*
     RecyclerView Adapter that lists savings goals
@@ -31,11 +35,17 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.ViewHolder> {
     }
 
     @Override
-    public GoalAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+    public GoalAdapter.ViewHolder onCreateViewHolder(final ViewGroup parent,
                                                             int viewType) {
 
         RelativeLayout v = (RelativeLayout) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_progress, parent, false);
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClick(v, parent.getContext());
+            }
+        });
 
         ViewHolder vh = new ViewHolder(v);
         return vh;
@@ -63,5 +73,14 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.ViewHolder> {
     public int getItemCount() {
 
         return mDataset.size();
+    }
+
+    public void onItemClick(View v, Context context) {
+
+        RelativeLayout holder = (RelativeLayout) v;
+
+        Intent intent = new Intent(context, GoalHistoryActivity.class);
+        intent.putExtra("GOAL_NAME", ((TextView) holder.findViewById(R.id.item_name)).getText().toString());
+        context.startActivity(intent);
     }
 }

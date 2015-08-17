@@ -90,16 +90,6 @@ public class GoalsFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    public void onItemClick(View v) {
-
-        RelativeLayout holder = (RelativeLayout) v;
-
-        Intent intent = new Intent(getActivity(), GoalHistoryActivity.class);
-        intent.putExtra("GOAL_NAME", ((TextView) holder.findViewById(R.id.item_name)).getText().toString());
-        startActivity(intent);
-
-    }
-
     public void onAddClick(View v) {
 
         Intent intent = new Intent(getActivity(), AddGoalActivity.class);
