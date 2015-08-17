@@ -39,16 +39,6 @@ public class ItemHistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_history);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.item_toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
         View.OnLongClickListener listener = new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -122,30 +112,25 @@ public class ItemHistoryActivity extends AppCompatActivity {
             RecyclerView.Adapter mAdapter = new ItemHistoryAdapter(myHistory);
             mRecyclerView.setAdapter(mAdapter);
         } else {
-
             history.setVisibility(View.VISIBLE);
             mRecyclerView.setAdapter(null);
         }
     }
 
     public void onAddExpenseClick(View v) {
-
         Intent intent = new Intent(this, AddExpenseActivity.class);
         intent.putExtra("ITEM_NAME", name);
         startActivity(intent);
     }
 
     public void onMakeDepositClick(View v) {
-
         Intent intent = new Intent(this, MakeDepositActivity.class);
         intent.putExtra("ITEM_NAME", name);
         startActivity(intent);
     }
 
     public void onOverviewClick(View v) {
-
         int REQUEST_ITEM_ADJUSTMENT = 0;
-
         Intent intent = new Intent(this, AdjustItemActivity.class);
         intent.putExtra("ITEM_NAME", name);
         intent.putExtra("ITEM_BUDGET", myItem.getBudget());
