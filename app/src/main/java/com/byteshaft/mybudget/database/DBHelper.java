@@ -553,7 +553,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase myDb = this.getWritableDatabase();
         Cursor res = myDb.rawQuery("select * from goals", null);
-
         ArrayList<String> goalNames = new ArrayList<String>();
 
         res.moveToFirst();
