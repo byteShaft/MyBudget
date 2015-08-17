@@ -73,5 +73,6 @@
     <string name="title_section3">Contact us</string>
     <string name="drawer_open">Menu</string>
     <string name="drawer_close">MyBudget</string>
+    <string name="deposit">deposit</string>
 
 </resources>
