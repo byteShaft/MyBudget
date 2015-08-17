@@ -37,7 +37,7 @@ public class AdjustGoalActivity extends AppCompatActivity {
         goalAmount = b.getInt("GOAL_AMOUNT");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        setSupportActionBar(toolbar); /// useless code
         getSupportActionBar().setTitle("Adjust Goal: " + oldName);
 
         toolbar.setNavigationIcon(R.drawable.ic_back);

@@ -34,16 +34,6 @@ public class GoalHistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goal_history);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.item_toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
         CardView overviewCard = (CardView) findViewById(R.id.overview_card);
 
         View.OnLongClickListener listener = new View.OnLongClickListener() {
