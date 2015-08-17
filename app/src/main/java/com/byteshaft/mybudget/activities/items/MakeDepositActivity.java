@@ -32,7 +32,7 @@ public class MakeDepositActivity extends AppCompatActivity implements AdapterVie
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, myDb.getGoalNames());
 
         if (adapter.getCount() > 0) {
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            adapter.setDropDownViewResource(R.layout.spinner_textview);
             spinner.setOnItemSelectedListener(this);
             spinner.setAdapter(adapter);
         } else {
