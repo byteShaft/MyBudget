@@ -7,8 +7,10 @@ import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -29,7 +31,6 @@ import com.byteshaft.mybudget.database.DBHelper;
 public class ItemHistoryActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
-
     private LineItem myItem;
     private int itemSpent;
     private DBHelper myDb;
@@ -50,8 +51,6 @@ public class ItemHistoryActivity extends AppCompatActivity {
                 return true;
             }
         };
-
-        findViewById(R.id.make_deposit_button).setOnLongClickListener(listener);
         mRecyclerView = (RecyclerView) findViewById(R.id.item_history_recycler);
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
@@ -123,12 +122,6 @@ public class ItemHistoryActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void onMakeDepositClick(View v) {
-        Intent intent = new Intent(this, MakeDepositActivity.class);
-        intent.putExtra("ITEM_NAME", name);
-        startActivity(intent);
-    }
-
     public void onOverviewClick(View v) {
         int REQUEST_ITEM_ADJUSTMENT = 0;
         Intent intent = new Intent(this, AdjustItemActivity.class);
@@ -180,5 +173,25 @@ public class ItemHistoryActivity extends AppCompatActivity {
         String[] noDecimals = noDollar.split("\\.");
         int trimmed = Integer.parseInt(noDecimals[0]);
         return trimmed;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_about, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.on_make_depo:
+                Intent intent = new Intent(this, MakeDepositActivity.class);
+                intent.putExtra("ITEM_NAME", name);
+                startActivity(intent);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
