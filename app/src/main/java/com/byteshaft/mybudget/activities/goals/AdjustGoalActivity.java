@@ -28,26 +28,12 @@ public class AdjustGoalActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adjust_goal);
-
         myDb = DBHelper.getInstance(this);
 
         Bundle b = getIntent().getExtras();
         oldName = b.getString("GOAL_NAME");
         deposited = b.getInt("GOAL_DEPOSITED");
         goalAmount = b.getInt("GOAL_AMOUNT");
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar); /// useless code
-        getSupportActionBar().setTitle("Adjust Goal: " + oldName);
-
-        toolbar.setNavigationIcon(R.drawable.ic_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setResult(Activity.RESULT_OK, new Intent().putExtra("GOAL_NAME", oldName));
-                finish();
-            }
-        });
     }
 
     @Override
@@ -166,7 +152,5 @@ public class AdjustGoalActivity extends AppCompatActivity {
         alertDialog.setMessage("Are you sure you want to delete this goal?");
         alertDialog.setTitle(R.string.app_name);
         alertDialog.show();
-
-
     }
 }
