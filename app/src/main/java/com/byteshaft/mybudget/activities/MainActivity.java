@@ -2,12 +2,12 @@ package com.byteshaft.mybudget.activities;
 
 
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private ActionBarDrawerToggle getActionBarDrawerToggle() {
-        return new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open,
+        return new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, R.string.drawer_open,
                 R.string.drawer_close) {
 
             @Override
