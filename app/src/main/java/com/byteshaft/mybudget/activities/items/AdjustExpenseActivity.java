@@ -42,19 +42,6 @@ public class AdjustExpenseActivity extends AppCompatActivity {
         expenseAmount = b.getInt("EXPENSE_AMOUNT");
         itemName = b.getString("ITEM_NAME");
         remaining = b.getInt("ITEM_REMAINING");
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.adjust_expense_toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Expense: " + expenseName + " (" + expenseDate +")");
-
-        toolbar.setNavigationIcon(R.drawable.ic_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setResult(Activity.RESULT_OK, new Intent().putExtra("EXPENSE_NAME", expenseName));
-                finish();
-            }
-        });
     }
 
     public void onSubmitClick(View v) {

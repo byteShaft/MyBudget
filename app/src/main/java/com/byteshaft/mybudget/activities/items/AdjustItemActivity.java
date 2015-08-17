@@ -31,26 +31,11 @@ public class AdjustItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adjust_item);
-
         myDb = DBHelper.getInstance(this);
-
         Bundle b = getIntent().getExtras();
         itemName = b.getString("ITEM_NAME");
         itemBudget = b.getInt("ITEM_BUDGET");
         itemSpent = b.getInt("ITEM_SPENT");
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.adjust_item_toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Adjust Item: " + itemName);
-
-        toolbar.setNavigationIcon(R.drawable.ic_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setResult(Activity.RESULT_OK, new Intent().putExtra("ITEM_NAME", itemName));
-                finish();
-            }
-        });
     }
 
     @Override
@@ -60,10 +45,8 @@ public class AdjustItemActivity extends AppCompatActivity {
     }
 
     public void onSubmitClick(View v) {
-
         EditText newNameView = (EditText) findViewById(R.id.name);
         EditText newBudgetView = (EditText) findViewById(R.id.amount);
-
         Context context = getApplicationContext();
         CharSequence text;
         int duration = Toast.LENGTH_SHORT;
