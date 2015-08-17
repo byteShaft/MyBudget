@@ -48,6 +48,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private FloatingActionButton fab;
     private int curBudget = 0;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -99,7 +100,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-
         fab = (FloatingActionButton) baseView.findViewById(R.id.fab);
         fab.setOnLongClickListener(addItemListener);
         fab.attachToRecyclerView(mRecyclerView);
@@ -152,6 +152,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         ArrayList myLineItems = db.getAllLineItems();
         RecyclerView.Adapter mAdapter = new MainAdapter(myLineItems);
         mRecyclerView.setAdapter(mAdapter);
+
 
     }
 
@@ -258,7 +259,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             case R.id.fab:
                 addLineItem();
                 break;
-            case R.id.item_progress:
+            case R.id.my_recycler_view:
+                System.out.println("itemClick");
                 onItemClick(v);
                 break;
         }

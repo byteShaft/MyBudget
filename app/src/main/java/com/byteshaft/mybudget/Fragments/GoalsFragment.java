@@ -32,7 +32,7 @@ import com.byteshaft.mybudget.activities.MainActivity;
 import com.byteshaft.mybudget.adapters.GoalAdapter;
 import com.byteshaft.mybudget.database.DBHelper;
 
-public class GoalsFragment extends Fragment {
+public class GoalsFragment extends Fragment implements View.OnClickListener {
 
     private View baseView;
     private RecyclerView mRecyclerView;
@@ -53,6 +53,7 @@ public class GoalsFragment extends Fragment {
 
         fab = (FloatingActionButton) baseView.findViewById(R.id.fab);
         fab.attachToRecyclerView(mRecyclerView);
+        fab.setOnClickListener(this);
 
         db = DBHelper.getInstance(getActivity());
 
@@ -70,9 +71,9 @@ public class GoalsFragment extends Fragment {
     public void initGoals() {
 
         db.checkGoalTableIsDefined();
-
         ArrayList goals = db.getAllGoals();
         TextView placeholder = (TextView) baseView.findViewById(R.id.goal_placeholder);
+        placeholder.setOnClickListener(this);
 
         if(goals.size() > 0) {
             placeholder.setVisibility(View.GONE);
@@ -162,5 +163,18 @@ public class GoalsFragment extends Fragment {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.goal_placeholder:
+                onAddClick(v);
+                break;
+            case R.id.fab:
+                onAddClick(v);
+                break;
+        }
+
     }
 }
