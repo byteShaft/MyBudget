@@ -31,31 +31,16 @@ public class AddExpenseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expense);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.expense_toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
         Bundle b = getIntent().getExtras();
 
         if (b != null) {
-
             itemName = b.getString("ITEM_NAME");
             getSupportActionBar().setTitle(itemName + ": Add Expense");
-
         } else {
-
             Context context = getApplicationContext();
             CharSequence text = "Item name was not provided";
             int duration = Toast.LENGTH_SHORT;
-
             Toast.makeText(context, text, duration).show();
-
             finish();
         }
     }
@@ -73,7 +58,6 @@ public class AddExpenseActivity extends AppCompatActivity {
         Calendar c = Calendar.getInstance();
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM");
         String date = formatter.format(c.getTime());
-
         // get item
         DBHelper myDb = DBHelper.getInstance(this);
         LineItem item = myDb.getLineItem(itemName);

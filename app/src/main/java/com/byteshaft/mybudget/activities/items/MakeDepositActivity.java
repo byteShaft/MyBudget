@@ -3,7 +3,6 @@ package com.byteshaft.mybudget.activities.items;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,22 +26,10 @@ public class MakeDepositActivity extends AppCompatActivity implements AdapterVie
         setContentView(R.layout.activity_make_deposit);
         Bundle b = getIntent().getExtras();
         itemName = b.getString("ITEM_NAME");
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(itemName + ": Make Goal Deposit");
-        setSupportActionBar(toolbar);
-
-        toolbar.setNavigationIcon(R.drawable.ic_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
         myDb = DBHelper.getInstance(this);
 
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, myDb.getGoalNames());
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, myDb.getGoalNames());
 
         if (adapter.getCount() > 0) {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -52,9 +39,7 @@ public class MakeDepositActivity extends AppCompatActivity implements AdapterVie
             Context context = getApplicationContext();
             CharSequence text = "No goals have been defined yet.";
             int duration = Toast.LENGTH_SHORT;
-
             Toast.makeText(context, text, duration).show();
-
             finish();
         }
     }
