@@ -29,27 +29,13 @@ public class AdjustDepositActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adjust_deposit);
-
         myDb = DBHelper.getInstance(this);
-
         Bundle b = getIntent().getExtras();
         depositName = b.getString("DEPOSIT_NAME");
         depositDate = b.getString("DEPOSIT_DATE");
         depositAmount = b.getInt("DEPOSIT_AMOUNT");
         itemName = b.getString("ITEM_NAME");
         remaining = b.getInt("ITEM_REMAINING");
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(depositName);
-
-        toolbar.setNavigationIcon(R.drawable.ic_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 
     public void onSubmitClick(View v) {
