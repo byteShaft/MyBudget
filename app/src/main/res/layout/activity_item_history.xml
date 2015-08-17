@@ -5,21 +5,6 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-
-        <ImageButton
-            android:id="@+id/make_deposit_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/selector"
-            android:src="@drawable/ic_deposit"
-            android:contentDescription="@string/make_deposit_hint"
-            android:layout_gravity="right"
-            android:layout_marginRight="10dp"
-            android:clickable="true"
-            android:longClickable="true"
-            android:onClick="onMakeDepositClick"
-            />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="455dp"
