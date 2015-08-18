@@ -14,11 +14,11 @@
     <string name="title_activity_budget_dialog">BudgetDialogActivity</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
-    <string name="title_activity_item_history">ItemHistoryActivity</string>
+    <string name="title_activity_item_history">ItemHistory</string>
     <string name="title_activity_expense">ExpenseActivity</string>
     <string name="title_activity_adjust_budget">Adjust Budget</string>
-    <string name="title_activity_adjust_item">AdjustItemActivity</string>
-    <string name="title_activity_adjust_expense">AdjustExpenseActivity</string>
+    <string name="title_activity_adjust_item">Adjust Item</string>
+    <string name="title_activity_adjust_expense">Adjust Expense</string>
     <string name="item_name">Item Name</string>
     <string name="amount_budgeted">Amount Budgeted</string>
     <string name="add_item">Add item</string>

@@ -90,14 +90,12 @@ public class ItemHistoryActivity extends AppCompatActivity {
     public void setOverview() {
         myItem = myDb.getLineItem(name);
         itemSpent = myDb.getItemSpent(name);
-
         TextView budgeted = (TextView) findViewById(R.id.budgeted);
         TextView spent = (TextView) findViewById(R.id.spent);
         TextView remaining = (TextView) findViewById(R.id.remaining);
         budgeted.setText("Budgeted: £" + Integer.toString(myItem.getBudget()) + ".00");
         spent.setText("Spent: £" + Integer.toString(itemSpent) + ".00");
         remaining.setText("Remaining: £" + Integer.toString(myItem.getBudget() - itemSpent) + ".00");
-
     }
 
     /*
@@ -163,7 +161,6 @@ public class ItemHistoryActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data != null) {
             name = data.getExtras().getString("ITEM_NAME");
-            getSupportActionBar().setTitle("Item Name: " + name);
 
         }
     }

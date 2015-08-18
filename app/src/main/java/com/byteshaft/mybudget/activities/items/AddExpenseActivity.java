@@ -1,10 +1,12 @@
 package com.byteshaft.mybudget.activities.items;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -31,8 +33,8 @@ public class AddExpenseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expense);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Bundle b = getIntent().getExtras();
-
         if (b != null) {
             itemName = b.getString("ITEM_NAME");
             getSupportActionBar().setTitle(itemName + ": Add Expense");
@@ -83,6 +85,18 @@ public class AddExpenseActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // app icon in action bar clicked; goto parent activity.
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     // convenience method to handle SharedPreferences updating of "spent" value

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -33,7 +34,7 @@ public class AdjustExpenseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adjust_expense);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         myDb = DBHelper.getInstance(this);
 
         Bundle b = getIntent().getExtras();
@@ -42,6 +43,19 @@ public class AdjustExpenseActivity extends AppCompatActivity {
         expenseAmount = b.getInt("EXPENSE_AMOUNT");
         itemName = b.getString("ITEM_NAME");
         remaining = b.getInt("ITEM_REMAINING");
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // app icon in action bar clicked; goto parent activity.
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
     }
 
     public void onSubmitClick(View v) {
