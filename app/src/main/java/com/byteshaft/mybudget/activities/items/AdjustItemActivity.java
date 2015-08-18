@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -31,6 +32,7 @@ public class AdjustItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adjust_item);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         myDb = DBHelper.getInstance(this);
         Bundle b = getIntent().getExtras();
         itemName = b.getString("ITEM_NAME");
@@ -39,10 +41,24 @@ public class AdjustItemActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // app icon in action bar clicked; goto parent activity.
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public void onBackPressed() {
         setResult(Activity.RESULT_OK, new Intent().putExtra("ITEM_NAME", itemName));
         finish();
     }
+
+
 
     public void onSubmitClick(View v) {
         EditText newNameView = (EditText) findViewById(R.id.name);
