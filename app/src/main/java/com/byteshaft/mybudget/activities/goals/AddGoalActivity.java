@@ -2,9 +2,8 @@ package com.byteshaft.mybudget.activities.goals;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -20,20 +19,19 @@ public class AddGoalActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_goal);
-
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setTitle("Add New Goal");
-//
-//        toolbar.setNavigationIcon(R.drawable.ic_back);
-//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                finish();
-//            }
-//        });
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         myDb = DBHelper.getInstance(this);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // app icon in action bar clicked; goto parent activity.
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void onClick(View v) {
@@ -77,9 +75,7 @@ public class AddGoalActivity extends AppCompatActivity {
                 text = "A goal with that name already exists, please try again";
                 Toast.makeText(context, text, duration).show();
             }
-
         }
-
     }
 
 }

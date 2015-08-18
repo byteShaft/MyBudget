@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -28,12 +29,23 @@ public class AdjustGoalActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adjust_goal);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         myDb = DBHelper.getInstance(this);
-
         Bundle b = getIntent().getExtras();
         oldName = b.getString("GOAL_NAME");
         deposited = b.getInt("GOAL_DEPOSITED");
         goalAmount = b.getInt("GOAL_AMOUNT");
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // app icon in action bar clicked; goto parent activity.
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

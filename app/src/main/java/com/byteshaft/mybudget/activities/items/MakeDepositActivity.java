@@ -3,6 +3,7 @@ package com.byteshaft.mybudget.activities.items;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,6 +25,7 @@ public class MakeDepositActivity extends AppCompatActivity implements AdapterVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_deposit);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Bundle b = getIntent().getExtras();
         itemName = b.getString("ITEM_NAME");
         myDb = DBHelper.getInstance(this);
@@ -96,5 +98,16 @@ public class MakeDepositActivity extends AppCompatActivity implements AdapterVie
                 }
             }
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // app icon in action bar clicked; goto parent activity.
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

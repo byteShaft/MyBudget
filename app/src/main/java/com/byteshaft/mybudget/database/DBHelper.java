@@ -651,14 +651,11 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public void adjustDeposit(String goalName, String depositName, String date, int amount) {
-
         SQLiteDatabase myDb = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         String tableName = getGoalTableName(goalName);
         Cursor res = myDb.rawQuery("SELECT * FROM " + tableName + " WHERE NAME ='" + depositName + "'", null);
-
         res.moveToFirst();
-
         cv.put("name", depositName);
         cv.put("date", date);
         cv.put("amount", amount);
@@ -666,7 +663,6 @@ public class DBHelper extends SQLiteOpenHelper {
         myDb.update(tableName, cv, "id = ?", new String[]{
                 Integer.toString(res.getInt(res.getColumnIndex("id")))
         });
-
         updateGoalState(goalName);
     }
 

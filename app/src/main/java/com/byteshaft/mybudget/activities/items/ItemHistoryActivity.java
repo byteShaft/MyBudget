@@ -40,6 +40,7 @@ public class ItemHistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_history);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         View.OnLongClickListener listener = new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -60,7 +61,7 @@ public class ItemHistoryActivity extends AppCompatActivity {
 
         if (b != null) {
             name = b.getString("ITEM_NAME");
-            getSupportActionBar().setTitle("Item: " + name);
+            getSupportActionBar().setTitle(name);
             myItem = myDb.getLineItem(name);
             if (myItem != null) {
                 setOverview();
@@ -89,14 +90,12 @@ public class ItemHistoryActivity extends AppCompatActivity {
     public void setOverview() {
         myItem = myDb.getLineItem(name);
         itemSpent = myDb.getItemSpent(name);
-
         TextView budgeted = (TextView) findViewById(R.id.budgeted);
         TextView spent = (TextView) findViewById(R.id.spent);
         TextView remaining = (TextView) findViewById(R.id.remaining);
         budgeted.setText("Budgeted: £" + Integer.toString(myItem.getBudget()) + ".00");
         spent.setText("Spent: £" + Integer.toString(itemSpent) + ".00");
         remaining.setText("Remaining: £" + Integer.toString(myItem.getBudget() - itemSpent) + ".00");
-
     }
 
     /*
@@ -148,7 +147,6 @@ public class ItemHistoryActivity extends AppCompatActivity {
             startActivity(intent);
 
         } else {
-
             Intent intent = new Intent(this, AdjustExpenseActivity.class);
             intent.putExtra("EXPENSE_NAME", expName);
             intent.putExtra("EXPENSE_DATE", expDate);
@@ -156,16 +154,15 @@ public class ItemHistoryActivity extends AppCompatActivity {
             intent.putExtra("ITEM_NAME", name);
             intent.putExtra("ITEM_REMAINING", (myItem.getBudget() - itemSpent));
             startActivity(intent);
-
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data != null) {
+            name = data.getExtras().getString("ITEM_NAME");
 
-        name = data.getExtras().getString("ITEM_NAME");
-        getSupportActionBar().setTitle("Item Name: " + name);
-
+        }
     }
 
     public int trimExpenseAmount(String str) {
@@ -191,6 +188,10 @@ public class ItemHistoryActivity extends AppCompatActivity {
                 intent.putExtra("ITEM_NAME", name);
                 startActivity(intent);
                 break;
+            case android.R.id.home:
+                // app icon in action bar clicked; goto parent activity.
+                this.finish();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
