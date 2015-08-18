@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:onClick="onHistoryClick"
+    android:id="@+id/tableLayout"
     android:stretchColumns="1">
     <TableRow>
         <TextView

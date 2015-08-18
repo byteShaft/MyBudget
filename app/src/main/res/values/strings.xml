@@ -61,7 +61,7 @@
     <string name="clear_goals_text">Clear Goals</string>
     <string name="delete_goals_text">Delete All Goals</string>
     <string name="starting_deposit_text">Starting Deposit (Optional)</string>
-    <string name="title_activity_adjust_goal">AdjustGoalActivity</string>
+    <string name="title_activity_adjust_goal">Adjust Saving</string>
     <string name="delete_goal_text">Delete Goal</string>
     <string name="adjust_goal_hint">Adjust Goal</string>
     <string name="title_activity_adjust_deposit">AdjustDepositActivity</string>

@@ -52,7 +52,6 @@ public class GoalHistoryActivity extends AppCompatActivity {
         };
 
         overviewCard.setOnLongClickListener(listener);
-
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
@@ -135,14 +134,10 @@ public class GoalHistoryActivity extends AppCompatActivity {
             mRecyclerView.setAdapter(null);
 
         }
-
-
     }
 
     public void onOverviewClick(View v) {
-
         int REQUEST_GOAL_ADJUSTMENT = 0;
-
         Intent intent = new Intent(this, AdjustGoalActivity.class);
         intent.putExtra("GOAL_NAME", name);
         intent.putExtra("GOAL_DEPOSITED", myGoal.getDeposited());
@@ -158,7 +153,6 @@ public class GoalHistoryActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         name = data.getExtras().getString("GOAL_NAME");
         getSupportActionBar().setTitle("Item Name: " + name);
 
