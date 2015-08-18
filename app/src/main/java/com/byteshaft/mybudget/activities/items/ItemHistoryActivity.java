@@ -40,6 +40,7 @@ public class ItemHistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_history);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         View.OnLongClickListener listener = new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -60,7 +61,7 @@ public class ItemHistoryActivity extends AppCompatActivity {
 
         if (b != null) {
             name = b.getString("ITEM_NAME");
-            getSupportActionBar().setTitle("Item: " + name);
+            getSupportActionBar().setTitle(name);
             myItem = myDb.getLineItem(name);
             if (myItem != null) {
                 setOverview();
@@ -191,6 +192,10 @@ public class ItemHistoryActivity extends AppCompatActivity {
                 intent.putExtra("ITEM_NAME", name);
                 startActivity(intent);
                 break;
+            case android.R.id.home:
+                // app icon in action bar clicked; goto parent activity.
+                this.finish();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
