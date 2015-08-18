@@ -16,7 +16,7 @@
     <string name="cancel">Cancel</string>
     <string name="title_activity_item_history">ItemHistoryActivity</string>
     <string name="title_activity_expense">ExpenseActivity</string>
-    <string name="title_activity_adjust_budget">AdjustBudgetActivity</string>
+    <string name="title_activity_adjust_budget">Adjust Budget</string>
     <string name="title_activity_adjust_item">AdjustItemActivity</string>
     <string name="title_activity_adjust_expense">AdjustExpenseActivity</string>
     <string name="item_name">Item Name</string>
@@ -68,7 +68,7 @@
     <string name="delete_deposit_text">Delete Deposit</string>
     <string name="add_item_text">Add new item</string>
     <string name="add_new_goal_text">Add new goal</string>
-    <string name="title_section1">Home</string>
+    <string name="title_section1">My Budget</string>
     <string name="title_section2">Goals</string>
     <string name="title_section3">Contact us</string>
     <string name="drawer_open">Menu</string>
