@@ -149,7 +149,6 @@ public class ItemHistoryActivity extends AppCompatActivity {
             startActivity(intent);
 
         } else {
-
             Intent intent = new Intent(this, AdjustExpenseActivity.class);
             intent.putExtra("EXPENSE_NAME", expName);
             intent.putExtra("EXPENSE_DATE", expDate);
@@ -157,7 +156,6 @@ public class ItemHistoryActivity extends AppCompatActivity {
             intent.putExtra("ITEM_NAME", name);
             intent.putExtra("ITEM_REMAINING", (myItem.getBudget() - itemSpent));
             startActivity(intent);
-
         }
     }
 
