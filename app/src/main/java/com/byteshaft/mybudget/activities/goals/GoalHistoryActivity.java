@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,7 +34,7 @@ public class GoalHistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goal_history);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         CardView overviewCard = (CardView) findViewById(R.id.overview_card);
 
         View.OnLongClickListener listener = new View.OnLongClickListener() {
@@ -63,7 +64,7 @@ public class GoalHistoryActivity extends AppCompatActivity {
 
         if(b != null) {
             name = b.getString("GOAL_NAME");
-            getSupportActionBar().setTitle("Goal: " + name);
+            getSupportActionBar().setTitle("Saving: " + name);
 
             myGoal = myDb.getGoal(name);
 
@@ -86,6 +87,17 @@ public class GoalHistoryActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // app icon in action bar clicked; goto parent activity.
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
 
@@ -101,7 +113,7 @@ public class GoalHistoryActivity extends AppCompatActivity {
         TextView deposited = (TextView) findViewById(R.id.deposited);
         TextView remaining = (TextView) findViewById(R.id.remaining);
 
-        goal.setText("Goal: £" + Integer.toString(myGoal.getGoal()) + ".00");
+        goal.setText("Saving: £" + Integer.toString(myGoal.getGoal()) + ".00");
         deposited.setText("Deposited: £" + Integer.toString(myGoal.getDeposited()) + ".00");
         remaining.setText("Remaining: £" + Integer.toString(myGoal.getGoal() - myGoal.getDeposited()) + ".00");
 
