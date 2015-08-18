@@ -163,10 +163,11 @@ public class ItemHistoryActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data != null) {
+            name = data.getExtras().getString("ITEM_NAME");
+            getSupportActionBar().setTitle("Item Name: " + name);
 
-        name = data.getExtras().getString("ITEM_NAME");
-        getSupportActionBar().setTitle("Item Name: " + name);
-
+        }
     }
 
     public int trimExpenseAmount(String str) {
