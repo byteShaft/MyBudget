@@ -5,8 +5,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -16,13 +19,41 @@ import com.byteshaft.mybudget.database.DBHelper;
 /*
  Prompts user to enter a new budget. Called from MainActivity.
  */
-public class AdjustBudgetActivity extends AppCompatActivity {
+public class AdjustBudgetActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private Button submit;
+    private EditText amountHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_adjust_budget);
+
+        submit = (Button) findViewById(R.id.on_submit);
+        submit.setOnClickListener(this);
+        amountHolder = (EditText) findViewById(R.id.amount_holder);
+        amountHolder.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().isEmpty()) {
+                    submit.setEnabled(false);
+                } else {
+                    submit.setEnabled(true);
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override
@@ -40,9 +71,7 @@ public class AdjustBudgetActivity extends AppCompatActivity {
     /*
     Called by button click in layout file.
     */
-    public void onSubmit(View v) {
-
-        EditText amountHolder = (EditText) findViewById(R.id.amount);
+    private void onSubmit() {
         int newBudget = Integer.parseInt(amountHolder.getText().toString());
 
         Context context = getApplicationContext();
@@ -70,6 +99,15 @@ public class AdjustBudgetActivity extends AppCompatActivity {
             }
 
             finish();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.on_submit:
+                onSubmit();
+                break;
         }
     }
 }
