@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Name :-"
+        android:text="Name /Number :-"
         android:id="@+id/textView"
         android:layout_marginTop="71dp" />
 
@@ -19,6 +19,7 @@
         android:background="@android:drawable/editbox_background"
         android:layout_marginTop="65dp"
         android:ems="10"
+        android:hint="Name / Number"
         android:paddingLeft="5dp"
         android:layout_toRightOf="@id/textView"
         android:layout_toEndOf="@id/textView" />
@@ -37,6 +38,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/editTextEmail"
         android:background="@android:drawable/editbox_background"
+        android:text="amifinancialsolutions.ie"
         android:inputType="textEmailAddress"
         android:layout_marginTop="8dp"
         android:layout_below="@+id/editText"
@@ -77,6 +79,26 @@
         android:layout_alignLeft="@+id/editTextMessage"
         android:layout_alignStart="@+id/editTextMessage"
         android:layout_marginTop="10dp" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="50dp"
+        android:id="@+id/imageView"
+        android:background="@android:drawable/stat_sys_phone_call"
+        android:layout_below="@+id/button"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="55dp"
+        android:layout_toRightOf="@+id/imageView"
+        android:layout_toEndOf="@+id/imageView"
+        android:layout_below="@+id/button"
+        android:textStyle="bold"
+        android:text="Call us : 01-6604936"
+        />
 
 </RelativeLayout>
 
