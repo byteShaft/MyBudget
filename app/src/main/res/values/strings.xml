@@ -76,5 +76,6 @@
     <string name="deposit">deposit</string>
     <string name="activity_title">Category</string>
     <string name="moto">Take the first step to financial freedom</string>
+    <string name="sendemail">Send Email</string>
 
 </resources>
