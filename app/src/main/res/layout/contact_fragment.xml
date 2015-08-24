@@ -4,14 +4,20 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_centerVertical="true"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:id="@+id/linearLayout">
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_margin="10dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:id="@+id/linearLayout2">
 
         <TextView
@@ -39,37 +45,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_margin="10dp"
-        android:id="@+id/linearLayout"
-        android:layout_below="@+id/linearLayout2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:text="Email :-"
-            android:id="@+id/textViewEmail"
-            android:layout_marginTop="10dp" />
-
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editTextEmail"
-            android:hint="Email Address"
-            android:text="amifinancialsolutions.ie"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:background="@android:drawable/editbox_background"
-            android:inputType="textEmailAddress"
-            android:ems="10" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="10dp"
         android:id="@+id/linearLayoutMessage"
         android:layout_below="@+id/linearLayout">
 
@@ -79,48 +54,64 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:text="Message :-"
-            android:id="@+id/textViewMessage"
-            android:layout_marginTop="30dp" />
+            android:id="@+id/textViewMessage" />
 
         <EditText
             android:layout_width="fill_parent"
-            android:layout_height="150dp"
+            android:layout_height="100dp"
             android:id="@+id/editTextMessage"
             android:layout_marginLeft="15dp"
-            android:layout_marginRight="35dp"
+            android:layout_marginRight="15dp"
             android:background="@android:drawable/editbox_background"
-            android:inputType="textMultiLine"
-            android:lines="8"
-            android:ems="10" />
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sendemail"
+            android:id="@+id/button"
+            android:layout_margin="20dp"
+            android:layout_gravity="right" />
 
     </LinearLayout>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Send Email"
-        android:layout_below="@+id/linearLayoutMessage"
-        android:id="@+id/button"/>
+    </LinearLayout>
 
-    <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="50dp"
-        android:id="@+id/imageView"
-        android:background="@android:drawable/stat_sys_phone_call"
-        android:layout_below="@+id/button"
-        />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_below="@+id/linearLayout"
+        android:layout_alignRight="@+id/textView2"
+        android:layout_alignEnd="@+id/textView2"
+        android:layout_marginRight="51dp"
+        android:layout_marginEnd="51dp"
+        android:id="@+id/linearLayout3">
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/holo_green_dark"
+        android:gravity="center"
+        android:layout_margin="30dp"
+        android:textSize="15sp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/moto"
+        android:id="@+id/textView2"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="55dp"
-        android:layout_toRightOf="@+id/imageView"
-        android:layout_toEndOf="@+id/imageView"
-        android:layout_below="@+id/button"
+        android:gravity="center"
+        android:textSize="20sp"
         android:textStyle="bold"
-        android:text="Call us : 01-6604936"
-        />
+        android:text="Call us on :  01-6604936"
+        android:layout_below="@+id/linearLayout3"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
 
