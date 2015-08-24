@@ -4,81 +4,102 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Name /Number :-"
-        android:id="@+id/textView"
-        android:layout_marginTop="71dp" />
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout2">
 
-    <EditText
-        android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="Name :-"
+            android:id="@+id/textView" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:id="@+id/editText"
+            android:hint="Your Name"
+            android:background="@android:drawable/editbox_background"
+            android:ems="10" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
-        android:background="@android:drawable/editbox_background"
-        android:layout_marginTop="65dp"
-        android:ems="10"
-        android:hint="Name / Number"
-        android:paddingLeft="5dp"
-        android:layout_toRightOf="@id/textView"
-        android:layout_toEndOf="@id/textView" />
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:id="@+id/linearLayout"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="Email :-"
+            android:id="@+id/textViewEmail"
+            android:layout_marginTop="10dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextEmail"
+            android:hint="Email Address"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@android:drawable/editbox_background"
+            android:inputType="textEmailAddress"
+            android:ems="10" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Email :-"
-        android:layout_below="@+id/editText"
-        android:id="@+id/textViewEmail"
-        android:layout_marginTop="10dp" />
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:id="@+id/linearLayoutMessage"
+        android:layout_below="@+id/linearLayout">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/editTextEmail"
-        android:background="@android:drawable/editbox_background"
-        android:text="amifinancialsolutions.ie"
-        android:inputType="textEmailAddress"
-        android:layout_marginTop="8dp"
-        android:layout_below="@+id/editText"
-        android:ems="10"
-        android:paddingLeft="5dp"
-        android:layout_toRightOf="@id/textViewEmail"
-        android:layout_toEndOf="@id/textViewEmail" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="Message :-"
+            android:id="@+id/textViewMessage"
+            android:layout_marginTop="30dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Message :-"
-        android:layout_below="@+id/textViewEmail"
-        android:id="@+id/textViewMessage"
-        android:layout_marginTop="30dp" />
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="150dp"
+            android:id="@+id/editTextMessage"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="35dp"
+            android:background="@android:drawable/editbox_background"
+            android:inputType="textMultiLine"
+            android:lines="8"
+            android:ems="10" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="150dp"
-        android:id="@+id/editTextMessage"
-        android:background="@android:drawable/editbox_background"
-        android:layout_marginTop="8dp"
-        android:layout_below="@+id/textViewMessage"
-        android:inputType="textMultiLine"
-        android:lines="8"
-        android:ems="10"
-        android:paddingLeft="5dp"
-        android:layout_toRightOf="@id/textViewMessage"
-        android:layout_toEndOf="@id/textViewMessage" />
+    </LinearLayout>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Send Email"
-        android:id="@+id/button"
-        android:layout_below="@+id/editTextMessage"
-        android:layout_alignLeft="@+id/editTextMessage"
-        android:layout_alignStart="@+id/editTextMessage"
-        android:layout_marginTop="10dp" />
+        android:layout_below="@+id/linearLayoutMessage"
+        android:id="@+id/button"/>
 
     <ImageView
         android:layout_width="30dp"
