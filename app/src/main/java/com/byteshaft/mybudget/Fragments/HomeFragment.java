@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.activities.AdjustBudgetActivity;
+import com.byteshaft.mybudget.activities.MainActivity;
 import com.byteshaft.mybudget.activities.items.AddItemActivity;
 import com.byteshaft.mybudget.activities.items.ItemHistoryActivity;
 import com.byteshaft.mybudget.adapters.MainAdapter;
@@ -121,7 +122,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        System.out.println("onAttach");
     }
 
     @Override
@@ -186,6 +186,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 Toast.makeText(context, text, duration).show();
                 DialogFragment fragment = new BudgetDialogFragment();
                 fragment.show(getFragmentManager(), "budget");
+                initCards();
             }
 
         });

@@ -2,5 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context="kvarnsen.simplebudget.activities.MainActivity">
     <item android:id="@+id/action_clear" android:title="@string/clear_budget_text"
-        android:orderInCategory="100" app:showAsAction="never" />
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_clear"
+        app:showAsAction="always" />
 </menu>
