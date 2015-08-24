@@ -1,5 +1,82 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<?xml version="1.0" encoding="utf-8"?><!--?xml version="1.0" encoding="utf-8"?-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
 
-</LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Name :-"
+        android:id="@+id/textView"
+        android:layout_marginTop="71dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText"
+        android:background="@android:drawable/editbox_background"
+        android:layout_marginTop="65dp"
+        android:ems="10"
+        android:paddingLeft="5dp"
+        android:layout_toRightOf="@id/textView"
+        android:layout_toEndOf="@id/textView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Email :-"
+        android:layout_below="@+id/editText"
+        android:id="@+id/textViewEmail"
+        android:layout_marginTop="10dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextEmail"
+        android:background="@android:drawable/editbox_background"
+        android:inputType="textEmailAddress"
+        android:layout_marginTop="8dp"
+        android:layout_below="@+id/editText"
+        android:ems="10"
+        android:paddingLeft="5dp"
+        android:layout_toRightOf="@id/textViewEmail"
+        android:layout_toEndOf="@id/textViewEmail" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Message :-"
+        android:layout_below="@+id/textViewEmail"
+        android:id="@+id/textViewMessage"
+        android:layout_marginTop="30dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:id="@+id/editTextMessage"
+        android:background="@android:drawable/editbox_background"
+        android:layout_marginTop="8dp"
+        android:layout_below="@+id/textViewMessage"
+        android:inputType="textMultiLine"
+        android:lines="8"
+        android:ems="10"
+        android:paddingLeft="5dp"
+        android:layout_toRightOf="@id/textViewMessage"
+        android:layout_toEndOf="@id/textViewMessage" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send Email"
+        android:id="@+id/button"
+        android:layout_below="@+id/editTextMessage"
+        android:layout_alignLeft="@+id/editTextMessage"
+        android:layout_alignStart="@+id/editTextMessage"
+        android:layout_marginTop="10dp" />
+
+</RelativeLayout>
+
