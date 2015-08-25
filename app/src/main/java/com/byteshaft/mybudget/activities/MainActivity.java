@@ -19,7 +19,7 @@ import com.byteshaft.mybudget.Fragments.HomeFragment;
 import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.Fragments.GoalsFragment;
 
-public class MainActivity extends AppCompatActivity {
+    public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;

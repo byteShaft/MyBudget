@@ -51,30 +51,19 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
                 String number = mEditTextNumber.getText().toString();
                 String subject = mEditTextSubject.getText().toString();
                 String message = mEditTextMessage.getText().toString();
-                if (name.isEmpty()) {
-                    Toast.makeText(getActivity(), "Please Enter Name", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (message.isEmpty()) {
-                    Toast.makeText(getActivity(), "please enter Message", Toast.LENGTH_SHORT).show();
-                }
-
-                if (!name.isEmpty() &&  !message.isEmpty()) {
-                    Intent intent = new Intent(Intent.ACTION_SEND);
-                    intent.setType("message/rfc822");
-                    intent.putExtra(Intent.EXTRA_EMAIL, new String[]{emailAddress});
-                    if (!subject.isEmpty()) {
-                        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
-                    }
-                    if (!number.isEmpty()) {
-                        intent.putExtra(Intent.EXTRA_TEXT, message + "\n\n" + name + "\n" + number);
-                    } else {
-                        intent.putExtra(Intent.EXTRA_TEXT, message + "\n\n" + name);
-                    }
+                if (name.isEmpty() || message.isEmpty()) {
+                    Toast.makeText(getActivity(), "Please enter your name and message", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    String uriText = "mailto:" + Uri.encode(emailAddress) +
+                            "?subject=" + Uri.encode(subject) +
+                            "&body=" + Uri.encode(message + "\n\n" + name + "\n" + number);
+                    Uri uri = Uri.parse(uriText);
+                    intent.setData(uri);
                     try {
-                        startActivity(Intent.createChooser(intent, "Send mail..."));
+                        startActivity(Intent.createChooser(intent, "Select any e-mail client..."));
                     } catch (android.content.ActivityNotFoundException ex) {
-                        Toast.makeText(getActivity(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "There are no e-mail clients installed.", Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;
