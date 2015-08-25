@@ -81,7 +81,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 Vibrator vb = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
                 vb.vibrate(1000);
 
-                String str = "Add new item - £" + Integer.toString(curBudget - db.getTotalAllocated()) + ".00 left to allocate";
+                String str = "Add new item - €" + Integer.toString(curBudget - db.getTotalAllocated()) + ".00 left to allocate";
 
                 Toast toast = Toast.makeText(getActivity(), str, Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 100);
@@ -140,9 +140,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         TextView budgeted = (TextView) budgetCard.findViewById(R.id.budgeted);
         TextView spent = (TextView) budgetCard.findViewById(R.id.spent);
         TextView remaining = (TextView) budgetCard.findViewById(R.id.remaining);
-        budgeted.setText("Budgeted: £" + Integer.toString(curBudget) + ".00");
-        spent.setText("Spent: £" + totalSpent + ".00");
-        remaining.setText("Remaining: £" + Integer.toString(curBudget - totalSpent) + ".00");
+        budgeted.setText("Budgeted: €" + Integer.toString(curBudget) + ".00");
+        spent.setText("Spent: €" + totalSpent + ".00");
+        remaining.setText("Remaining: €" + Integer.toString(curBudget - totalSpent) + ".00");
         budgetCard.setVisibility(View.VISIBLE);
         placeholder.setVisibility(View.VISIBLE);
 
