@@ -81,7 +81,7 @@ public class MakeDepositActivity extends AppCompatActivity implements AdapterVie
 
                 int goalRemaining = myDb.getGoalRemaining(goalName);
                 if(amount > goalRemaining) {
-                    text = "Deposit amount exceeds remaining amount for that goal (£" + goalRemaining + ".00), please try again!";
+                    text = "Deposit amount exceeds remaining amount for that goal (€" + goalRemaining + ".00), please try again!";
                     Toast.makeText(context, text, duration).show();
                 } else {
                     myDb.addDeposit(goalName, itemName, amount, true);
