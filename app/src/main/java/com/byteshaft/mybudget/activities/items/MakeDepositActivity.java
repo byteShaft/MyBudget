@@ -11,7 +11,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.byteshaft.mybudget.AppGlobals;
+import com.byteshaft.mybudget.Fragments.HomeFragment;
 import com.byteshaft.mybudget.R;
+import com.byteshaft.mybudget.Utils.Helpers;
 import com.byteshaft.mybudget.database.DBHelper;
 
 
@@ -28,7 +31,11 @@ public class MakeDepositActivity extends AppCompatActivity implements AdapterVie
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Bundle b = getIntent().getExtras();
         itemName = b.getString("ITEM_NAME");
-        myDb = DBHelper.getInstance(this);
+        if (AppGlobals.getsCurrentMonthYear() != null) {
+            myDb = new DBHelper(getApplicationContext(), AppGlobals.getsCurrentMonthYear()+".db");
+        } else {
+            myDb = new DBHelper(getApplicationContext(), Helpers.getTimeStamp("MMM_yyyy")+".db");
+        }
 
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, myDb.getGoalNames());

@@ -12,6 +12,8 @@ import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,9 +29,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.byteshaft.mybudget.AppGlobals;
 import com.byteshaft.mybudget.R;
+import com.byteshaft.mybudget.Utils.Helpers;
 import com.byteshaft.mybudget.activities.AdjustBudgetActivity;
-import com.byteshaft.mybudget.activities.MainActivity;
 import com.byteshaft.mybudget.activities.items.AddItemActivity;
 import com.byteshaft.mybudget.activities.items.ItemHistoryActivity;
 import com.byteshaft.mybudget.adapters.MainAdapter;
@@ -48,6 +51,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private CardView budgetCard;
     private FloatingActionButton fab;
     private int curBudget = 0;
+    private TextView textView;
 
 
     @Nullable
@@ -56,6 +60,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         baseView = inflater.inflate(R.layout.activity_main , container, false);
         budgetCard = (CardView) baseView.findViewById(R.id.budget_card);
         budgetCard.setOnClickListener(this);
+        textView = (TextView) baseView.findViewById(R.id.textViewMonthYear);
         Button button = (Button) baseView.findViewById(R.id.item_placeholder);
         button.setOnClickListener(this);
         FloatingActionButton floatingActionButton = (FloatingActionButton) baseView.findViewById(R.id.fab);
@@ -77,12 +82,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         View.OnLongClickListener addItemListener = new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-
                 Vibrator vb = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
                 vb.vibrate(1000);
-
                 String str = "Add new item - £" + Integer.toString(curBudget - db.getTotalAllocated()) + ".00 left to allocate";
-
                 Toast toast = Toast.makeText(getActivity(), str, Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 100);
                 toast.show();
@@ -105,11 +107,28 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         fab.setOnLongClickListener(addItemListener);
         fab.attachToRecyclerView(mRecyclerView);
         fab.show();
-
-        db = DBHelper.getInstance(getActivity());
+        if (AppGlobals.getsCurrentMonthYear() != null) {
+            String removeUnderScore = AppGlobals.getsCurrentMonthYear().replace("_", " ");
+            textView.setText(removeUnderScore);
+        } else {
+            String removeUnderScore = Helpers.getTimeStamp("MMM_yyyy").replace("_" , " ");
+            textView.setText(removeUnderScore);
+        }
+        System.out.println(AppGlobals.getsCurrentMonthYear() == null);
+        if (AppGlobals.getsCurrentMonthYear() != null) {
+            db = new DBHelper(getActivity(), AppGlobals.getsCurrentMonthYear()+".db");
+            System.out.println("previous");
+            System.out.println(AppGlobals.getsCurrentMonthYear());
+        } else {
+            db = new DBHelper(getActivity(), Helpers.getTimeStamp("MMM_yyyy"));
+        }
         SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, 0);
-        curBudget = preferences.getInt("curBudget", 0);
-        if (curBudget == 0) {
+        if (AppGlobals.getsCurrentMonthYear() != null) {
+            curBudget = preferences.getInt(AppGlobals.getsCurrentMonthYear(), 0);
+        } else {
+            curBudget = preferences.getInt(Helpers.getTimeStamp("MMM_yyyy"), 0);
+        }
+      if (curBudget == 0) {
             DialogFragment fragment = new BudgetDialogFragment();
             fragment.show(getFragmentManager(), "budget");
             fragment.setCancelable(false);
@@ -133,7 +152,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void initCards() {
         fab.show();
         SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, 0);
-        curBudget = preferences.getInt("curBudget", 0);
+        if (AppGlobals.getsCurrentMonthYear() != null) {
+            curBudget = preferences.getInt(AppGlobals.getsCurrentMonthYear(), 0);
+            System.out.println("ok");
+        } else {
+            curBudget = preferences.getInt(Helpers.getTimeStamp("MMM_yyyy"), 0);
+        }
         db.checkBudgetIsDefined();
         int totalSpent = db.getTotalSpent();
         TextView placeholder = (TextView) baseView.findViewById(R.id.item_placeholder);
@@ -145,15 +169,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         remaining.setText("Remaining: £" + Integer.toString(curBudget - totalSpent) + ".00");
         budgetCard.setVisibility(View.VISIBLE);
         placeholder.setVisibility(View.VISIBLE);
-
-        if (db.getNoRows() != 0)
+        if (db.getNoRows() != 0) {
             placeholder.setVisibility(View.GONE);
-
+        }
         ArrayList myLineItems = db.getAllLineItems();
         RecyclerView.Adapter mAdapter = new MainAdapter(myLineItems);
         mRecyclerView.setAdapter(mAdapter);
-
-
     }
 
     public void addLineItem() {
@@ -178,7 +199,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 db.clearBudget();
                 SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, 0);
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putInt("curBudget", 0);
+                editor.putInt(Helpers.getTimeStamp("MMM_yyyy"), 0);
                 editor.commit();
                 Context context = getActivity();
                 CharSequence text = "Budget cleared";
@@ -244,7 +265,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             clearBudget();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -261,10 +281,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 addLineItem();
                 break;
             case R.id.my_recycler_view:
-                System.out.println("itemClick");
                 onItemClick(v);
                 break;
         }
-
     }
 }

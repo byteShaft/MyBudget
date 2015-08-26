@@ -75,5 +75,6 @@
     <string name="drawer_close">MyBudget</string>
     <string name="deposit">deposit</string>
     <string name="activity_title">Category</string>
+    <string name="history">Budget History</string>
 
 </resources>

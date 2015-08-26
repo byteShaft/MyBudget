@@ -18,7 +18,10 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import com.byteshaft.mybudget.AppGlobals;
+import com.byteshaft.mybudget.Fragments.HomeFragment;
 import com.byteshaft.mybudget.R;
+import com.byteshaft.mybudget.Utils.Helpers;
 import com.byteshaft.mybudget.adapters.DepositHistoryAdapter;
 import com.byteshaft.mybudget.containers.Goal;
 import com.byteshaft.mybudget.database.DBHelper;
@@ -57,7 +60,11 @@ public class GoalHistoryActivity extends AppCompatActivity {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        myDb = DBHelper.getInstance(this);
+        if (AppGlobals.getsCurrentMonthYear() != null) {
+            myDb = new DBHelper(getApplicationContext(), AppGlobals.getsCurrentMonthYear()+".db");
+        } else {
+            myDb = new DBHelper(getApplicationContext(), Helpers.getTimeStamp("MMM_yyyy")+".db");
+        }
 
         Bundle b = getIntent().getExtras();
 
