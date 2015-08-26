@@ -57,7 +57,7 @@ public class GoalsFragment extends Fragment implements View.OnClickListener {
         if (AppGlobals.getsCurrentMonthYear() != null) {
             db = new DBHelper(getActivity(), AppGlobals.getsCurrentMonthYear()+".db");
         } else {
-            db = new DBHelper(getActivity(), Helpers.getTimeStamp("MMM_yyyy"));
+            db = new DBHelper(getActivity(), Helpers.getTimeStamp("MMM_yyyy")+".db");
         }
 
 
