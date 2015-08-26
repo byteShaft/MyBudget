@@ -24,9 +24,6 @@ import com.byteshaft.mybudget.containers.LineItem;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    private static DBHelper instance;
-
-    private static final String DATABASE_NAME = Helpers.getTimeStamp("MMM_yyyy")+".db";
     private static final String BUDGET_TABLE_NAME = Helpers.getTimeStamp("MMM_yyyy");
     private static final String BUDGET_ITEM_ID = "id";
     private static final String BUDGET_ITEM_NAME = "name";
@@ -127,7 +124,6 @@ public class DBHelper extends SQLiteOpenHelper {
         } catch (SQLiteException e) {
             Log.i(AppGlobals.getLogTag(getClass()), "Table already deleted");
         }
-        myDb.close();
 
     }
 
@@ -285,7 +281,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
         if (!oldName.equals(newName))
             myDb.execSQL("ALTER TABLE " + oldName + " RENAME TO " + newName);
-        myDb.close();
     }
 
     public void deleteLineItem(String itemName) {
@@ -312,7 +307,6 @@ public class DBHelper extends SQLiteOpenHelper {
             }
         }
         myDb.execSQL("DROP TABLE " + getTableName(itemName));
-        myDb.close();
     }
 
     /*****************************************************************
@@ -353,7 +347,6 @@ public class DBHelper extends SQLiteOpenHelper {
         });
 
         updateItemState(tableName, itemName);
-        myDb.close();
     }
 
     /*
@@ -381,9 +374,7 @@ public class DBHelper extends SQLiteOpenHelper {
             );
 
             history.add(cur);
-
             res.moveToNext();
-
         }
         return history;
     }
@@ -409,10 +400,8 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor res = myDb.rawQuery("SELECT * FROM GOALS WHERE NAME='" + name + "'", null);
 
         if (res.getCount() > 0) {
-            myDb.close();
             return true;
         } else {
-            myDb.close();
             return false;
         }
 
@@ -421,7 +410,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public boolean addGoal(String name, int goalAmount) {
         SQLiteDatabase myDb = null;
         if (checkGoalExists(name)) {
-            myDb.close();
             return false;
         } else {
             myDb = this.getWritableDatabase();
@@ -457,7 +445,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
         if (!oldName.equals(newName))
             myDb.execSQL("ALTER TABLE " + getGoalTableName(oldName) + " RENAME TO " + getGoalTableName(newName));
-        myDb.close();
     }
 
     public void updateGoalState(String goalName) {
@@ -488,8 +475,6 @@ public class DBHelper extends SQLiteOpenHelper {
         myDb.update("goals", cv, "id = ?", new String[]{
                 Integer.toString(res.getInt(res.getColumnIndex("id")))
         });
-        myDb.close();
-
     }
 
     public void deleteGoal(String name) {
@@ -524,7 +509,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
         }
         return goals;
-
     }
 
     // Used to create ArrayAdapter for MakeDepositActivity's Spinner
@@ -576,9 +560,7 @@ public class DBHelper extends SQLiteOpenHelper {
             res.moveToNext();
 
         }
-
         myDb.execSQL("DROP TABLE GOALS");
-        myDb.close();
 
     }
 
@@ -586,7 +568,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase myDb = this.getWritableDatabase();
         myDb.execSQL("CREATE TABLE IF NOT EXISTS GOALS " + "(id integer primary key, name text, goal integer, deposited integer)");
-        myDb.close();
     }
 
     public int getGoalRemaining(String goalName) {
@@ -624,9 +605,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         if (isFromExpense)
             addExpense(depositName, date, "Deposit: " + goalName, amount);
-
         updateGoalState(goalName);
-        myDb.close();
     }
 
     public void adjustDeposit(String goalName, String depositName, String date, int amount) {
@@ -643,7 +622,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 Integer.toString(res.getInt(res.getColumnIndex("id")))
         });
         updateGoalState(goalName);
-        myDb.close();
     }
 
     public void deleteDeposit(String goalName, String depositName, String expenseName) {
@@ -651,11 +629,9 @@ public class DBHelper extends SQLiteOpenHelper {
         myDb.execSQL("DELETE FROM " + getGoalTableName(goalName) + " WHERE NAME ='" + depositName + "'");
         deleteExpense(depositName, expenseName);
         updateGoalState(goalName);
-        myDb.close();
     }
 
     public ArrayList getDepositHistory(String goalName) {
-
         SQLiteDatabase myDb = this.getWritableDatabase();
         Cursor res = myDb.rawQuery("SELECT * FROM " + getGoalTableName(goalName), null);
         ArrayList depositHistory = new ArrayList<Expense>();
