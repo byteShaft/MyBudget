@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        isMainActivityActive = true;
         FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
         tx.replace(R.id.container, new HomeFragment());
         tx.commit();
@@ -139,9 +140,4 @@ public class MainActivity extends AppCompatActivity {
     }
         super.onBackPressed();
     }
-    //    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        isMainActivityActive = true;
-//    }
 }
