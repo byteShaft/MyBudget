@@ -12,7 +12,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.byteshaft.mybudget.AppGlobals;
+import com.byteshaft.mybudget.Fragments.HomeFragment;
 import com.byteshaft.mybudget.R;
+import com.byteshaft.mybudget.Utils.Helpers;
 import com.byteshaft.mybudget.database.DBHelper;
 
 public class AdjustDepositActivity extends AppCompatActivity {
@@ -31,7 +34,11 @@ public class AdjustDepositActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adjust_deposit);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        myDb = DBHelper.getInstance(this);
+        if (AppGlobals.getsCurrentMonthYear() != null) {
+            myDb = new DBHelper(getApplicationContext(), AppGlobals.getsCurrentMonthYear()+".db");
+        } else {
+            myDb = new DBHelper(getApplicationContext(), Helpers.getTimeStamp("MMM_yyyy")+".db");
+        }
         Bundle b = getIntent().getExtras();
         depositName = b.getString("DEPOSIT_NAME");
         depositDate = b.getString("DEPOSIT_DATE");

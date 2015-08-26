@@ -9,8 +9,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.byteshaft.mybudget.AppGlobals;
 import com.byteshaft.mybudget.Fragments.HomeFragment;
 import com.byteshaft.mybudget.R;
+import com.byteshaft.mybudget.Utils.Helpers;
 import com.byteshaft.mybudget.database.DBHelper;
 
 /*
@@ -27,7 +29,11 @@ public class AddItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
         setTitle(R.string.activity_title);
-        myDb = DBHelper.getInstance(this);
+        if (AppGlobals.getsCurrentMonthYear() != null) {
+            myDb = new DBHelper(getApplicationContext(), AppGlobals.getsCurrentMonthYear()+".db");
+        } else {
+            myDb = new DBHelper(getApplicationContext(), Helpers.getTimeStamp("MMM_yyyy")+".db");
+        }
     }
 
     public void onClick(View v) {
@@ -40,7 +46,7 @@ public class AddItemActivity extends AppCompatActivity {
         int duration = Toast.LENGTH_SHORT;
         int allocated = myDb.getTotalAllocated();
         SharedPreferences preferences = getSharedPreferences(HomeFragment.PREFS_NAME, 0);
-        int curBudget = preferences.getInt("curBudget", 0);
+        int curBudget = preferences.getInt(Helpers.getTimeStamp("MMM_yyyy"), 0);
 
         // basic input validation
         if (amountStr.equals("") || name.equals("")) {

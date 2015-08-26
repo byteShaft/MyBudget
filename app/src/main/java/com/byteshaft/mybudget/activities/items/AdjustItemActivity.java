@@ -13,7 +13,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.byteshaft.mybudget.AppGlobals;
+import com.byteshaft.mybudget.Fragments.HomeFragment;
 import com.byteshaft.mybudget.R;
+import com.byteshaft.mybudget.Utils.Helpers;
 import com.byteshaft.mybudget.activities.MainActivity;
 import com.byteshaft.mybudget.database.DBHelper;
 
@@ -33,7 +36,12 @@ public class AdjustItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adjust_item);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        myDb = DBHelper.getInstance(this);
+        if (AppGlobals.getsCurrentMonthYear() != null) {
+            myDb = new DBHelper(getApplicationContext(), AppGlobals.getsCurrentMonthYear()+".db");
+        } else {
+            myDb = new DBHelper(getApplicationContext(), Helpers.getTimeStamp("MMM_yyyy")+".db");
+        }
+
         Bundle b = getIntent().getExtras();
         itemName = b.getString("ITEM_NAME");
         itemBudget = b.getInt("ITEM_BUDGET");

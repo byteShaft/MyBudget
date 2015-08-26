@@ -13,11 +13,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.byteshaft.mybudget.Fragments.BudgetHistory;
 import com.byteshaft.mybudget.Fragments.ContactFragment;
 import com.byteshaft.mybudget.Fragments.HomeFragment;
 
 import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.Fragments.GoalsFragment;
+import com.byteshaft.mybudget.ui.BudgetDialogFragment;
 
     public class MainActivity extends AppCompatActivity {
 
@@ -46,11 +48,13 @@ import com.byteshaft.mybudget.Fragments.GoalsFragment;
                 getString(R.string.title_section1),
                 getString(R.string.title_section2),
                 getString(R.string.title_section3),
+                getString(R.string.history),
         };
         mDrawerList.setAdapter(new ArrayAdapter<>(this,
                 R.layout.drawer_list_item, mListTitles));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         selectItem(0);
+
     }
 
     private ActionBarDrawerToggle getActionBarDrawerToggle() {
@@ -85,6 +89,7 @@ import com.byteshaft.mybudget.Fragments.GoalsFragment;
     }
 
     void newFragment(int position) {
+        System.out.println(position);
         switch (position) {
             case 0:
                 mFragment = new HomeFragment();
@@ -94,6 +99,9 @@ import com.byteshaft.mybudget.Fragments.GoalsFragment;
                 break;
             case 2:
                 mFragment = new ContactFragment();
+                break;
+            case 3:
+                mFragment = new BudgetHistory();
                 break;
             default:
                 mFragment = new HomeFragment();
