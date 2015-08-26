@@ -12,8 +12,6 @@ import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -99,7 +97,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 //        DrawerLayout mDrawerLayout = (DrawerLayout) baseView.findViewById(R.id.drawer_layout);
 //        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(getActivity(), mDrawerLayout, toolbar, R.string.drawer, R.string.main);
 //        mDrawerLayout.setDrawerListener(mDrawerToggle);
-
+        if (AppGlobals.getsCurrentMonthYear() != null) {
+            db = new DBHelper(getActivity(), AppGlobals.getsCurrentMonthYear()+".db");
+        } else {
+            db = new DBHelper(getActivity(), Helpers.getTimeStamp("MMM_yyyy")+".db");
+        }
         mRecyclerView = (RecyclerView) baseView.findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -115,20 +117,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             String removeUnderScore = Helpers.getTimeStamp("MMM_yyyy").replace("_" , " ");
             textView.setText(removeUnderScore);
         }
-        System.out.println(AppGlobals.getsCurrentMonthYear() == null);
-        if (AppGlobals.getsCurrentMonthYear() != null) {
-            db = new DBHelper(getActivity(), AppGlobals.getsCurrentMonthYear()+".db");
-            System.out.println("previous");
-            System.out.println(AppGlobals.getsCurrentMonthYear());
-        } else {
-            db = new DBHelper(getActivity(), Helpers.getTimeStamp("MMM_yyyy"));
-        }
         SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, 0);
         if (AppGlobals.getsCurrentMonthYear() != null) {
             curBudget = preferences.getInt(AppGlobals.getsCurrentMonthYear(), 0);
         } else {
             curBudget = preferences.getInt(Helpers.getTimeStamp("MMM_yyyy"), 0);
         }
+        System.out.println(curBudget);
       if (curBudget == 0) {
             DialogFragment fragment = new BudgetDialogFragment();
             fragment.show(getFragmentManager(), "budget");
@@ -155,7 +150,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, 0);
         if (AppGlobals.getsCurrentMonthYear() != null) {
             curBudget = preferences.getInt(AppGlobals.getsCurrentMonthYear(), 0);
-            System.out.println("ok");
         } else {
             curBudget = preferences.getInt(Helpers.getTimeStamp("MMM_yyyy"), 0);
         }
@@ -170,10 +164,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         remaining.setText("Remaining: €" + Integer.toString(curBudget - totalSpent) + ".00");
         budgetCard.setVisibility(View.VISIBLE);
         placeholder.setVisibility(View.VISIBLE);
-        if (db.getNoRows() != 0) {
+        System.out.println(db.getNoRows());
+        if (db.getNoRows() != 0)
             placeholder.setVisibility(View.GONE);
-        }
+
         ArrayList myLineItems = db.getAllLineItems();
+        System.out.println(db.getAllLineItems());
         RecyclerView.Adapter mAdapter = new MainAdapter(myLineItems);
         mRecyclerView.setAdapter(mAdapter);
     }
