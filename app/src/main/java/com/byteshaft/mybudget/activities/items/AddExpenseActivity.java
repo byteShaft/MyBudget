@@ -12,8 +12,10 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import com.byteshaft.mybudget.AppGlobals;
 import com.byteshaft.mybudget.Fragments.HomeFragment;
 import com.byteshaft.mybudget.R;
+import com.byteshaft.mybudget.Utils.Helpers;
 import com.byteshaft.mybudget.containers.LineItem;
 import com.byteshaft.mybudget.database.DBHelper;
 
@@ -58,8 +60,14 @@ public class AddExpenseActivity extends AppCompatActivity {
         Calendar c = Calendar.getInstance();
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM");
         String date = formatter.format(c.getTime());
+        DBHelper myDb;
         // get item
-        DBHelper myDb = DBHelper.getInstance(this);
+        if (AppGlobals.getsCurrentMonthYear() != null) {
+            myDb = new DBHelper(getApplicationContext(), AppGlobals.getsCurrentMonthYear()+".db");
+        } else {
+            myDb = new DBHelper(getApplicationContext(), Helpers.getTimeStamp("MMM_yyyy")+".db");
+        }
+
         LineItem item = myDb.getLineItem(itemName);
         if (desc.equals("") || amountStr.equals("")) {
             text = "Both a description and an amount must be entered, please try again!";

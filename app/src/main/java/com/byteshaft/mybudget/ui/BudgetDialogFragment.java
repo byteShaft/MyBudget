@@ -1,10 +1,9 @@
 package com.byteshaft.mybudget.ui;
 
-import android.app.Activity;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -16,21 +15,19 @@ import android.widget.Toast;
 
 import com.byteshaft.mybudget.Fragments.HomeFragment;
 import com.byteshaft.mybudget.R;
+import com.byteshaft.mybudget.Utils.Helpers;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class BudgetDialogFragment extends DialogFragment {
 
     private int budget;
-//
-//    @Override
-//    public void onAttach(Activity activity) {
-//        super.onAttach(activity);
-//        try {
-//            mListener = (BudgetDialogListener) activity;
-//        } catch (ClassCastException e) {
-//            throw new ClassCastException(activity.toString()
-//                    + " must implement BudgetDialogListener");
-//        }
-//    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -50,7 +47,17 @@ public class BudgetDialogFragment extends DialogFragment {
                             budget = Integer.parseInt(myEditText.getText().toString());
                             SharedPreferences preferences = getActivity().getSharedPreferences(HomeFragment.PREFS_NAME, 0);
                             SharedPreferences.Editor editor = preferences.edit();
-                            editor.putInt("curBudget", Integer.valueOf(myEditText.getText().toString()));
+                            editor.putInt(Helpers.getTimeStamp("MMM_yyyy"), Integer.valueOf(myEditText.getText().toString()));
+                            Set<String> totalMonth = preferences.getStringSet("TotalMonths", null);
+                            if (totalMonth == null) {
+                                Set<String> set = new HashSet<>();
+                                set.add(Helpers.getTimeStamp("MMM_yyyy"));
+                                editor.putStringSet("TotalMonths",set); editor.commit();
+                            } else {
+                                totalMonth.add(Helpers.getTimeStamp("MMM_yyyy"));
+                                editor.putStringSet("TotalMonths", totalMonth);
+                            }
+
                             editor.commit();
                             FragmentTransaction tx = getActivity().getSupportFragmentManager().beginTransaction();
                             tx.replace(R.id.container, new HomeFragment());
@@ -60,7 +67,6 @@ public class BudgetDialogFragment extends DialogFragment {
                 });
         return builder.create();
     }
-
     public int getBudget() {
         return budget;
 

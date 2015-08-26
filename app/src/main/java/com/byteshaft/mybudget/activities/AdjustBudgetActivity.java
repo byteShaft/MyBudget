@@ -13,8 +13,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.byteshaft.mybudget.AppGlobals;
 import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.Fragments.HomeFragment;
+import com.byteshaft.mybudget.Utils.Helpers;
 import com.byteshaft.mybudget.database.DBHelper;
 /*
  Prompts user to enter a new budget. Called from MainActivity.
@@ -29,7 +31,6 @@ public class AdjustBudgetActivity extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_adjust_budget);
-
         submit = (Button) findViewById(R.id.on_submit);
         submit.setOnClickListener(this);
         amountHolder = (EditText) findViewById(R.id.amount_holder);
@@ -77,9 +78,14 @@ public class AdjustBudgetActivity extends AppCompatActivity implements View.OnCl
         Context context = getApplicationContext();
         CharSequence text;
         int duration = Toast.LENGTH_SHORT;
+        DBHelper myDb;
 
         // check that budget does not exceed amount already allocated
-        DBHelper myDb = DBHelper.getInstance(this);
+        if (AppGlobals.getsCurrentMonthYear() != null) {
+            myDb = new DBHelper(getApplicationContext(), AppGlobals.getsCurrentMonthYear()+".db");
+        } else {
+            myDb = new DBHelper(getApplicationContext(), Helpers.getTimeStamp("MMM_yyyy")+".db");
+        }
 
         if (newBudget < myDb.getTotalAllocated()) {
             text = "New budget amount is less than amount already allocated, please try again";
@@ -87,7 +93,7 @@ public class AdjustBudgetActivity extends AppCompatActivity implements View.OnCl
         } else {
             SharedPreferences prefs = getSharedPreferences(HomeFragment.PREFS_NAME, 0);
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putInt("curBudget", newBudget);
+            editor.putInt(Helpers.getTimeStamp("MMM_yyyy"), newBudget);
             boolean result = editor.commit();
 
             if (result) {
