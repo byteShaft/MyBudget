@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:text="Name :-"
+            android:text="Name *"
             android:id="@+id/textView" />
         <EditText
             android:layout_width="fill_parent"
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:text="Phone :-"
+            android:text="Phone"
             android:id="@+id/textView2" />
         <EditText
             android:layout_width="fill_parent"
@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:text="Subject :-"
+            android:text="Subject"
             android:id="@+id/textView3" />
         <EditText
             android:layout_width="fill_parent"
@@ -91,7 +91,7 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:text="Message :-"
+            android:text="Message *"
             android:id="@+id/textView4" />
         <EditText
             android:id="@+id/editText4"
