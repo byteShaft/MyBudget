@@ -32,6 +32,7 @@ public class BudgetHistory extends Fragment implements AdapterView.OnItemClickLi
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        MainActivity.isMainActivityActive = false;
         mBaseView = inflater.inflate(R.layout.history, container, false);
         mListBudgets = (ListView) mBaseView.findViewById(R.id.listViewBudgets);
         mTextView = (TextView) mBaseView.findViewById(R.id.textView);

@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.byteshaft.mybudget.AppGlobals;
-import com.byteshaft.mybudget.Fragments.HomeFragment;
 import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.Utils.Helpers;
 import com.byteshaft.mybudget.database.DBHelper;
@@ -55,6 +54,8 @@ public class AddGoalActivity extends AppCompatActivity {
         CharSequence text;
         int duration = Toast.LENGTH_SHORT;
 
+
+
         if(amountStr.equals("") || name.equals("")) {
 
             text = "Both a goal name and amount must be entered, please try again";
@@ -66,10 +67,14 @@ public class AddGoalActivity extends AppCompatActivity {
             Toast.makeText(context, text, duration).show();
 
         } else {
-
             boolean result = myDb.addGoal(name, Integer.parseInt(amountStr));
 
             if(!startingDepositStr.equals("")) {
+                if (Integer.valueOf(startingDepositStr) > Integer.valueOf(amountStr)) {
+                text = "Invalid amount entered";
+                Toast.makeText(context, text, duration).show();
+                return;
+            }
                 myDb.addDeposit(name, "Initial", Integer.parseInt(startingDepositStr), false);
             }
 
@@ -84,5 +89,4 @@ public class AddGoalActivity extends AppCompatActivity {
             }
         }
     }
-
 }
