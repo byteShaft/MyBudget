@@ -101,9 +101,9 @@ public class ItemHistoryActivity extends AppCompatActivity {
         TextView budgeted = (TextView) findViewById(R.id.budgeted);
         TextView spent = (TextView) findViewById(R.id.spent);
         TextView remaining = (TextView) findViewById(R.id.remaining);
-        budgeted.setText("Budgeted: £" + Integer.toString(myItem.getBudget()) + ".00");
-        spent.setText("Spent: £" + Integer.toString(itemSpent) + ".00");
-        remaining.setText("Remaining: £" + Integer.toString(myItem.getBudget() - itemSpent) + ".00");
+        budgeted.setText("Budgeted: €" + Integer.toString(myItem.getBudget()) + ".00");
+        spent.setText("Spent: €" + Integer.toString(itemSpent) + ".00");
+        remaining.setText("Remaining: €" + Integer.toString(myItem.getBudget() - itemSpent) + ".00");
     }
 
     /*

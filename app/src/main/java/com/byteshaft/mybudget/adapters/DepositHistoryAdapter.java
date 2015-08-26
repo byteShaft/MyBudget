@@ -67,7 +67,7 @@ public class DepositHistoryAdapter extends RecyclerView.Adapter<DepositHistoryAd
         layout.setOnClickListener(this);
         historyDate.setText(cur.getDate());
         historyName.setText(cur.getName());
-        historyAmount.setText("£" + Integer.toString(cur.getAmount()) + ".00");
+        historyAmount.setText("€" + Integer.toString(cur.getAmount()) + ".00");
 
     }
 

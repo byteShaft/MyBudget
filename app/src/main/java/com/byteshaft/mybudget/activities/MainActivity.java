@@ -1,6 +1,5 @@
 package com.byteshaft.mybudget.activities;
 
-
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
@@ -22,8 +21,7 @@ import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.Fragments.GoalsFragment;
 import com.byteshaft.mybudget.ui.BudgetDialogFragment;
 
-public class MainActivity extends AppCompatActivity {
-
+    public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;

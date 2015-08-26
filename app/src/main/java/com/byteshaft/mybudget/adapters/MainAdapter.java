@@ -64,7 +64,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         ProgressBar curProgBar = (ProgressBar) curItem.findViewById(R.id.prog_bar);
 
         curTitle.setText(cur.getName());
-        curProgText.setText("£" + Integer.toString(cur.getSpent()) + ".00/£" + Integer.toString(cur.getBudget()) + ".00");
+        curProgText.setText("€" + Integer.toString(cur.getSpent()) + ".00/€" + Integer.toString(cur.getBudget()) + ".00");
         curProgBar.setProgress((int) progress);
 
     }
