@@ -43,6 +43,7 @@ public class GoalsFragment extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        MainActivity.isMainActivityActive = false;
         baseView = inflater.inflate(R.layout.activity_goals, container, false);
 
         setHasOptionsMenu(true);

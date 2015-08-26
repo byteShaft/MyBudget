@@ -1,5 +1,6 @@
 package com.byteshaft.mybudget.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
@@ -19,9 +20,8 @@ import com.byteshaft.mybudget.Fragments.HomeFragment;
 
 import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.Fragments.GoalsFragment;
-import com.byteshaft.mybudget.ui.BudgetDialogFragment;
 
-    public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -29,6 +29,8 @@ import com.byteshaft.mybudget.ui.BudgetDialogFragment;
     private Fragment mFragment;
     private String[] mListTitles;
     private int mPositionGlobal;
+    public static boolean isMainActivityActive;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +46,7 @@ import com.byteshaft.mybudget.ui.BudgetDialogFragment;
         mDrawerToggle = getActionBarDrawerToggle();
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerList = (ListView) findViewById(R.id.list_drawer);
-        mListTitles = new String[] {
+        mListTitles = new String[]{
                 getString(R.string.title_section1),
                 getString(R.string.title_section2),
                 getString(R.string.title_section3),
@@ -127,4 +129,19 @@ import com.byteshaft.mybudget.ui.BudgetDialogFragment;
             mDrawerLayout.closeDrawer(mDrawerList);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        if (!isMainActivityActive) {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+        isMainActivityActive = true;
+    }
+        super.onBackPressed();
+    }
+    //    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        isMainActivityActive = true;
+//    }
 }

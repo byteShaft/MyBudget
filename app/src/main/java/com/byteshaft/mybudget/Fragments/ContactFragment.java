@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.byteshaft.mybudget.R;
+import com.byteshaft.mybudget.activities.MainActivity;
 
 
 public class ContactFragment extends Fragment implements View.OnClickListener {
@@ -30,6 +31,7 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        MainActivity.isMainActivityActive = false;
         baseView = inflater.inflate(R.layout.contact_fragment, container, false);
         mEditTextName = (EditText) baseView.findViewById(R.id.editText1);
         mEditTextNumber = (EditText) baseView.findViewById(R.id.editText2);
@@ -42,6 +44,10 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
         return baseView;
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
 
     @Override
     public void onClick(View v) {
