@@ -22,6 +22,7 @@
             android:id="@+id/amount"
             android:inputType="numberDecimal"
             android:layout_width="250dp"
+            android:maxLength="10"
             android:layout_height="wrap_content"
             android:hint="@string/amount_text"/>
         <Button
