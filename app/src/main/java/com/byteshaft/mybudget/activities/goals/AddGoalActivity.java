@@ -54,8 +54,6 @@ public class AddGoalActivity extends AppCompatActivity {
         CharSequence text;
         int duration = Toast.LENGTH_SHORT;
 
-
-
         if(amountStr.equals("") || name.equals("")) {
 
             text = "Both a goal name and amount must be entered, please try again";
@@ -66,22 +64,18 @@ public class AddGoalActivity extends AppCompatActivity {
             text = "Goal name can only contain letters, please try again";
             Toast.makeText(context, text, duration).show();
 
+        } else if (!startingDepositStr.equals("") && Float.valueOf(startingDepositStr) > Float.valueOf(amountStr)) {
+                text = "Invalid amount entered";
+                Toast.makeText(context, text, duration).show();
         } else {
             boolean result = myDb.addGoal(name, Float.parseFloat(amountStr));
 
             if(!startingDepositStr.equals("")) {
-                if (Float.valueOf(startingDepositStr) > Float.valueOf(amountStr)) {
-                text = "Invalid amount entered";
-                Toast.makeText(context, text, duration).show();
-                return;
-            }
                 myDb.addDeposit(name, "Initial", Float.parseFloat(startingDepositStr), false);
             }
-
             if(result) {
                 text = "Goal added!";
                 Toast.makeText(context, text, duration).show();
-
                 finish();
             } else {
                 text = "A goal with that name already exists, please try again";
