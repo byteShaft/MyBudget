@@ -84,22 +84,22 @@ public class BudgetHistory extends Fragment implements AdapterView.OnItemClickLi
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                getActivity().getApplicationContext().deleteDatabase(value+".db");
+                getActivity().getApplicationContext().deleteDatabase(value + ".db");
                 SharedPreferences preferences = getActivity().getSharedPreferences(AppGlobals.PREFS_NAME, 0);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.remove(value);
-                editor.remove(value+"curSpent");
+                editor.remove(value + "curSpent");
                 Set<String> total = preferences.getStringSet("TotalMonths", null);
                 Set<String> set = new HashSet<>();
                 if (!total.isEmpty() && total.size() >= 0) {
                     List<String> listFromSet = new ArrayList<>(total);
-                    for (String item: listFromSet) {
+                    for (String item : listFromSet) {
                         if (!item.equals(value)) {
                             set.add(item);
-                            System.out.println(item);
                         }
                     }
-                    editor.putStringSet("TotalMonths",set); editor.commit();
+                    editor.putStringSet("TotalMonths", set);
+                    editor.commit();
                 }
                 dialogInterface.dismiss();
             }
