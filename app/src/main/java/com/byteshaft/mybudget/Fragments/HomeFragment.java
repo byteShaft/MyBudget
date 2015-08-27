@@ -260,6 +260,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_main, menu);
+        if (menu != null) {
+            MenuItem menuItem = menu.findItem(R.id.action_clear);
+            if (AppGlobals.getsCurrentMonthYear() != null && !AppGlobals.getsCurrentMonthYear().
+                    equals(Helpers.getTimeStamp("MMM_yyyy"))) {
+                System.out.println(menuItem == null);
+                menuItem.setVisible(false);
+            }
+        }
     }
 
     @Override
