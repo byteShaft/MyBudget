@@ -91,7 +91,7 @@ public class AdjustBudgetActivity extends AppCompatActivity implements View.OnCl
             text = "New budget amount is less than amount already allocated, please try again";
             Toast.makeText(context, text, duration).show();
         } else {
-            SharedPreferences prefs = getSharedPreferences(HomeFragment.PREFS_NAME, 0);
+            SharedPreferences prefs = getSharedPreferences(AppGlobals.PREFS_NAME, 0);
             SharedPreferences.Editor editor = prefs.edit();
             editor.putInt(Helpers.getTimeStamp("MMM_yyyy"), newBudget);
             boolean result = editor.commit();

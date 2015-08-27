@@ -37,7 +37,7 @@ public class BudgetHistory extends Fragment implements AdapterView.OnItemClickLi
         mListBudgets = (ListView) mBaseView.findViewById(R.id.listViewBudgets);
         mTextView = (TextView) mBaseView.findViewById(R.id.textView);
         mTextView.setVisibility(View.INVISIBLE);
-        SharedPreferences preferences = getActivity().getSharedPreferences(HomeFragment.PREFS_NAME, 0);
+        SharedPreferences preferences = getActivity().getSharedPreferences(AppGlobals.PREFS_NAME, 0);
         Set<String> total = preferences.getStringSet("TotalMonths", null);
         String[] totalMonth = total.toArray(new String[total.size()]);
         if (totalMonth.length == 0) {

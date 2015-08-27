@@ -39,10 +39,12 @@ import com.byteshaft.mybudget.ui.BudgetDialogFragment;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
-    public final static String PREFS_NAME = "MyBudgetPrefs";
     private View baseView;
     private RecyclerView mRecyclerView;
     private DBHelper db;
@@ -117,13 +119,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             String removeUnderScore = Helpers.getTimeStamp("MMM_yyyy").replace("_" , " ");
             textView.setText(removeUnderScore);
         }
-        SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences preferences = getActivity().getSharedPreferences(AppGlobals.PREFS_NAME, 0);
         if (AppGlobals.getsCurrentMonthYear() != null) {
             curBudget = preferences.getInt(AppGlobals.getsCurrentMonthYear(), 0);
         } else {
             curBudget = preferences.getInt(Helpers.getTimeStamp("MMM_yyyy"), 0);
         }
-        System.out.println(curBudget);
       if (curBudget == 0) {
             DialogFragment fragment = new BudgetDialogFragment();
             fragment.show(getFragmentManager(), "budget");
@@ -147,7 +148,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     public void initCards() {
         fab.show();
-        SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences preferences = getActivity().getSharedPreferences(AppGlobals.PREFS_NAME, 0);
         if (AppGlobals.getsCurrentMonthYear() != null) {
             curBudget = preferences.getInt(AppGlobals.getsCurrentMonthYear(), 0);
         } else {
@@ -164,12 +165,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         remaining.setText("Remaining: €" + Integer.toString(curBudget - totalSpent) + ".00");
         budgetCard.setVisibility(View.VISIBLE);
         placeholder.setVisibility(View.VISIBLE);
-        System.out.println(db.getNoRows());
         if (db.getNoRows() != 0)
             placeholder.setVisibility(View.GONE);
 
         ArrayList myLineItems = db.getAllLineItems();
-        System.out.println(db.getAllLineItems());
         RecyclerView.Adapter mAdapter = new MainAdapter(myLineItems);
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -194,10 +193,22 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 db.clearBudget();
-                SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, 0);
+                SharedPreferences preferences = getActivity().getSharedPreferences(AppGlobals.PREFS_NAME, 0);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putInt(Helpers.getTimeStamp("MMM_yyyy"), 0);
                 editor.commit();
+                Set<String> total = preferences.getStringSet("TotalMonths", null);
+                Set<String> set = new HashSet<>();
+                if (!total.isEmpty() && total.size() >= 0) {
+                    List<String> listFromSet = new ArrayList<>(total);
+                    for (String item: listFromSet) {
+                        if (!item.equals(AppGlobals.getsCurrentMonthYear())) {
+                            set.add(item);
+                        }
+                    }
+                    editor.putStringSet("TotalMonths",set); editor.commit();
+                }
+
                 Context context = getActivity();
                 CharSequence text = "Budget cleared";
                 int duration = Toast.LENGTH_SHORT;
