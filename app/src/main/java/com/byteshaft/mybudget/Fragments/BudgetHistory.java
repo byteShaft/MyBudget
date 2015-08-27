@@ -1,12 +1,16 @@
 package com.byteshaft.mybudget.Fragments;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.internal.widget.AdapterViewCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,13 +25,17 @@ import com.byteshaft.mybudget.AppGlobals;
 import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.activities.MainActivity;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-public class BudgetHistory extends Fragment implements AdapterView.OnItemClickListener {
+public class BudgetHistory extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener{
 
     private View mBaseView;
     private ListView mListBudgets;
     private TextView mTextView;
+    private ArrayAdapter<String> modeAdapter;
 
     @Nullable
     @Override
@@ -44,11 +52,19 @@ public class BudgetHistory extends Fragment implements AdapterView.OnItemClickLi
             mTextView.setText("No history present");
             mTextView.setVisibility(View.VISIBLE);
         }
-        ArrayAdapter<String> modeAdapter = new ArrayAdapter<>(getActivity(),
+        modeAdapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_list_item_1, totalMonth);
-        mListBudgets.setAdapter(modeAdapter);
         mListBudgets.setOnItemClickListener(this);
+        mListBudgets.setOnItemLongClickListener(this);
+        modeAdapter.notifyDataSetChanged();
         return mBaseView;
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mListBudgets.setAdapter(modeAdapter);
 
     }
 
@@ -56,5 +72,46 @@ public class BudgetHistory extends Fragment implements AdapterView.OnItemClickLi
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         AppGlobals.setCurrentMonthYear(parent.getItemAtPosition(position).toString());
         startActivity(new Intent(getActivity(), MainActivity.class));
+    }
+
+    @Override
+    public boolean onItemLongClick(final AdapterView<?> parent, View view, final int position, long id) {
+        final String value = parent.getItemAtPosition(position).toString();
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Confirm Delete");
+        builder.setMessage("Do you want to delete this record?");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                getActivity().getApplicationContext().deleteDatabase(value + ".db");
+                SharedPreferences preferences = getActivity().getSharedPreferences(AppGlobals.PREFS_NAME, 0);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.remove(value);
+                editor.remove(value + "curSpent");
+                Set<String> total = preferences.getStringSet("TotalMonths", null);
+                Set<String> set = new HashSet<>();
+                if (!total.isEmpty() && total.size() >= 0) {
+                    List<String> listFromSet = new ArrayList<>(total);
+                    for (String item : listFromSet) {
+                        if (!item.equals(value)) {
+                            set.add(item);
+                        }
+                    }
+                    editor.putStringSet("TotalMonths", set);
+                    editor.commit();
+                }
+                dialogInterface.dismiss();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.create();
+        builder.show();
+        return true;
     }
 }
