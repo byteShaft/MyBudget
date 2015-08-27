@@ -263,8 +263,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             MenuItem menuItem = menu.findItem(R.id.action_clear);
             if (AppGlobals.getsCurrentMonthYear() != null && !AppGlobals.getsCurrentMonthYear().
                     equals(Helpers.getTimeStamp("MMM_yyyy"))) {
-                System.out.println(menuItem == null);
                 menuItem.setVisible(false);
+            } else if (AppGlobals.getsCurrentMonthYear() != null && AppGlobals
+                    .getsCurrentMonthYear().equals(Helpers.getTimeStamp("MMM_yyyy"))) {
+                menuItem.setVisible(true);
             }
         }
     }
