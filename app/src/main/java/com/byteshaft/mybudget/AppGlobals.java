@@ -12,6 +12,7 @@ public class AppGlobals extends Application {
     private static Context sContext;
     private static final String LOG_TAG = "MyBudget";
     private static String sCurrentMonthYear = null;
+    public final static String PREFS_NAME = "MyBudgetPrefs";
 
     public static Context getContext() {
         return sContext;

@@ -93,7 +93,6 @@ public class AddExpenseActivity extends AppCompatActivity {
         }
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -107,9 +106,16 @@ public class AddExpenseActivity extends AppCompatActivity {
 
     // convenience method to handle SharedPreferences updating of "spent" value
     public void updateBudget(float spent) {
-        SharedPreferences preferences = getSharedPreferences(HomeFragment.PREFS_NAME, 0);
+        SharedPreferences preferences = getSharedPreferences(AppGlobals.PREFS_NAME, 0);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putFloat("curSpent", preferences.getFloat("curSpent", 0) + spent);
+        if (AppGlobals.getsCurrentMonthYear() != null) {
+            editor.putFloat(AppGlobals.getsCurrentMonthYear()+"curSpent", preferences.getFloat(
+                    AppGlobals.getsCurrentMonthYear()+"curSpent", 0) + spent);
+        } else {
+            editor.putFloat(Helpers.getTimeStamp("MMM_yyyy")+"curSpent", preferences.getFloat(
+                    Helpers.getTimeStamp("MMM_yyyy")+"curSpent", 0) + spent);
+        }
+
         editor.commit();
     }
 }

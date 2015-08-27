@@ -36,8 +36,7 @@
             android:contentDescription="@string/adjust_budget_hint"
             android:clickable="true"
             android:longClickable="true"
-            android:onClick="adjustBudget"
-            >
+            android:onClick="adjustBudget">
 
             <LinearLayout
                 android:layout_width="match_parent"
