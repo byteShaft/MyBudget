@@ -24,8 +24,8 @@ public class AdjustGoalActivity extends AppCompatActivity {
 
     private DBHelper myDb;
     private String oldName;
-    private int goalAmount;
-    private int deposited;
+    private float goalAmount;
+    private float deposited;
 
 
     @Override
@@ -40,8 +40,8 @@ public class AdjustGoalActivity extends AppCompatActivity {
         }
         Bundle b = getIntent().getExtras();
         oldName = b.getString("GOAL_NAME");
-        deposited = b.getInt("GOAL_DEPOSITED");
-        goalAmount = b.getInt("GOAL_AMOUNT");
+        deposited = b.getFloat("GOAL_DEPOSITED");
+        goalAmount = b.getFloat("GOAL_AMOUNT");
     }
 
     @Override
@@ -73,7 +73,7 @@ public class AdjustGoalActivity extends AppCompatActivity {
 
         String newName = newNameView.getText().toString();
         String newGoalStr = newGoalView.getText().toString();
-        int newGoal;
+        float newGoal;
 
         if(myDb.checkGoalExists(newName)) {
 
@@ -87,7 +87,7 @@ public class AdjustGoalActivity extends AppCompatActivity {
 
         } else if(newName.equals("") && !newGoalStr.equals("")) { // amount but no name
             newName = oldName;
-            newGoal = Integer.parseInt(newGoalStr);
+            newGoal = Float.parseFloat(newGoalStr);
 
             if(newGoal < deposited) {
 
@@ -117,7 +117,7 @@ public class AdjustGoalActivity extends AppCompatActivity {
             }
 
         } else {
-            newGoal = Integer.parseInt(newGoalStr);
+            newGoal = Float.parseFloat(newGoalStr);
 
             if(newGoal < deposited) {
 

@@ -24,8 +24,8 @@ public class AdjustDepositActivity extends AppCompatActivity {
     private String depositDate;
     private String itemName;
     private String goalName;
-    private int depositAmount;
-    private int remaining;
+    private float depositAmount;
+    private float remaining;
 
     private DBHelper myDb;
 
@@ -42,9 +42,9 @@ public class AdjustDepositActivity extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         depositName = b.getString("DEPOSIT_NAME");
         depositDate = b.getString("DEPOSIT_DATE");
-        depositAmount = b.getInt("DEPOSIT_AMOUNT");
+        depositAmount = b.getFloat("DEPOSIT_AMOUNT");
         itemName = b.getString("ITEM_NAME");
-        remaining = b.getInt("ITEM_REMAINING");
+        remaining = b.getFloat("ITEM_REMAINING");
     }
 
     @Override
@@ -76,7 +76,7 @@ public class AdjustDepositActivity extends AppCompatActivity {
 
         } else {
 
-            int newAmount = Integer.parseInt(newAmountStr);
+            float newAmount = Float.parseFloat(newAmountStr);
 
             if (newAmount > (remaining + depositAmount)) {   // calculates what the remaining would be minus this item
 

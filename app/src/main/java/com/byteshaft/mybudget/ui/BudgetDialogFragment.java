@@ -27,7 +27,7 @@ import java.util.Set;
 
 public class BudgetDialogFragment extends DialogFragment {
 
-    private int budget;
+    private float budget;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -44,10 +44,10 @@ public class BudgetDialogFragment extends DialogFragment {
                         if (TextUtils.isEmpty(myEditText.getText())) {
                             Toast.makeText(getActivity(), "please enter amount", Toast.LENGTH_SHORT).show();
                         } else {
-                            budget = Integer.parseInt(myEditText.getText().toString());
+                            budget = Float.parseFloat(myEditText.getText().toString());
                             SharedPreferences preferences = getActivity().getSharedPreferences(HomeFragment.PREFS_NAME, 0);
                             SharedPreferences.Editor editor = preferences.edit();
-                            editor.putInt(Helpers.getTimeStamp("MMM_yyyy"), Integer.valueOf(myEditText.getText().toString()));
+                            editor.putFloat(Helpers.getTimeStamp("MMM_yyyy"), Float.valueOf(myEditText.getText().toString()));
                             Set<String> totalMonth = preferences.getStringSet("TotalMonths", null);
                             if (totalMonth == null) {
                                 Set<String> set = new HashSet<>();
@@ -67,7 +67,7 @@ public class BudgetDialogFragment extends DialogFragment {
                 });
         return builder.create();
     }
-    public int getBudget() {
+    public float getBudget() {
         return budget;
 
     }

@@ -6,9 +6,9 @@ public class Expense {
 
     private String name;
     private String date;
-    private int amount;
+    private float amount;
 
-    public Expense(String name, String date, int amount) {
+    public Expense(String name, String date, float amount) {
         this.name = name;
         this.date = date;
         this.amount = amount;
@@ -22,7 +22,7 @@ public class Expense {
         return date;
     }
 
-    public int getAmount() {
+    public float getAmount() {
         return amount;
     }
 

@@ -44,9 +44,9 @@ public class AddItemActivity extends AppCompatActivity {
         Context context = getApplicationContext();
         CharSequence text;
         int duration = Toast.LENGTH_SHORT;
-        int allocated = myDb.getTotalAllocated();
+        float allocated = myDb.getTotalAllocated();
         SharedPreferences preferences = getSharedPreferences(HomeFragment.PREFS_NAME, 0);
-        int curBudget = preferences.getInt(Helpers.getTimeStamp("MMM_yyyy"), 0);
+        float curBudget = preferences.getFloat(Helpers.getTimeStamp("MMM_yyyy"), 0);
 
         // basic input validation
         if (amountStr.equals("") || name.equals("")) {
@@ -65,7 +65,7 @@ public class AddItemActivity extends AppCompatActivity {
                 text = "Current budget has already been completely allocated";
                 Toast.makeText(context, text, duration).show();
                 finish();
-            } else if ((allocated + Integer.parseInt(amountStr)) > curBudget) {
+            } else if ((allocated + Float.parseFloat(amountStr)) > curBudget) {
                 text = "Amount exceeds remaining allocatable budget, please try again!";
                 Toast.makeText(context, text, duration).show();
             } else {
@@ -74,9 +74,9 @@ public class AddItemActivity extends AppCompatActivity {
                     text = "Item with that name already exists, please try again!";
                     Toast.makeText(context, text, duration).show();
                 } else {
-                    myDb.insertLineItem(name, Integer.parseInt(amountStr), 0);
+                    myDb.insertLineItem(name, Float.parseFloat(amountStr), 0);
 
-                    text = "Item added. €" + Integer.toString(curBudget - myDb.getTotalAllocated()) + ".00 remaining to be allocated.";
+                    text = "Item added. " + Helpers.getCurrency(curBudget - myDb.getTotalAllocated()) + " remaining to be allocated.";
                     duration = Toast.LENGTH_LONG;
                     Toast.makeText(context, text, duration).show();
                     finish();

@@ -67,15 +67,15 @@ public class AddGoalActivity extends AppCompatActivity {
             Toast.makeText(context, text, duration).show();
 
         } else {
-            boolean result = myDb.addGoal(name, Integer.parseInt(amountStr));
+            boolean result = myDb.addGoal(name, Float.parseFloat(amountStr));
 
             if(!startingDepositStr.equals("")) {
-                if (Integer.valueOf(startingDepositStr) > Integer.valueOf(amountStr)) {
+                if (Float.valueOf(startingDepositStr) > Float.valueOf(amountStr)) {
                 text = "Invalid amount entered";
                 Toast.makeText(context, text, duration).show();
                 return;
             }
-                myDb.addDeposit(name, "Initial", Integer.parseInt(startingDepositStr), false);
+                myDb.addDeposit(name, "Initial", Float.parseFloat(startingDepositStr), false);
             }
 
             if(result) {

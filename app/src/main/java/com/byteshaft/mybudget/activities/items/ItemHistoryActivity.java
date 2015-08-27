@@ -35,7 +35,7 @@ public class ItemHistoryActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private LineItem myItem;
-    private int itemSpent;
+    private float itemSpent;
     private DBHelper myDb;
     private String name;
 
@@ -101,9 +101,9 @@ public class ItemHistoryActivity extends AppCompatActivity {
         TextView budgeted = (TextView) findViewById(R.id.budgeted);
         TextView spent = (TextView) findViewById(R.id.spent);
         TextView remaining = (TextView) findViewById(R.id.remaining);
-        budgeted.setText("Budgeted: €" + Integer.toString(myItem.getBudget()) + ".00");
-        spent.setText("Spent: €" + Integer.toString(itemSpent) + ".00");
-        remaining.setText("Remaining: €" + Integer.toString(myItem.getBudget() - itemSpent) + ".00");
+        budgeted.setText("Budgeted: " + Helpers.getCurrency(myItem.getBudget()));
+        spent.setText("Spent: " + Helpers.getCurrency(itemSpent));
+        remaining.setText("Remaining: " + Helpers.getCurrency(myItem.getBudget() - itemSpent));
     }
 
     /*
@@ -142,7 +142,7 @@ public class ItemHistoryActivity extends AppCompatActivity {
         TableLayout table = (TableLayout) v;
         String expName = ((TextView) table.findViewById(R.id.history_name)).getText().toString();
         String expDate = ((TextView) table.findViewById(R.id.history_date)).getText().toString();
-        int expAmount = trimExpenseAmount(((TextView) table.findViewById(R.id.history_amount)).getText().toString());
+        float expAmount = trimExpenseAmount(((TextView) table.findViewById(R.id.history_amount)).getText().toString());
 
         if (expName.contains("Deposit")) {
 
@@ -173,10 +173,10 @@ public class ItemHistoryActivity extends AppCompatActivity {
         }
     }
 
-    public int trimExpenseAmount(String str) {
+    public float trimExpenseAmount(String str) {
         String noDollar = str.substring(1);
         String[] noDecimals = noDollar.split("\\.");
-        int trimmed = Integer.parseInt(noDecimals[0]);
+        float trimmed = Float.parseFloat(noDecimals[0]);
         return trimmed;
     }
 

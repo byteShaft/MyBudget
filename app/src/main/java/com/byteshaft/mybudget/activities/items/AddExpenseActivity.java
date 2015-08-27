@@ -73,11 +73,11 @@ public class AddExpenseActivity extends AppCompatActivity {
             text = "Both a description and an amount must be entered, please try again!";
             Toast.makeText(context, text, duration).show();
         } else {
-            int amount = Integer.parseInt(amountStr);
+            float amount = Float.valueOf(amountStr);
             if (!(desc.replaceAll("\\s+", "")).matches("[a-zA-z]+")) {
                 text = "Name can only contain letters, please try again";
                 Toast.makeText(context, text, duration).show();
-            } else if (Integer.parseInt(amountStr) > item.getRemaining()) {
+            } else if (Float.valueOf(amountStr) > item.getRemaining()) {
                 text = "Expense exceeds remaining budget for that item, please try again!";
                 Toast.makeText(context, text, duration).show();
             } else {
@@ -106,10 +106,10 @@ public class AddExpenseActivity extends AppCompatActivity {
     }
 
     // convenience method to handle SharedPreferences updating of "spent" value
-    public void updateBudget(int spent) {
+    public void updateBudget(float spent) {
         SharedPreferences preferences = getSharedPreferences(HomeFragment.PREFS_NAME, 0);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt("curSpent", preferences.getInt("curSpent", 0) + spent);
+        editor.putFloat("curSpent", preferences.getFloat("curSpent", 0) + spent);
         editor.commit();
     }
 }

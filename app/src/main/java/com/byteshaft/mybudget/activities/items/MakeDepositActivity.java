@@ -77,7 +77,7 @@ public class MakeDepositActivity extends AppCompatActivity implements AdapterVie
 
         } else {
 
-            int amount = Integer.parseInt(amountStr);
+            float amount = Float.parseFloat(amountStr);
 
             if (amount > myDb.getLineItem(itemName).getRemaining()) {
 
@@ -86,9 +86,9 @@ public class MakeDepositActivity extends AppCompatActivity implements AdapterVie
 
             } else {
 
-                int goalRemaining = myDb.getGoalRemaining(goalName);
+                float goalRemaining = myDb.getGoalRemaining(goalName);
                 if(amount > goalRemaining) {
-                    text = "Deposit amount exceeds remaining amount for that goal (€" + goalRemaining + ".00), please try again!";
+                    text = "Deposit amount exceeds remaining amount for that goal (" +Helpers.getCurrency(goalRemaining)+ "), please try again!";
                     Toast.makeText(context, text, duration).show();
                 } else {
                     myDb.addDeposit(goalName, itemName, amount, true);
