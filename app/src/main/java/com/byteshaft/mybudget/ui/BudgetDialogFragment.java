@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.byteshaft.mybudget.AppGlobals;
 import com.byteshaft.mybudget.Fragments.HomeFragment;
 import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.Utils.Helpers;
@@ -44,8 +45,8 @@ public class BudgetDialogFragment extends DialogFragment {
                         if (TextUtils.isEmpty(myEditText.getText())) {
                             Toast.makeText(getActivity(), "please enter amount", Toast.LENGTH_SHORT).show();
                         } else {
-                            budget = Float.parseFloat(myEditText.getText().toString());
-                            SharedPreferences preferences = getActivity().getSharedPreferences(HomeFragment.PREFS_NAME, 0);
+                            budget = Integer.parseInt(myEditText.getText().toString());
+                            SharedPreferences preferences = getActivity().getSharedPreferences(AppGlobals.PREFS_NAME, 0);
                             SharedPreferences.Editor editor = preferences.edit();
                             editor.putFloat(Helpers.getTimeStamp("MMM_yyyy"), Float.valueOf(myEditText.getText().toString()));
                             Set<String> totalMonth = preferences.getStringSet("TotalMonths", null);

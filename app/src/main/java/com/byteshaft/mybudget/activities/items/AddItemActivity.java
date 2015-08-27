@@ -45,7 +45,7 @@ public class AddItemActivity extends AppCompatActivity {
         CharSequence text;
         int duration = Toast.LENGTH_SHORT;
         float allocated = myDb.getTotalAllocated();
-        SharedPreferences preferences = getSharedPreferences(HomeFragment.PREFS_NAME, 0);
+        SharedPreferences preferences = getSharedPreferences(AppGlobals.PREFS_NAME, 0);
         float curBudget = preferences.getFloat(Helpers.getTimeStamp("MMM_yyyy"), 0);
 
         // basic input validation

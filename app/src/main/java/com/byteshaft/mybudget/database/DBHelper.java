@@ -495,7 +495,6 @@ public class DBHelper extends SQLiteOpenHelper {
         res.moveToFirst();
 
         while (!res.isAfterLast()) {
-
             curGoal = new Goal(
                     res.getString(res.getColumnIndex("name")),
                     res.getFloat(res.getColumnIndex("goal")),
@@ -503,7 +502,6 @@ public class DBHelper extends SQLiteOpenHelper {
             );
 
             goals.add(curGoal);
-
             res.moveToNext();
 
         }
