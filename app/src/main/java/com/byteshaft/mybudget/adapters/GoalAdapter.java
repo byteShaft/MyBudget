@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import com.byteshaft.mybudget.R;
+import com.byteshaft.mybudget.Utils.Helpers;
 import com.byteshaft.mybudget.activities.goals.GoalHistoryActivity;
 import com.byteshaft.mybudget.containers.Goal;
 /*
@@ -64,7 +65,7 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.ViewHolder> {
         ProgressBar curProgBar = (ProgressBar) curGoal.findViewById(R.id.prog_bar);
 
         curTitle.setText(cur.getName());
-        curProgText.setText("€" + Integer.toString(cur.getDeposited()) + ".00/€" + Integer.toString(cur.getGoal()) + ".00");
+        curProgText.setText(Helpers.getCurrency(cur.getDeposited()) + "/" + Helpers.getCurrency(cur.getGoal()));
         curProgBar.setProgress((int) progress);
 
     }

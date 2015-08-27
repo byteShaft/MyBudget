@@ -42,11 +42,11 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(
                 "create table  " + BUDGET_TABLE_NAME + " " +
-                        "(id integer primary key, name text,budgeted integer, spent integer, remaining integer)"
+                        "(id integer primary key, name text,budgeted real, spent real, remaining real)"
         );
         db.execSQL(
                 "create table goals " +
-                        "(id integer primary key, name text, goal integer, deposited integer)"
+                        "(id integer primary key, name text, goal real, deposited real)"
         );
     }
 
@@ -62,35 +62,35 @@ public class DBHelper extends SQLiteOpenHelper {
      * Handles functionality to manage the user's budget
      *****************************************************************/
 
-    public int getTotalAllocated() {
+    public float getTotalAllocated() {
         SQLiteDatabase myDb = this.getWritableDatabase();
         Cursor res = myDb.rawQuery("select budgeted from " + BUDGET_TABLE_NAME, null);
 
-        int totalAllocated = 0;
+        float totalAllocated = 0;
 
         res.moveToFirst();
 
         while (!res.isAfterLast()) {
 
-            totalAllocated += res.getInt(res.getColumnIndex(BUDGET_ITEM_BUDGETED));
+            totalAllocated += res.getFloat(res.getColumnIndex(BUDGET_ITEM_BUDGETED));
             res.moveToNext();
 
         }
         return totalAllocated;
     }
 
-    public int getTotalSpent() {
+    public float getTotalSpent() {
 
         SQLiteDatabase myDb = this.getWritableDatabase();
         Cursor res = myDb.rawQuery("select * from " + BUDGET_TABLE_NAME, null);
 
-        int totalSpent = 0;
+        float totalSpent = 0;
 
         res.moveToFirst();
 
         while (!res.isAfterLast()) {
 
-            totalSpent += res.getInt(res.getColumnIndex(BUDGET_ITEM_SPENT));
+            totalSpent += res.getFloat(res.getColumnIndex(BUDGET_ITEM_SPENT));
             res.moveToNext();
 
         }
@@ -149,12 +149,12 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public boolean insertLineItem(String name, int budgeted, int spent) {
+    public boolean insertLineItem(String name, float budgeted, float spent) {
 
         SQLiteDatabase myDb = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
-        int remaining = budgeted - spent;
+        float remaining = budgeted - spent;
 
         cv.put("name", name);
         cv.put("budgeted", budgeted);
@@ -181,11 +181,11 @@ public class DBHelper extends SQLiteOpenHelper {
         while (!c.isAfterLast()) {
 
             item = new LineItem(
-                    c.getInt(c.getColumnIndex(BUDGET_ITEM_ID)),
+                    c.getFloat(c.getColumnIndex(BUDGET_ITEM_ID)),
                     c.getString(c.getColumnIndex(BUDGET_ITEM_NAME)),
-                    c.getInt(c.getColumnIndex(BUDGET_ITEM_BUDGETED)),
-                    c.getInt(c.getColumnIndex(BUDGET_ITEM_SPENT)),
-                    c.getInt(c.getColumnIndex(BUDGET_ITEM_REMAINING))
+                    c.getFloat(c.getColumnIndex(BUDGET_ITEM_BUDGETED)),
+                    c.getFloat(c.getColumnIndex(BUDGET_ITEM_SPENT)),
+                    c.getFloat(c.getColumnIndex(BUDGET_ITEM_REMAINING))
             );
 
             c.moveToNext();
@@ -202,11 +202,11 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor res = myDb.rawQuery("select * from " + BUDGET_TABLE_NAME, null);
         while (res.moveToNext()) {
             curItem = new LineItem(
-                    res.getInt(res.getColumnIndex(BUDGET_ITEM_ID)),
+                    res.getFloat(res.getColumnIndex(BUDGET_ITEM_ID)),
                     res.getString(res.getColumnIndex(BUDGET_ITEM_NAME)),
-                    res.getInt(res.getColumnIndex(BUDGET_ITEM_BUDGETED)),
-                    res.getInt(res.getColumnIndex(BUDGET_ITEM_SPENT)),
-                    res.getInt(res.getColumnIndex(BUDGET_ITEM_REMAINING))
+                    res.getFloat(res.getColumnIndex(BUDGET_ITEM_BUDGETED)),
+                    res.getFloat(res.getColumnIndex(BUDGET_ITEM_SPENT)),
+                    res.getFloat(res.getColumnIndex(BUDGET_ITEM_REMAINING))
             );
 
             lineItems.add(curItem);
@@ -216,17 +216,17 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    public int getItemSpent(String name) {
+    public float getItemSpent(String name) {
 
         SQLiteDatabase myDb = this.getWritableDatabase();
         Cursor res = myDb.rawQuery("select * from " + getTableName(name), null);
 
-        int spent = 0;
+        float spent = 0;
 
         res.moveToFirst();
 
         while (!res.isAfterLast()) {
-            spent += res.getInt(res.getColumnIndex("amount"));
+            spent += res.getFloat(res.getColumnIndex("amount"));
 
             res.moveToNext();
         }
@@ -242,9 +242,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
         res.moveToFirst();
 
-        int budget = res.getInt(res.getColumnIndex(BUDGET_ITEM_BUDGETED));
-        int spent = getItemSpent(tableName);
-        int remaining = budget - spent;
+        float budget = res.getFloat(res.getColumnIndex(BUDGET_ITEM_BUDGETED));
+        float spent = getItemSpent(tableName);
+        float remaining = budget - spent;
 
         cv.put("name", name);
         cv.put("budgeted", budget);
@@ -252,13 +252,13 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put("remaining", remaining);
 
         myDb.update(BUDGET_TABLE_NAME, cv, "id = ?", new String[]{
-                Integer.toString(res.getInt(res.getColumnIndex(BUDGET_ITEM_ID)))
+                Float.toString(res.getFloat(res.getColumnIndex(BUDGET_ITEM_ID)))
         });
         res.close();
 
     }
 
-    public void updateItem(String oldName, String newName, int newBudget, int spent) {
+    public void updateItem(String oldName, String newName, float newBudget, float spent) {
         SQLiteDatabase myDb = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         Cursor res = myDb.rawQuery("select * from " + BUDGET_TABLE_NAME + " where name='" + oldName + "'", null);
@@ -270,7 +270,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put("remaining", (newBudget - spent));
 
         myDb.update(BUDGET_TABLE_NAME, cv, "id = ?", new String[]{
-                Integer.toString(res.getInt(res.getColumnIndex(BUDGET_ITEM_ID)))
+                Float.toString(res.getFloat(res.getColumnIndex(BUDGET_ITEM_ID)))
         });
 
         newName = getTableName(newName);
@@ -313,7 +313,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * Manages creation, deletion and manipulation of expenses
      *****************************************************************/
 
-    public boolean addExpense(String name, String date, String desc, int amount) {
+    public boolean addExpense(String name, String date, String desc, float amount) {
 
         SQLiteDatabase myDb = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -327,7 +327,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public void updateExpense(String itemName, String oldName, String newName, String date, int newAmount) {
+    public void updateExpense(String itemName, String oldName, String newName, String date, float newAmount) {
 
         SQLiteDatabase myDb = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -341,7 +341,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put("amount", newAmount);
 
         myDb.update(tableName, cv, "id = ?", new String[]{
-                Integer.toString(res.getInt(res.getColumnIndex(BUDGET_ITEM_ID)))
+                Float.toString(res.getFloat(res.getColumnIndex(BUDGET_ITEM_ID)))
         });
 
         updateItemState(tableName, itemName);
@@ -368,7 +368,7 @@ public class DBHelper extends SQLiteOpenHelper {
             cur = new Expense(
                     res.getString(res.getColumnIndex("name")),
                     res.getString(res.getColumnIndex("date")),
-                    res.getInt(res.getColumnIndex("amount"))
+                    res.getFloat(res.getColumnIndex("amount"))
             );
 
             history.add(cur);
@@ -407,7 +407,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean addGoal(String name, int goalAmount) {
+    public boolean addGoal(String name, float goalAmount) {
         SQLiteDatabase myDb = getWritableDatabase();
         if (checkGoalExists(name)) {
             return false;
@@ -429,7 +429,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void adjustGoal(String oldName, String newName, int newGoal) {
+    public void adjustGoal(String oldName, String newName, float newGoal) {
         SQLiteDatabase myDb = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         Cursor res = myDb.rawQuery("select * from goals where name='" + oldName + "'", null);
@@ -440,7 +440,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put("goal", newGoal);
 
         myDb.update("goals", cv, "id = ?", new String[]{
-                Integer.toString(res.getInt(res.getColumnIndex("id")))
+                Float.toString(res.getFloat(res.getColumnIndex("id")))
         });
 
         if (!oldName.equals(newName))
@@ -455,24 +455,24 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor res = myDb.rawQuery("SELECT * FROM GOALS WHERE NAME='" + goalName + "'", null);
         Cursor depositCur = myDb.rawQuery("SELECT * FROM " + getGoalTableName(goalName), null);
 
-        int deposited = 0;
+        float deposited = 0;
 
         depositCur.moveToFirst();
 
         while (!depositCur.isAfterLast()) {
 
-            deposited = deposited + (depositCur.getInt(depositCur.getColumnIndex("amount")));
+            deposited = deposited + (depositCur.getFloat(depositCur.getColumnIndex("amount")));
 
             depositCur.moveToNext();
         }
         res.moveToFirst();
 
         cv.put("name", goalName);
-        cv.put("goal", res.getInt(res.getColumnIndex("goal")));
+        cv.put("goal", res.getFloat(res.getColumnIndex("goal")));
         cv.put("deposited", deposited);
 
         myDb.update("goals", cv, "id = ?", new String[]{
-                Integer.toString(res.getInt(res.getColumnIndex("id")))
+                Float.toString(res.getFloat(res.getColumnIndex("id")))
         });
         res.close();
     }
@@ -497,8 +497,8 @@ public class DBHelper extends SQLiteOpenHelper {
         while (!res.isAfterLast()) {
             curGoal = new Goal(
                     res.getString(res.getColumnIndex("name")),
-                    res.getInt(res.getColumnIndex("goal")),
-                    res.getInt(res.getColumnIndex("deposited"))
+                    res.getFloat(res.getColumnIndex("goal")),
+                    res.getFloat(res.getColumnIndex("deposited"))
             );
 
             goals.add(curGoal);
@@ -538,8 +538,8 @@ public class DBHelper extends SQLiteOpenHelper {
         res.moveToFirst();
         return new Goal(
                 res.getString(res.getColumnIndex("name")),
-                res.getInt(res.getColumnIndex("goal")),
-                res.getInt(res.getColumnIndex("deposited"))
+                res.getFloat(res.getColumnIndex("goal")),
+                res.getFloat(res.getColumnIndex("deposited"))
         );
     }
 
@@ -566,14 +566,14 @@ public class DBHelper extends SQLiteOpenHelper {
         myDb.execSQL("CREATE TABLE IF NOT EXISTS GOALS " + "(id integer primary key, name text, goal integer, deposited integer)");
     }
 
-    public int getGoalRemaining(String goalName) {
+    public float getGoalRemaining(String goalName) {
 
         SQLiteDatabase myDb = this.getWritableDatabase();
         Cursor res = myDb.rawQuery("SELECT * FROM GOALS WHERE NAME='" + goalName + "'", null);
 
         res.moveToFirst();
 
-        int remaining = res.getInt(res.getColumnIndex("goal")) - res.getInt(res.getColumnIndex("deposited"));
+        float remaining = res.getFloat(res.getColumnIndex("goal")) - res.getFloat(res.getColumnIndex("deposited"));
         res.close();
         return remaining;
 
@@ -584,7 +584,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * Manages creation, adjustment and deletion of goal deposits
      *****************************************************************/
 
-    public void addDeposit(String goalName, String depositName, int amount, boolean isFromExpense) {
+    public void addDeposit(String goalName, String depositName, float amount, boolean isFromExpense) {
 
         SQLiteDatabase myDb = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -604,7 +604,7 @@ public class DBHelper extends SQLiteOpenHelper {
         updateGoalState(goalName);
     }
 
-    public void adjustDeposit(String goalName, String depositName, String date, int amount) {
+    public void adjustDeposit(String goalName, String depositName, String date, float amount) {
         SQLiteDatabase myDb = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         String tableName = getGoalTableName(goalName);
@@ -615,7 +615,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put("amount", amount);
 
         myDb.update(tableName, cv, "id = ?", new String[]{
-                Integer.toString(res.getInt(res.getColumnIndex("id")))
+                Float.toString(res.getFloat(res.getColumnIndex("id")))
         });
         updateGoalState(goalName);
     }
@@ -640,7 +640,7 @@ public class DBHelper extends SQLiteOpenHelper {
             curDeposit = new Expense(
                     res.getString(res.getColumnIndex("name")),
                     res.getString(res.getColumnIndex("date")),
-                    res.getInt(res.getColumnIndex("amount"))
+                    res.getFloat(res.getColumnIndex("amount"))
             );
 
             depositHistory.add(curDeposit);

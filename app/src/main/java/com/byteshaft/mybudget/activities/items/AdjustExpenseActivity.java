@@ -28,8 +28,8 @@ public class AdjustExpenseActivity extends AppCompatActivity {
     private String expenseName;
     private String expenseDate;
     private String itemName;
-    private int expenseAmount;
-    private int remaining;
+    private float expenseAmount;
+    private float remaining;
 
     private DBHelper myDb;
 
@@ -48,9 +48,9 @@ public class AdjustExpenseActivity extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         expenseName = b.getString("EXPENSE_NAME");
         expenseDate = b.getString("EXPENSE_DATE");
-        expenseAmount = b.getInt("EXPENSE_AMOUNT");
+        expenseAmount = b.getFloat("EXPENSE_AMOUNT");
         itemName = b.getString("ITEM_NAME");
-        remaining = b.getInt("ITEM_REMAINING");
+        remaining = b.getFloat("ITEM_REMAINING");
     }
 
     @Override
@@ -99,7 +99,7 @@ public class AdjustExpenseActivity extends AppCompatActivity {
 
         } else {
 
-            int newAmount = Integer.parseInt(newAmountStr);
+            float newAmount = Float.parseFloat(newAmountStr);
 
             if(newAmount > (remaining + expenseAmount)) {   // calculates what the remaining would be minus this item
 

@@ -4,10 +4,10 @@ package com.byteshaft.mybudget.containers;
  */
 public class LineItem {
 
-    private int id, budgeted, spent, remaining;
+    private float id, budgeted, spent, remaining;
     private String name;
 
-    public LineItem(int id, String name, int budgeted, int spent, int remaining) {
+    public LineItem(float id, String name, float budgeted, float spent, float remaining) {
 
         this.id = id;
         this.name = name;
@@ -17,19 +17,19 @@ public class LineItem {
 
     }
 
-    public int getId() {
+    public float getId() {
         return id;
     }
 
-    public int getBudget() {
+    public float getBudget() {
         return budgeted;
     }
 
-    public int getSpent() {
+    public float getSpent() {
         return spent;
     }
 
-    public int getRemaining() {
+    public float getRemaining() {
         return remaining;
     }
 

@@ -27,8 +27,8 @@ import com.byteshaft.mybudget.database.DBHelper;
 public class AdjustItemActivity extends AppCompatActivity {
 
     private String itemName;
-    private int itemBudget;
-    private int itemSpent;
+    private float itemBudget;
+    private float itemSpent;
     private DBHelper myDb;
 
     @Override
@@ -44,8 +44,8 @@ public class AdjustItemActivity extends AppCompatActivity {
 
         Bundle b = getIntent().getExtras();
         itemName = b.getString("ITEM_NAME");
-        itemBudget = b.getInt("ITEM_BUDGET");
-        itemSpent = b.getInt("ITEM_SPENT");
+        itemBudget = b.getFloat("ITEM_BUDGET");
+        itemSpent = b.getFloat("ITEM_SPENT");
     }
 
     @Override
@@ -66,8 +66,6 @@ public class AdjustItemActivity extends AppCompatActivity {
         finish();
     }
 
-
-
     public void onSubmitClick(View v) {
         EditText newNameView = (EditText) findViewById(R.id.name);
         EditText newBudgetView = (EditText) findViewById(R.id.amount);
@@ -77,7 +75,7 @@ public class AdjustItemActivity extends AppCompatActivity {
 
         String newName = newNameView.getText().toString();
         String newBudgetStr = newBudgetView.getText().toString();
-        int newBudget;
+        float newBudget;
 
         if (myDb.checkNameExists(newName)) {
 
@@ -90,7 +88,7 @@ public class AdjustItemActivity extends AppCompatActivity {
             Toast.makeText(context, text, duration).show();
         } else if (newName.equals("") && !newBudgetStr.equals("")) { // amount but no name
             newName = itemName;
-            newBudget = Integer.parseInt(newBudgetStr);
+            newBudget = Float.parseFloat(newBudgetStr);
             if (newBudget < itemSpent) {
                 text = "New item budget exceeds amount already spent, please try again";
                 Toast.makeText(context, text, duration).show();
@@ -113,7 +111,7 @@ public class AdjustItemActivity extends AppCompatActivity {
                 finish();
             }
         } else {
-            newBudget = Integer.parseInt(newBudgetStr);
+            newBudget = Float.parseFloat(newBudgetStr);
             if (newBudget < itemSpent) {
                 text = "New item budget exceeds amount already spent, please try again";
                 Toast.makeText(context, text, duration).show();

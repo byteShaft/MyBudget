@@ -73,11 +73,11 @@ public class AddExpenseActivity extends AppCompatActivity {
             text = "Both a description and an amount must be entered, please try again!";
             Toast.makeText(context, text, duration).show();
         } else {
-            int amount = Integer.parseInt(amountStr);
+            float amount = Float.valueOf(amountStr);
             if (!(desc.replaceAll("\\s+", "")).matches("[a-zA-z]+")) {
                 text = "Name can only contain letters, please try again";
                 Toast.makeText(context, text, duration).show();
-            } else if (Integer.parseInt(amountStr) > item.getRemaining()) {
+            } else if (Float.valueOf(amountStr) > item.getRemaining()) {
                 text = "Expense exceeds remaining budget for that item, please try again!";
                 Toast.makeText(context, text, duration).show();
             } else {
@@ -105,11 +105,17 @@ public class AddExpenseActivity extends AppCompatActivity {
     }
 
     // convenience method to handle SharedPreferences updating of "spent" value
-    public void updateBudget(int spent) {
+    public void updateBudget(float spent) {
         SharedPreferences preferences = getSharedPreferences(AppGlobals.PREFS_NAME, 0);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt(Helpers.getTimeStamp("MMM_yyyy")+"curSpent", preferences.getInt(
-                Helpers.getTimeStamp("MMM_yyyy")+"curSpent", 0) + spent);
+        if (AppGlobals.getsCurrentMonthYear() != null) {
+            editor.putFloat(AppGlobals.getsCurrentMonthYear()+"curSpent", preferences.getFloat(
+                    AppGlobals.getsCurrentMonthYear()+"curSpent", 0) + spent);
+        } else {
+            editor.putFloat(Helpers.getTimeStamp("MMM_yyyy")+"curSpent", preferences.getFloat(
+                    Helpers.getTimeStamp("MMM_yyyy")+"curSpent", 0) + spent);
+        }
+
         editor.commit();
     }
 }
