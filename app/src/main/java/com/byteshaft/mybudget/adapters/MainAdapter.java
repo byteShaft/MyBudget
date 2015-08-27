@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import com.byteshaft.mybudget.R;
+import com.byteshaft.mybudget.Utils.Helpers;
 import com.byteshaft.mybudget.activities.items.ItemHistoryActivity;
 import com.byteshaft.mybudget.containers.LineItem;
 /*
@@ -63,7 +64,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         TextView curProgText = (TextView) curItem.findViewById(R.id.prog_text);
         ProgressBar curProgBar = (ProgressBar) curItem.findViewById(R.id.prog_bar);
         curTitle.setText(cur.getName());
-        curProgText.setText("€" + Integer.toString(cur.getSpent()) + ".00/€" + Integer.toString(cur.getBudget()) + ".00");
+        curProgText.setText(Helpers.getCurrency(cur.getSpent()) + "/" + Helpers.getCurrency(cur.getBudget()));
         curProgBar.setProgress((int) progress);
 
     }

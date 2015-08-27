@@ -48,7 +48,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private DBHelper db;
     private CardView budgetCard;
     private FloatingActionButton fab;
-    private int curBudget = 0;
+    private float curBudget = 0;
     private TextView textView;
 
 
@@ -82,7 +82,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             public boolean onLongClick(View v) {
                 Vibrator vb = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
                 vb.vibrate(1000);
-                String str = "Add new item - €" + Integer.toString(curBudget - db.getTotalAllocated()) + ".00 left to allocate";
+                String str = "Add new item - " + Helpers.getCurrency(curBudget - db.getTotalAllocated()) + " left to allocate";
 
                 Toast toast = Toast.makeText(getActivity(), str, Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 100);
@@ -119,9 +119,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
         SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, 0);
         if (AppGlobals.getsCurrentMonthYear() != null) {
-            curBudget = preferences.getInt(AppGlobals.getsCurrentMonthYear(), 0);
+            curBudget = preferences.getFloat(AppGlobals.getsCurrentMonthYear(), 0);
         } else {
-            curBudget = preferences.getInt(Helpers.getTimeStamp("MMM_yyyy"), 0);
+            curBudget = preferences.getFloat(Helpers.getTimeStamp("MMM_yyyy"), 0);
         }
         System.out.println(curBudget);
       if (curBudget == 0) {
@@ -149,19 +149,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         fab.show();
         SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, 0);
         if (AppGlobals.getsCurrentMonthYear() != null) {
-            curBudget = preferences.getInt(AppGlobals.getsCurrentMonthYear(), 0);
+            curBudget = preferences.getFloat(AppGlobals.getsCurrentMonthYear(), 0);
         } else {
-            curBudget = preferences.getInt(Helpers.getTimeStamp("MMM_yyyy"), 0);
+            curBudget = preferences.getFloat(Helpers.getTimeStamp("MMM_yyyy"), 0);
         }
         db.checkBudgetIsDefined();
-        int totalSpent = db.getTotalSpent();
+        float totalSpent = db.getTotalSpent();
         TextView placeholder = (TextView) baseView.findViewById(R.id.item_placeholder);
         TextView budgeted = (TextView) budgetCard.findViewById(R.id.budgeted);
         TextView spent = (TextView) budgetCard.findViewById(R.id.spent);
         TextView remaining = (TextView) budgetCard.findViewById(R.id.remaining);
-        budgeted.setText("Budgeted: €" + Integer.toString(curBudget) + ".00");
-        spent.setText("Spent: €" + totalSpent + ".00");
-        remaining.setText("Remaining: €" + Integer.toString(curBudget - totalSpent) + ".00");
+        budgeted.setText("Budgeted: " + Helpers.getCurrency(curBudget));
+        spent.setText("Spent: " + Helpers.getCurrency(totalSpent));
+        remaining.setText("Remaining: " + Helpers.getCurrency(curBudget - totalSpent));
         budgetCard.setVisibility(View.VISIBLE);
         placeholder.setVisibility(View.VISIBLE);
         System.out.println(db.getNoRows());
@@ -175,7 +175,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     public void addLineItem() {
-        if(curBudget - db.getTotalAllocated() == 0) {
+        if(curBudget - db.getTotalAllocated() == 0.0) {
             Toast.makeText(getActivity(),
                     "please set budget ", Toast.LENGTH_SHORT).show();
             DialogFragment fragment = new BudgetDialogFragment();
@@ -196,7 +196,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 db.clearBudget();
                 SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, 0);
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putInt(Helpers.getTimeStamp("MMM_yyyy"), 0);
+                editor.putFloat(Helpers.getTimeStamp("MMM_yyyy"), 0);
                 editor.commit();
                 Context context = getActivity();
                 CharSequence text = "Budget cleared";

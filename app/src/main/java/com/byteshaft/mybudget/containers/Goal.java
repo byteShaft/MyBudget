@@ -3,10 +3,10 @@ package com.byteshaft.mybudget.containers;
 public class Goal {
 
     private String name;
-    private int goal;
-    private int deposited;
+    private float goal;
+    private float deposited;
 
-    public Goal(String name, int goal, int deposited) {
+    public Goal(String name, float goal, float deposited) {
         this.name = name;
         this.goal = goal;
         this.deposited = deposited;
@@ -16,11 +16,11 @@ public class Goal {
         return name;
     }
 
-    public int getGoal() {
+    public float getGoal() {
         return goal;
     }
 
-    public int getDeposited() {
+    public float getDeposited() {
         return deposited;
     }
 

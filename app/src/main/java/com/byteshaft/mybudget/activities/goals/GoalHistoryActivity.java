@@ -119,9 +119,9 @@ public class GoalHistoryActivity extends AppCompatActivity {
         TextView deposited = (TextView) findViewById(R.id.deposited);
         TextView remaining = (TextView) findViewById(R.id.remaining);
 
-        goal.setText("Saving: €" + Integer.toString(myGoal.getGoal()) + ".00");
-        deposited.setText("Deposited: €" + Integer.toString(myGoal.getDeposited()) + ".00");
-        remaining.setText("Remaining: €" + Integer.toString(myGoal.getGoal() - myGoal.getDeposited()) + ".00");
+        goal.setText("Saving: " + Helpers.getCurrency(myGoal.getGoal()));
+        deposited.setText("Deposited: " + Helpers.getCurrency(myGoal.getDeposited()));
+        remaining.setText("Remaining: " + Helpers.getCurrency(myGoal.getGoal() - myGoal.getDeposited()));
 
     }
 

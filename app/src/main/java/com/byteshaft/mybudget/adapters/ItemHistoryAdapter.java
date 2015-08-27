@@ -9,6 +9,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import com.byteshaft.mybudget.R;
+import com.byteshaft.mybudget.Utils.Helpers;
 import com.byteshaft.mybudget.containers.Expense;
 
 /*
@@ -55,7 +56,7 @@ public class ItemHistoryAdapter extends RecyclerView.Adapter<ItemHistoryAdapter.
 
         historyDate.setText(cur.getDate());
         historyName.setText(cur.getName());
-        historyAmount.setText("€" + Integer.toString(cur.getAmount()) + ".00");
+        historyAmount.setText(Helpers.getCurrency(cur.getAmount()));
 
     }
 

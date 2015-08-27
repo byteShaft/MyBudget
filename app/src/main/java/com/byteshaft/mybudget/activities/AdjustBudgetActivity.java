@@ -73,7 +73,7 @@ public class AdjustBudgetActivity extends AppCompatActivity implements View.OnCl
     Called by button click in layout file.
     */
     private void onSubmit() {
-        int newBudget = Integer.parseInt(amountHolder.getText().toString());
+        float newBudget = Float.parseFloat(amountHolder.getText().toString());
 
         Context context = getApplicationContext();
         CharSequence text;
@@ -93,7 +93,7 @@ public class AdjustBudgetActivity extends AppCompatActivity implements View.OnCl
         } else {
             SharedPreferences prefs = getSharedPreferences(HomeFragment.PREFS_NAME, 0);
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putInt(Helpers.getTimeStamp("MMM_yyyy"), newBudget);
+            editor.putFloat(Helpers.getTimeStamp("MMM_yyyy"), newBudget);
             boolean result = editor.commit();
 
             if (result) {
