@@ -1,6 +1,5 @@
 package com.byteshaft.mybudget.Fragments;
 
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -53,11 +52,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private float curBudget = 0;
     private TextView textView;
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        baseView = inflater.inflate(R.layout.activity_main , container, false);
+        baseView = inflater.inflate(R.layout.activity_main, container, false);
         budgetCard = (CardView) baseView.findViewById(R.id.budget_card);
         budgetCard.setOnClickListener(this);
         textView = (TextView) baseView.findViewById(R.id.textViewMonthYear);
@@ -100,9 +98,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 //        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(getActivity(), mDrawerLayout, toolbar, R.string.drawer, R.string.main);
 //        mDrawerLayout.setDrawerListener(mDrawerToggle);
         if (AppGlobals.getsCurrentMonthYear() != null) {
-            db = new DBHelper(getActivity(), AppGlobals.getsCurrentMonthYear()+".db");
+            db = new DBHelper(getActivity(), AppGlobals.getsCurrentMonthYear() + ".db");
         } else {
-            db = new DBHelper(getActivity(), Helpers.getTimeStamp("MMM_yyyy")+".db");
+            db = new DBHelper(getActivity(), Helpers.getTimeStamp("MMM_yyyy") + ".db");
         }
         mRecyclerView = (RecyclerView) baseView.findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
@@ -116,7 +114,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             String removeUnderScore = AppGlobals.getsCurrentMonthYear().replace("_", " ");
             textView.setText(removeUnderScore);
         } else {
-            String removeUnderScore = Helpers.getTimeStamp("MMM_yyyy").replace("_" , " ");
+            String removeUnderScore = Helpers.getTimeStamp("MMM_yyyy").replace("_", " ");
             textView.setText(removeUnderScore);
         }
         SharedPreferences preferences = getActivity().getSharedPreferences(AppGlobals.PREFS_NAME, 0);
@@ -125,7 +123,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         } else {
             curBudget = preferences.getFloat(Helpers.getTimeStamp("MMM_yyyy"), 0);
         }
-      if (curBudget == 0) {
+        if (curBudget == 0) {
             DialogFragment fragment = new BudgetDialogFragment();
             fragment.show(getFragmentManager(), "budget");
             fragment.setCancelable(false);
@@ -174,7 +172,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     public void addLineItem() {
-        if(curBudget - db.getTotalAllocated() == 0.0) {
+        if (curBudget - db.getTotalAllocated() == 0.0) {
             Toast.makeText(getActivity(),
                     "please set budget ", Toast.LENGTH_SHORT).show();
             DialogFragment fragment = new BudgetDialogFragment();
@@ -201,12 +199,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 Set<String> set = new HashSet<>();
                 if (!total.isEmpty() && total.size() >= 0) {
                     List<String> listFromSet = new ArrayList<>(total);
-                    for (String item: listFromSet) {
+                    for (String item : listFromSet) {
                         if (!item.equals(AppGlobals.getsCurrentMonthYear())) {
                             set.add(item);
                         }
                     }
-                    editor.putStringSet("TotalMonths",set); editor.commit();
+                    editor.putStringSet("TotalMonths", set);
+                    editor.commit();
                 }
 
                 Context context = getActivity();
