@@ -1,21 +1,16 @@
 package com.byteshaft.mybudget.activities.items;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.byteshaft.mybudget.AppGlobals;
-import com.byteshaft.mybudget.Fragments.HomeFragment;
 import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.Utils.Helpers;
 import com.byteshaft.mybudget.database.DBHelper;
@@ -39,9 +34,11 @@ public class AdjustExpenseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_adjust_expense);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if (AppGlobals.getsCurrentMonthYear() != null) {
-            myDb = new DBHelper(getApplicationContext(), AppGlobals.getsCurrentMonthYear()+".db");
+            myDb = new DBHelper(getApplicationContext(), AppGlobals.getsCurrentMonthYear() + ".db");
+        } else if (AppGlobals.getDatePickerState() || AppGlobals.getDpCurrentMonthExist()) {
+            myDb = new DBHelper(getApplicationContext(), AppGlobals.getDatePickerValues() + ".db");
         } else {
-            myDb = new DBHelper(getApplicationContext(), Helpers.getTimeStamp("MMM_yyyy")+".db");
+            myDb = new DBHelper(getApplicationContext(), Helpers.getTimeStamp("MMM_yyyy") + ".db");
         }
 
 

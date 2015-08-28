@@ -24,6 +24,8 @@ public class AddGoalActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if (AppGlobals.getsCurrentMonthYear() != null) {
             myDb = new DBHelper(getApplicationContext(), AppGlobals.getsCurrentMonthYear() + ".db");
+        } else if (AppGlobals.getDatePickerState() || AppGlobals.getDpCurrentMonthExist()) {
+            myDb = new DBHelper(getApplicationContext(), AppGlobals.getDatePickerValues() + ".db");
         } else {
             myDb = new DBHelper(getApplicationContext(), Helpers.getTimeStamp("MMM_yyyy") + ".db");
         }

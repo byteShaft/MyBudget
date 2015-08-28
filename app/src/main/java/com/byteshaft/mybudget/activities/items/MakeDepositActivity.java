@@ -12,7 +12,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.byteshaft.mybudget.AppGlobals;
-import com.byteshaft.mybudget.Fragments.HomeFragment;
 import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.Utils.Helpers;
 import com.byteshaft.mybudget.database.DBHelper;
@@ -32,9 +31,11 @@ public class MakeDepositActivity extends AppCompatActivity implements AdapterVie
         Bundle b = getIntent().getExtras();
         itemName = b.getString("ITEM_NAME");
         if (AppGlobals.getsCurrentMonthYear() != null) {
-            myDb = new DBHelper(getApplicationContext(), AppGlobals.getsCurrentMonthYear()+".db");
+            myDb = new DBHelper(getApplicationContext(), AppGlobals.getsCurrentMonthYear() + ".db");
+        } else if (AppGlobals.getDatePickerState() || AppGlobals.getDpCurrentMonthExist()) {
+            myDb = new DBHelper(getApplicationContext(), AppGlobals.getDatePickerValues() + ".db");
         } else {
-            myDb = new DBHelper(getApplicationContext(), Helpers.getTimeStamp("MMM_yyyy")+".db");
+            myDb = new DBHelper(getApplicationContext(), Helpers.getTimeStamp("MMM_yyyy") + ".db");
         }
 
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
@@ -87,8 +88,8 @@ public class MakeDepositActivity extends AppCompatActivity implements AdapterVie
             } else {
 
                 float goalRemaining = myDb.getGoalRemaining(goalName);
-                if(amount > goalRemaining) {
-                    text = "Deposit amount exceeds remaining amount for that goal (" +Helpers.getCurrency(goalRemaining)+ "), please try again!";
+                if (amount > goalRemaining) {
+                    text = "Deposit amount exceeds remaining amount for that goal (" + Helpers.getCurrency(goalRemaining) + "), please try again!";
                     Toast.makeText(context, text, duration).show();
                 } else {
                     myDb.addDeposit(goalName, itemName, amount, true);

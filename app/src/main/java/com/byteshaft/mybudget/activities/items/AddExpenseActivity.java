@@ -9,15 +9,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 import com.byteshaft.mybudget.AppGlobals;
-import com.byteshaft.mybudget.Fragments.HomeFragment;
 import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.Utils.Helpers;
 import com.byteshaft.mybudget.containers.LineItem;
 import com.byteshaft.mybudget.database.DBHelper;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /*
     A dialog-like activity that prompts a user to add a new expense for a line item.
@@ -63,9 +62,11 @@ public class AddExpenseActivity extends AppCompatActivity {
         DBHelper myDb;
         // get item
         if (AppGlobals.getsCurrentMonthYear() != null) {
-            myDb = new DBHelper(getApplicationContext(), AppGlobals.getsCurrentMonthYear()+".db");
+            myDb = new DBHelper(getApplicationContext(), AppGlobals.getsCurrentMonthYear() + ".db");
+        } else if (AppGlobals.getDatePickerState() || AppGlobals.getDpCurrentMonthExist()) {
+            myDb = new DBHelper(getApplicationContext(), AppGlobals.getDatePickerValues() + ".db");
         } else {
-            myDb = new DBHelper(getApplicationContext(), Helpers.getTimeStamp("MMM_yyyy")+".db");
+            myDb = new DBHelper(getApplicationContext(), Helpers.getTimeStamp("MMM_yyyy") + ".db");
         }
 
         LineItem item = myDb.getLineItem(itemName);

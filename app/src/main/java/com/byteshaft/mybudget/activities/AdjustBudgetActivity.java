@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
@@ -15,7 +14,6 @@ import android.widget.Toast;
 
 import com.byteshaft.mybudget.AppGlobals;
 import com.byteshaft.mybudget.R;
-import com.byteshaft.mybudget.Fragments.HomeFragment;
 import com.byteshaft.mybudget.Utils.Helpers;
 import com.byteshaft.mybudget.database.DBHelper;
 /*
@@ -82,9 +80,11 @@ public class AdjustBudgetActivity extends AppCompatActivity implements View.OnCl
 
         // check that budget does not exceed amount already allocated
         if (AppGlobals.getsCurrentMonthYear() != null) {
-            myDb = new DBHelper(getApplicationContext(), AppGlobals.getsCurrentMonthYear()+".db");
+            myDb = new DBHelper(getApplicationContext(), AppGlobals.getsCurrentMonthYear() + ".db");
+        } else if (AppGlobals.getDatePickerState() || AppGlobals.getDpCurrentMonthExist()) {
+            myDb = new DBHelper(getApplicationContext(), AppGlobals.getDatePickerValues() + ".db");
         } else {
-            myDb = new DBHelper(getApplicationContext(), Helpers.getTimeStamp("MMM_yyyy")+".db");
+            myDb = new DBHelper(getApplicationContext(), Helpers.getTimeStamp("MMM_yyyy") + ".db");
         }
 
         if (newBudget < myDb.getTotalAllocated()) {

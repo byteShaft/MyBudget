@@ -2,11 +2,11 @@ package com.byteshaft.mybudget.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,10 +16,9 @@ import android.widget.ListView;
 
 import com.byteshaft.mybudget.Fragments.BudgetHistory;
 import com.byteshaft.mybudget.Fragments.ContactFragment;
-import com.byteshaft.mybudget.Fragments.HomeFragment;
-
-import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.Fragments.GoalsFragment;
+import com.byteshaft.mybudget.Fragments.HomeFragment;
+import com.byteshaft.mybudget.R;
 
 public class MainActivity extends AppCompatActivity {
 

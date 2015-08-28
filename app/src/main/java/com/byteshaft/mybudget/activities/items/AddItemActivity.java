@@ -4,13 +4,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.byteshaft.mybudget.AppGlobals;
-import com.byteshaft.mybudget.Fragments.HomeFragment;
 import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.Utils.Helpers;
 import com.byteshaft.mybudget.database.DBHelper;
@@ -30,9 +28,11 @@ public class AddItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_item);
         setTitle(R.string.activity_title);
         if (AppGlobals.getsCurrentMonthYear() != null) {
-            myDb = new DBHelper(getApplicationContext(), AppGlobals.getsCurrentMonthYear()+".db");
+            myDb = new DBHelper(getApplicationContext(), AppGlobals.getsCurrentMonthYear() + ".db");
+        } else if (AppGlobals.getDatePickerState() || AppGlobals.getDpCurrentMonthExist()) {
+            myDb = new DBHelper(getApplicationContext(), AppGlobals.getDatePickerValues() + ".db");
         } else {
-            myDb = new DBHelper(getApplicationContext(), Helpers.getTimeStamp("MMM_yyyy")+".db");
+            myDb = new DBHelper(getApplicationContext(), Helpers.getTimeStamp("MMM_yyyy") + ".db");
         }
     }
 
@@ -46,7 +46,15 @@ public class AddItemActivity extends AppCompatActivity {
         int duration = Toast.LENGTH_SHORT;
         float allocated = myDb.getTotalAllocated();
         SharedPreferences preferences = getSharedPreferences(AppGlobals.PREFS_NAME, 0);
-        float curBudget = preferences.getFloat(Helpers.getTimeStamp("MMM_yyyy"), 0);
+        float curBudget;
+        if (AppGlobals.getDatePickerState() || AppGlobals.getDpCurrentMonthExist()) {
+            curBudget = preferences.getFloat(AppGlobals.getDatePickerValues(), 0);
+        } else if (AppGlobals.getsCurrentMonthYear() != null) {
+            curBudget = preferences.getFloat(AppGlobals.getsCurrentMonthYear(), 0);
+        } else {
+            curBudget = preferences.getFloat(Helpers.getTimeStamp("MMM_yyyy"), 0);
+        }
+
 
         // basic input validation
         if (amountStr.equals("") || name.equals("")) {
