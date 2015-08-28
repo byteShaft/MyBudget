@@ -2,6 +2,7 @@ package com.byteshaft.mybudget.Fragments;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +36,7 @@ import com.byteshaft.mybudget.activities.items.AddItemActivity;
 import com.byteshaft.mybudget.activities.items.ItemHistoryActivity;
 import com.byteshaft.mybudget.adapters.MainAdapter;
 import com.byteshaft.mybudget.database.DBHelper;
+import com.byteshaft.mybudget.datepicker.CustomDatePicker;
 import com.byteshaft.mybudget.ui.BudgetDialogFragment;
 import com.melnykov.fab.FloatingActionButton;
 
@@ -50,7 +53,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private CardView budgetCard;
     private FloatingActionButton fab;
     private float curBudget = 0;
-    private TextView textView;
+    private Button mButton;
 
     @Nullable
     @Override
@@ -58,7 +61,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         baseView = inflater.inflate(R.layout.activity_main, container, false);
         budgetCard = (CardView) baseView.findViewById(R.id.budget_card);
         budgetCard.setOnClickListener(this);
-        textView = (TextView) baseView.findViewById(R.id.textViewMonthYear);
+        mButton  = (Button) baseView.findViewById(R.id.buttonMonthYear);
+        mButton.setOnClickListener(this);
         Button button = (Button) baseView.findViewById(R.id.item_placeholder);
         button.setOnClickListener(this);
         FloatingActionButton floatingActionButton = (FloatingActionButton) baseView.findViewById(R.id.fab);
@@ -112,10 +116,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         fab.show();
         if (AppGlobals.getsCurrentMonthYear() != null) {
             String removeUnderScore = AppGlobals.getsCurrentMonthYear().replace("_", " ");
-            textView.setText(removeUnderScore);
+            mButton.setText(removeUnderScore);
         } else {
             String removeUnderScore = Helpers.getTimeStamp("MMM_yyyy").replace("_", " ");
-            textView.setText(removeUnderScore);
+            mButton.setText(removeUnderScore);
         }
         SharedPreferences preferences = getActivity().getSharedPreferences(AppGlobals.PREFS_NAME, 0);
         if (AppGlobals.getsCurrentMonthYear() != null) {
@@ -299,6 +303,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.my_recycler_view:
                 onItemClick(v);
+                break;
+            case R.id.buttonMonthYear:
+                CustomDatePicker pd = new CustomDatePicker();
+                pd.setListener(new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int day, int monthOfYear, int year) {
+                        System.out.println(monthOfYear);
+                        System.out.println(year);
+                    }
+                });
+                pd.show(getFragmentManager(), "MonthYearPickerDialog");
                 break;
         }
     }
