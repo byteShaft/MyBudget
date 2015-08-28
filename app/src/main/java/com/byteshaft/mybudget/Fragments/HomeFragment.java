@@ -2,6 +2,7 @@ package com.byteshaft.mybudget.Fragments;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,9 +37,11 @@ import com.byteshaft.mybudget.activities.items.AddItemActivity;
 import com.byteshaft.mybudget.activities.items.ItemHistoryActivity;
 import com.byteshaft.mybudget.adapters.MainAdapter;
 import com.byteshaft.mybudget.database.DBHelper;
+import com.byteshaft.mybudget.datepicker.CustomDatePicker;
 import com.byteshaft.mybudget.ui.BudgetDialogFragment;
 import com.melnykov.fab.FloatingActionButton;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -50,7 +55,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private CardView budgetCard;
     private FloatingActionButton fab;
     private float curBudget = 0;
-    private TextView textView;
+    private Button mButton;
+    private static boolean settingMonth = false;
+    private String selectedDate;
+    private boolean sMonthAlreadyExist = false;
 
     @Nullable
     @Override
@@ -58,7 +66,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         baseView = inflater.inflate(R.layout.activity_main, container, false);
         budgetCard = (CardView) baseView.findViewById(R.id.budget_card);
         budgetCard.setOnClickListener(this);
-        textView = (TextView) baseView.findViewById(R.id.textViewMonthYear);
+        mButton  = (Button) baseView.findViewById(R.id.buttonMonthYear);
+        mButton.setOnClickListener(this);
         Button button = (Button) baseView.findViewById(R.id.item_placeholder);
         button.setOnClickListener(this);
         FloatingActionButton floatingActionButton = (FloatingActionButton) baseView.findViewById(R.id.fab);
@@ -112,10 +121,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         fab.show();
         if (AppGlobals.getsCurrentMonthYear() != null) {
             String removeUnderScore = AppGlobals.getsCurrentMonthYear().replace("_", " ");
-            textView.setText(removeUnderScore);
+            mButton.setText(removeUnderScore);
         } else {
             String removeUnderScore = Helpers.getTimeStamp("MMM_yyyy").replace("_", " ");
-            textView.setText(removeUnderScore);
+            mButton.setText(removeUnderScore);
         }
         SharedPreferences preferences = getActivity().getSharedPreferences(AppGlobals.PREFS_NAME, 0);
         if (AppGlobals.getsCurrentMonthYear() != null) {
@@ -124,9 +133,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             curBudget = preferences.getFloat(Helpers.getTimeStamp("MMM_yyyy"), 0);
         }
         if (curBudget == 0) {
-            DialogFragment fragment = new BudgetDialogFragment();
-            fragment.show(getFragmentManager(), "budget");
-            fragment.setCancelable(false);
+            //do nothing
         } else {
             initCards();
         }
@@ -148,8 +155,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         fab.show();
         SharedPreferences preferences = getActivity().getSharedPreferences(AppGlobals.PREFS_NAME, 0);
         if (AppGlobals.getsCurrentMonthYear() != null) {
+            System.out.println("if first");
             curBudget = preferences.getFloat(AppGlobals.getsCurrentMonthYear(), 0);
-        } else {
+        } else if (AppGlobals.getsCurrentMonthYear() == null && settingMonth) {
+            System.out.println("if sec");
+            curBudget = preferences.getFloat(selectedDate, 0);
+            db = null;
+            db = new DBHelper(getActivity(), selectedDate + ".db");
+        } else if (AppGlobals.getsCurrentMonthYear() == null && sMonthAlreadyExist) {
+            System.out.println("if third");
+            db = null;
+            db = new DBHelper(getActivity(), selectedDate + ".db");
+            curBudget = preferences.getFloat(selectedDate, 0);
+        } else if (!settingMonth) {
+            System.out.println("if four");
             curBudget = preferences.getFloat(Helpers.getTimeStamp("MMM_yyyy"), 0);
         }
         db.checkBudgetIsDefined();
@@ -299,6 +318,38 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.my_recycler_view:
                 onItemClick(v);
+                break;
+            case R.id.buttonMonthYear:
+                CustomDatePicker pd = new CustomDatePicker();
+                pd.setListener(new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int day, int monthOfYear, int year) {
+                        String databaseName = (CustomDatePicker.getMonthName(monthOfYear)+"_"+year).trim();
+                        File database = getActivity().
+                                getApplicationContext().getDatabasePath((databaseName+".db").trim());
+                        System.out.println(databaseName);
+                        if (!database.exists()) {
+                            String removeUnderScore = databaseName.replace("_", " ");
+                            mButton.setText(removeUnderScore);
+                            settingMonth = true;
+                            selectedDate = databaseName;
+                            DialogFragment fragment = new BudgetDialogFragment();
+                            fragment.show(getFragmentManager(), "budget");
+                            fragment.setCancelable(false);
+                            initCards();
+                        } else {
+                            Log.i(AppGlobals.getLogTag(getClass()), "Found");
+                            Toast.makeText(getActivity(), "This month's budget is already defined " +
+                                            "set the category", Toast.LENGTH_SHORT).show();
+                            selectedDate = databaseName;
+                            String removeUnderScore = databaseName.replace("_", " ");
+                            mButton.setText(removeUnderScore);
+                            sMonthAlreadyExist = true;
+                            initCards();
+                        }
+                    }
+                });
+                pd.show(getFragmentManager(), "MonthYearPickerDialog");
                 break;
         }
     }
