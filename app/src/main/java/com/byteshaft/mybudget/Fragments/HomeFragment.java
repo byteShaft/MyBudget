@@ -216,7 +216,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 editor.commit();
                 Set<String> total = preferences.getStringSet("TotalMonths", null);
                 Set<String> set = new HashSet<>();
-                if (!total.isEmpty() && total.size() >= 0) {
+                if (total == null) {
+                    Toast.makeText(getActivity(), "Nothing to clear", Toast.LENGTH_SHORT).show();
+                } else {
                     List<String> listFromSet = new ArrayList<>(total);
                     for (String item : listFromSet) {
                         if (!item.equals(AppGlobals.getsCurrentMonthYear())) {
@@ -225,14 +227,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     }
                     editor.putStringSet("TotalMonths", set);
                     editor.commit();
+                    Context context = getActivity();
+                    CharSequence text = "Budget cleared";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast.makeText(context, text, duration).show();
+                    DialogFragment fragment = new BudgetDialogFragment();
+                    fragment.show(getFragmentManager(), "budget");
+                    initCards();
                 }
-                Context context = getActivity();
-                CharSequence text = "Budget cleared";
-                int duration = Toast.LENGTH_SHORT;
-                Toast.makeText(context, text, duration).show();
-                DialogFragment fragment = new BudgetDialogFragment();
-                fragment.show(getFragmentManager(), "budget");
-                initCards();
             }
 
         });
