@@ -18,11 +18,6 @@ import com.byteshaft.mybudget.Fragments.HomeFragment;
 import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.Utils.Helpers;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -48,11 +43,20 @@ public class BudgetDialogFragment extends DialogFragment {
                             budget = Integer.parseInt(myEditText.getText().toString());
                             SharedPreferences preferences = getActivity().getSharedPreferences(AppGlobals.PREFS_NAME, 0);
                             SharedPreferences.Editor editor = preferences.edit();
-                            editor.putFloat(Helpers.getTimeStamp("MMM_yyyy"), Float.valueOf(myEditText.getText().toString()));
+                            if (AppGlobals.getDatePickerState() || AppGlobals.getDpCurrentMonthExist()) {
+                                editor.putFloat(AppGlobals.getDatePickerValues(), Float.valueOf(myEditText.getText().toString()));
+                            } else {
+                                editor.putFloat(Helpers.getTimeStamp("MMM_yyyy"), Float.valueOf(myEditText.getText().toString()));
+                            }
                             Set<String> totalMonth = preferences.getStringSet("TotalMonths", null);
                             if (totalMonth == null) {
                                 Set<String> set = new HashSet<>();
-                                set.add(Helpers.getTimeStamp("MMM_yyyy"));
+                                if (AppGlobals.getDatePickerState() || AppGlobals.getDpCurrentMonthExist()) {
+                                    set.add(AppGlobals.getDatePickerValues());
+                                } else {
+                                    set.add(Helpers.getTimeStamp("MMM_yyyy"));
+                                }
+
                                 editor.putStringSet("TotalMonths",set); editor.commit();
                             } else {
                                 totalMonth.add(Helpers.getTimeStamp("MMM_yyyy"));

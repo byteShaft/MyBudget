@@ -56,9 +56,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private FloatingActionButton fab;
     private float curBudget = 0;
     private Button mButton;
-    private static boolean settingMonth = false;
-    private String selectedDate;
-    private boolean sMonthAlreadyExist = false;
 
     @Nullable
     @Override
@@ -66,7 +63,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         baseView = inflater.inflate(R.layout.activity_main, container, false);
         budgetCard = (CardView) baseView.findViewById(R.id.budget_card);
         budgetCard.setOnClickListener(this);
-        mButton  = (Button) baseView.findViewById(R.id.buttonMonthYear);
+        mButton = (Button) baseView.findViewById(R.id.buttonMonthYear);
         mButton.setOnClickListener(this);
         Button button = (Button) baseView.findViewById(R.id.item_placeholder);
         button.setOnClickListener(this);
@@ -108,6 +105,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 //        mDrawerLayout.setDrawerListener(mDrawerToggle);
         if (AppGlobals.getsCurrentMonthYear() != null) {
             db = new DBHelper(getActivity(), AppGlobals.getsCurrentMonthYear() + ".db");
+        } else if (AppGlobals.getDatePickerState() || AppGlobals.getDpCurrentMonthExist()) {
+            db = new DBHelper(getActivity(), AppGlobals.getDatePickerValues() + ".db");
         } else {
             db = new DBHelper(getActivity(), Helpers.getTimeStamp("MMM_yyyy") + ".db");
         }
@@ -122,6 +121,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         if (AppGlobals.getsCurrentMonthYear() != null) {
             String removeUnderScore = AppGlobals.getsCurrentMonthYear().replace("_", " ");
             mButton.setText(removeUnderScore);
+        } else if (AppGlobals.getDatePickerState()) {
+            String removeUnderscore = AppGlobals.getDatePickerValues().replace("_", "");
+            mButton.setText(removeUnderscore);
         } else {
             String removeUnderScore = Helpers.getTimeStamp("MMM_yyyy").replace("_", " ");
             mButton.setText(removeUnderScore);
@@ -129,7 +131,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         SharedPreferences preferences = getActivity().getSharedPreferences(AppGlobals.PREFS_NAME, 0);
         if (AppGlobals.getsCurrentMonthYear() != null) {
             curBudget = preferences.getFloat(AppGlobals.getsCurrentMonthYear(), 0);
-        } else {
+        } else if (AppGlobals.getDatePickerState()) {
+            curBudget = preferences.getFloat(AppGlobals.getDatePickerValues(), 0);
+        }  else {
             curBudget = preferences.getFloat(Helpers.getTimeStamp("MMM_yyyy"), 0);
         }
         if (curBudget == 0) {
@@ -157,17 +161,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         if (AppGlobals.getsCurrentMonthYear() != null) {
             System.out.println("if first");
             curBudget = preferences.getFloat(AppGlobals.getsCurrentMonthYear(), 0);
-        } else if (AppGlobals.getsCurrentMonthYear() == null && settingMonth) {
+        } else if (AppGlobals.getsCurrentMonthYear() == null &&
+                AppGlobals.getDatePickerState() || AppGlobals.getDpCurrentMonthExist()) {
             System.out.println("if sec");
-            curBudget = preferences.getFloat(selectedDate, 0);
+            curBudget = preferences.getFloat(AppGlobals.getDatePickerValues(), 0);
             db = null;
-            db = new DBHelper(getActivity(), selectedDate + ".db");
-        } else if (AppGlobals.getsCurrentMonthYear() == null && sMonthAlreadyExist) {
-            System.out.println("if third");
-            db = null;
-            db = new DBHelper(getActivity(), selectedDate + ".db");
-            curBudget = preferences.getFloat(selectedDate, 0);
-        } else if (!settingMonth) {
+            db = new DBHelper(getActivity(), AppGlobals.getDatePickerValues() + ".db");
+        } else if (!AppGlobals.getDatePickerState()) {
             System.out.println("if four");
             curBudget = preferences.getFloat(Helpers.getTimeStamp("MMM_yyyy"), 0);
         }
@@ -226,7 +226,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     editor.putStringSet("TotalMonths", set);
                     editor.commit();
                 }
-
                 Context context = getActivity();
                 CharSequence text = "Budget cleared";
                 int duration = Toast.LENGTH_SHORT;
@@ -324,27 +323,27 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 pd.setListener(new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int day, int monthOfYear, int year) {
-                        String databaseName = (CustomDatePicker.getMonthName(monthOfYear)+"_"+year).trim();
+                        String databaseName = (CustomDatePicker.getMonthName(monthOfYear) + "_" + year).trim();
                         File database = getActivity().
-                                getApplicationContext().getDatabasePath((databaseName+".db").trim());
+                                getApplicationContext().getDatabasePath((databaseName + ".db").trim());
                         System.out.println(databaseName);
                         if (!database.exists()) {
                             String removeUnderScore = databaseName.replace("_", " ");
                             mButton.setText(removeUnderScore);
-                            settingMonth = true;
-                            selectedDate = databaseName;
+                            AppGlobals.setDatePickerState(true);
+                            AppGlobals.setsDatePickerValues(databaseName);
                             DialogFragment fragment = new BudgetDialogFragment();
                             fragment.show(getFragmentManager(), "budget");
                             fragment.setCancelable(false);
                             initCards();
                         } else {
                             Log.i(AppGlobals.getLogTag(getClass()), "Found");
-                            Toast.makeText(getActivity(), "This month's budget is already defined " +
-                                            "set the category", Toast.LENGTH_SHORT).show();
-                            selectedDate = databaseName;
+                            Toast.makeText(getActivity(), "This month's budget is already defined" +
+                                    " , set the category", Toast.LENGTH_SHORT).show();
+                            AppGlobals.setsDatePickerValues(databaseName);
                             String removeUnderScore = databaseName.replace("_", " ");
                             mButton.setText(removeUnderScore);
-                            sMonthAlreadyExist = true;
+                            AppGlobals.setsDpCurrentMonthExist(true);
                             initCards();
                         }
                     }

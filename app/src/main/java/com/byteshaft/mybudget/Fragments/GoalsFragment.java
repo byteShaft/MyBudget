@@ -15,22 +15,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.byteshaft.mybudget.AppGlobals;
+import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.Utils.Helpers;
+import com.byteshaft.mybudget.activities.MainActivity;
 import com.byteshaft.mybudget.activities.goals.AddGoalActivity;
-import com.byteshaft.mybudget.activities.goals.GoalHistoryActivity;
+import com.byteshaft.mybudget.adapters.GoalAdapter;
+import com.byteshaft.mybudget.database.DBHelper;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
-
-import com.byteshaft.mybudget.R;
-import com.byteshaft.mybudget.activities.MainActivity;
-import com.byteshaft.mybudget.adapters.GoalAdapter;
-import com.byteshaft.mybudget.database.DBHelper;
 
 public class GoalsFragment extends Fragment implements View.OnClickListener {
 
@@ -56,9 +53,11 @@ public class GoalsFragment extends Fragment implements View.OnClickListener {
         fab.attachToRecyclerView(mRecyclerView);
         fab.setOnClickListener(this);
         if (AppGlobals.getsCurrentMonthYear() != null) {
-            db = new DBHelper(getActivity(), AppGlobals.getsCurrentMonthYear()+".db");
+            db = new DBHelper(getActivity(), AppGlobals.getsCurrentMonthYear() + ".db");
+        } else if (AppGlobals.getDatePickerState() || AppGlobals.getDpCurrentMonthExist()) {
+            db = new DBHelper(getActivity(), AppGlobals.getDatePickerValues() + ".db");
         } else {
-            db = new DBHelper(getActivity(), Helpers.getTimeStamp("MMM_yyyy")+".db");
+            db = new DBHelper(getActivity(), Helpers.getTimeStamp("MMM_yyyy") + ".db");
         }
 
 
