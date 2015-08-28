@@ -6,19 +6,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.internal.widget.AdapterViewCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.byteshaft.mybudget.AppGlobals;
@@ -47,10 +42,15 @@ public class BudgetHistory extends Fragment implements AdapterView.OnItemClickLi
         mTextView.setVisibility(View.INVISIBLE);
         SharedPreferences preferences = getActivity().getSharedPreferences(AppGlobals.PREFS_NAME, 0);
         Set<String> total = preferences.getStringSet("TotalMonths", null);
-        String[] totalMonth = total.toArray(new String[total.size()]);
-        if (totalMonth.length == 0) {
-            mTextView.setText("No history present");
-            mTextView.setVisibility(View.VISIBLE);
+        String[] totalMonth = new String[0];
+        if (total == null) {
+
+        }else {
+            totalMonth = total.toArray(new String[total.size()]);
+            if (totalMonth.length == 0) {
+                mTextView.setText("No history present");
+                mTextView.setVisibility(View.VISIBLE);
+            }
         }
         modeAdapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_list_item_1, totalMonth);
