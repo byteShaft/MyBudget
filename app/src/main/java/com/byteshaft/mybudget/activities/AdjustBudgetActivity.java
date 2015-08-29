@@ -91,10 +91,22 @@ public class AdjustBudgetActivity extends AppCompatActivity implements View.OnCl
             text = "New budget amount is less than amount already allocated, please try again";
             Toast.makeText(context, text, duration).show();
         } else {
+            boolean result;
             SharedPreferences prefs = getSharedPreferences(AppGlobals.PREFS_NAME, 0);
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putFloat(Helpers.getTimeStamp("MMM_yyyy"), newBudget);
-            boolean result = editor.commit();
+            if ( AppGlobals.getsCurrentMonthYear() != null ||AppGlobals.getDatePickerState()
+                    || AppGlobals.getDpCurrentMonthExist()) {
+                if (AppGlobals.getDatePickerState() || AppGlobals.getDpCurrentMonthExist()) {
+                    editor.putFloat(AppGlobals.getDatePickerValues(), newBudget);
+                }else if (AppGlobals.getsCurrentMonthYear() != null) {
+                    editor.putFloat(AppGlobals.getsCurrentMonthYear(), newBudget);
+                } else {
+                    editor.putFloat(AppGlobals.getsCurrentMonthYear(), newBudget);
+                }
+            } else {
+                editor.putFloat(Helpers.getTimeStamp("MMM_yyyy"), newBudget);
+            }
+            result = editor.commit();
 
             if (result) {
                 text = "Budget adjusted";

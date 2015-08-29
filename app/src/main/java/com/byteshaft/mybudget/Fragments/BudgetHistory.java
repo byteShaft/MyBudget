@@ -64,7 +64,6 @@ public class BudgetHistory extends Fragment implements AdapterView.OnItemClickLi
     public void onResume() {
         super.onResume();
         mListBudgets.setAdapter(modeAdapter);
-
     }
 
     @Override
@@ -101,9 +100,6 @@ public class BudgetHistory extends Fragment implements AdapterView.OnItemClickLi
                     editor.commit();
                 }
                 dialogInterface.dismiss();
-                String myAlarm = modeAdapter.getItem(position);
-                modeAdapter.remove(myAlarm);
-                modeAdapter.notifyDataSetChanged();
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
