@@ -42,20 +42,20 @@ public class BudgetHistory extends Fragment implements AdapterView.OnItemClickLi
         mTextView.setVisibility(View.INVISIBLE);
         SharedPreferences preferences = getActivity().getSharedPreferences(AppGlobals.PREFS_NAME, 0);
         Set<String> total = preferences.getStringSet("TotalMonths", null);
-        List<String> totalMonth = new ArrayList<>(total);
-        if (total == null) {
-
-        }else {
+        List<String> totalMonth;
+        if (total != null) {
+            totalMonth = new ArrayList<>(total);
             if (totalMonth.isEmpty()) {
                 mTextView.setText("No history present");
                 mTextView.setVisibility(View.VISIBLE);
+            } else {
+                modeAdapter = new ArrayAdapter<>(getActivity(),
+                        android.R.layout.simple_list_item_1, totalMonth);
+                mListBudgets.setOnItemClickListener(this);
+                mListBudgets.setOnItemLongClickListener(this);
+                modeAdapter.notifyDataSetChanged();
             }
         }
-        modeAdapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_list_item_1, totalMonth);
-        mListBudgets.setOnItemClickListener(this);
-        mListBudgets.setOnItemLongClickListener(this);
-        modeAdapter.notifyDataSetChanged();
         return mBaseView;
     }
 

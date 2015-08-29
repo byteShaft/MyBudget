@@ -254,8 +254,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     public void adjustBudget() {
-        Intent intent = new Intent(getActivity(), AdjustBudgetActivity.class);
-        startActivity(intent);
+        if (curBudget - db.getTotalAllocated() == 0.0) {
+            Toast.makeText(getActivity(),
+                    "please set budget ", Toast.LENGTH_SHORT).show();
+            DialogFragment fragment = new BudgetDialogFragment();
+            fragment.show(getFragmentManager(), "budget");
+            fragment.setCancelable(false);
+        } else {
+            Intent intent = new Intent(getActivity(), AdjustBudgetActivity.class);
+            startActivity(intent);
+        }
     }
 
     // code adapted from http://stackoverflow.com/questions/6290599/prompt-user-when-back-button-is-pressed
