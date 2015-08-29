@@ -159,16 +159,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         fab.show();
         SharedPreferences preferences = getActivity().getSharedPreferences(AppGlobals.PREFS_NAME, 0);
         if (AppGlobals.getsCurrentMonthYear() != null) {
-            System.out.println("if first");
             curBudget = preferences.getFloat(AppGlobals.getsCurrentMonthYear(), 0);
         } else if (AppGlobals.getsCurrentMonthYear() == null &&
                 AppGlobals.getDatePickerState() || AppGlobals.getDpCurrentMonthExist()) {
-            System.out.println("if sec");
             curBudget = preferences.getFloat(AppGlobals.getDatePickerValues(), 0);
             db = null;
             db = new DBHelper(getActivity(), AppGlobals.getDatePickerValues() + ".db");
         } else if (!AppGlobals.getDatePickerState()) {
-            System.out.println("if four");
             curBudget = preferences.getFloat(Helpers.getTimeStamp("MMM_yyyy"), 0);
         }
         db.checkBudgetIsDefined();
@@ -232,6 +229,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     int duration = Toast.LENGTH_SHORT;
                     Toast.makeText(context, text, duration).show();
                     DialogFragment fragment = new BudgetDialogFragment();
+                    fragment.setCancelable(false);
                     fragment.show(getFragmentManager(), "budget");
                     initCards();
                 }
