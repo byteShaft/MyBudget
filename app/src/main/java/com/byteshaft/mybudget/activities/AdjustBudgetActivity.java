@@ -135,7 +135,6 @@ public class AdjustBudgetActivity extends AppCompatActivity implements View.OnCl
                 text = "Failed to adjust budget";
                 Toast.makeText(context, text, duration).show();
             }
-
             finish();
         }
     }

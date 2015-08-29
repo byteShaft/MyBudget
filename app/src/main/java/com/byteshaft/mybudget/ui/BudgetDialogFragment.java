@@ -56,7 +56,7 @@ public class BudgetDialogFragment extends DialogFragment {
                             Set<String> totalMonth = preferences.getStringSet("TotalMonths", null);
                             if (totalMonth != null || AppGlobals.getDpCurrentMonthExist() ||
                                     AppGlobals.getDatePickerState() ||
-                                    AppGlobals.getsCurrentMonthYear() != null || AppGlobals.getBudgetCleared()) {
+                                    AppGlobals.getsCurrentMonthYear() != null || AppGlobals.getBudgetCleared()) {   
                                 System.out.println("Working");
                                 if (AppGlobals.getDatePickerState() || AppGlobals.getDpCurrentMonthExist()) {
                                     items.add(AppGlobals.getDatePickerValues());
