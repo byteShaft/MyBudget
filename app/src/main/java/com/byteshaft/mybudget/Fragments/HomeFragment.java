@@ -33,7 +33,6 @@ import com.byteshaft.mybudget.AppGlobals;
 import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.Utils.Helpers;
 import com.byteshaft.mybudget.activities.AdjustBudgetActivity;
-import com.byteshaft.mybudget.activities.MainActivity;
 import com.byteshaft.mybudget.activities.items.AddItemActivity;
 import com.byteshaft.mybudget.activities.items.ItemHistoryActivity;
 import com.byteshaft.mybudget.adapters.MainAdapter;
@@ -333,6 +332,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 pd.setListener(new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int day, int monthOfYear, int year) {
+                        AppGlobals.setCurrentMonthYear(null);
                         String databaseName = (CustomDatePicker.getMonthName(monthOfYear) + "_" + year).trim();
                         File database = getActivity().
                                 getApplicationContext().getDatabasePath((databaseName + ".db").trim());
