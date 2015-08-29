@@ -42,12 +42,11 @@ public class BudgetHistory extends Fragment implements AdapterView.OnItemClickLi
         mTextView.setVisibility(View.INVISIBLE);
         SharedPreferences preferences = getActivity().getSharedPreferences(AppGlobals.PREFS_NAME, 0);
         Set<String> total = preferences.getStringSet("TotalMonths", null);
-        String[] totalMonth = new String[0];
+        List<String> totalMonth = new ArrayList<>(total);
         if (total == null) {
 
         }else {
-            totalMonth = total.toArray(new String[total.size()]);
-            if (totalMonth.length == 0) {
+            if (totalMonth.isEmpty()) {
                 mTextView.setText("No history present");
                 mTextView.setVisibility(View.VISIBLE);
             }
@@ -64,6 +63,7 @@ public class BudgetHistory extends Fragment implements AdapterView.OnItemClickLi
     public void onResume() {
         super.onResume();
         mListBudgets.setAdapter(modeAdapter);
+
     }
 
     @Override
@@ -99,6 +99,9 @@ public class BudgetHistory extends Fragment implements AdapterView.OnItemClickLi
                     editor.putStringSet("TotalMonths", set);
                     editor.commit();
                 }
+                String item = modeAdapter.getItem(position);
+                modeAdapter.remove(item);
+                modeAdapter.notifyDataSetChanged();
                 dialogInterface.dismiss();
             }
         });
