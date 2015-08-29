@@ -131,12 +131,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (!isMainActivityActive) {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            isMainActivityActive = true;
+        }
+    }
+
+    @Override
     public void onBackPressed() {
         if (!isMainActivityActive) {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
         isMainActivityActive = true;
-    }
+    } else if (isMainActivityActive) {
+            Intent startMain = new Intent(Intent.ACTION_MAIN);
+            startMain.addCategory(Intent.CATEGORY_HOME);
+            startMain.setFlags(Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY);
+            startActivity(startMain);
+            MainActivity.this.finish();
+        }
         super.onBackPressed();
     }
 }
