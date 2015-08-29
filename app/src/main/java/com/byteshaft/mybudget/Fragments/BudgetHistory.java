@@ -70,6 +70,8 @@ public class BudgetHistory extends Fragment implements AdapterView.OnItemClickLi
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         AppGlobals.setCurrentMonthYear(parent.getItemAtPosition(position).toString());
         startActivity(new Intent(getActivity(), MainActivity.class));
+        AppGlobals.setsDpCurrentMonthExist(false);
+        AppGlobals.setDatePickerState(false);
     }
 
     @Override
