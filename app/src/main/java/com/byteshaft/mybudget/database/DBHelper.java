@@ -9,14 +9,14 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-
 import com.byteshaft.mybudget.AppGlobals;
 import com.byteshaft.mybudget.containers.Expense;
 import com.byteshaft.mybudget.containers.Goal;
 import com.byteshaft.mybudget.containers.LineItem;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -34,7 +34,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public DBHelper(Context context, String databaseName) {
         super(context, databaseName, null, 1);
-        System.out.println(databaseName);
 
     }
 

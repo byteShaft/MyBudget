@@ -16,6 +16,12 @@ import com.byteshaft.mybudget.AppGlobals;
 import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.Utils.Helpers;
 import com.byteshaft.mybudget.database.DBHelper;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 /*
  Prompts user to enter a new budget. Called from MainActivity.
  */
@@ -91,10 +97,36 @@ public class AdjustBudgetActivity extends AppCompatActivity implements View.OnCl
             text = "New budget amount is less than amount already allocated, please try again";
             Toast.makeText(context, text, duration).show();
         } else {
+            boolean result;
             SharedPreferences prefs = getSharedPreferences(AppGlobals.PREFS_NAME, 0);
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putFloat(Helpers.getTimeStamp("MMM_yyyy"), newBudget);
-            boolean result = editor.commit();
+            Set<String> items = new HashSet<>();
+            if ( AppGlobals.getsCurrentMonthYear() != null ||AppGlobals.getDatePickerState()
+                    || AppGlobals.getDpCurrentMonthExist()) {
+                if (AppGlobals.getDatePickerState() || AppGlobals.getDpCurrentMonthExist()) {
+                    editor.putFloat(AppGlobals.getDatePickerValues(), newBudget);
+                    items.add(AppGlobals.getDatePickerValues());
+                }else if (AppGlobals.getsCurrentMonthYear() != null) {
+                    editor.putFloat(AppGlobals.getsCurrentMonthYear(), newBudget);
+                    items.add(AppGlobals.getsCurrentMonthYear());
+                }
+            } else {
+                editor.putFloat(Helpers.getTimeStamp("MMM_yyyy"), newBudget);
+                items.add(Helpers.getTimeStamp("MMM_yyyy"));
+            }
+            Set<String> totalMonth = prefs.getStringSet("TotalMonths", null);
+            if (totalMonth == null) {
+                editor.putStringSet("TotalMonths", items);
+                editor.commit();
+            } else {
+                List<String> listFromSet = new ArrayList<>(totalMonth);
+                for (String item : listFromSet) {
+                    items.add(item);
+                }
+                editor.putStringSet("TotalMonths", items);
+                editor.commit();
+            }
+            result = editor.commit();
 
             if (result) {
                 text = "Budget adjusted";

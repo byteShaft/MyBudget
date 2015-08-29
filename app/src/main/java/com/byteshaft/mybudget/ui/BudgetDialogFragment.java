@@ -18,7 +18,9 @@ import com.byteshaft.mybudget.Fragments.HomeFragment;
 import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.Utils.Helpers;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class BudgetDialogFragment extends DialogFragment {
@@ -45,25 +47,40 @@ public class BudgetDialogFragment extends DialogFragment {
                             SharedPreferences.Editor editor = preferences.edit();
                             if (AppGlobals.getDatePickerState() || AppGlobals.getDpCurrentMonthExist()) {
                                 editor.putFloat(AppGlobals.getDatePickerValues(), Float.valueOf(myEditText.getText().toString()));
+                            } else if (AppGlobals.getsCurrentMonthYear() != null) {
+                                editor.putFloat(AppGlobals.getsCurrentMonthYear(), Float.valueOf(myEditText.getText().toString()));
                             } else {
                                 editor.putFloat(Helpers.getTimeStamp("MMM_yyyy"), Float.valueOf(myEditText.getText().toString()));
                             }
+                            Set<String> items = new HashSet<>();
                             Set<String> totalMonth = preferences.getStringSet("TotalMonths", null);
-                            if (totalMonth == null) {
-                                Set<String> set = new HashSet<>();
+                            if (totalMonth != null || AppGlobals.getDpCurrentMonthExist() ||
+                                    AppGlobals.getDatePickerState() ||
+                                    AppGlobals.getsCurrentMonthYear() != null || AppGlobals.getBudgetCleared()) {
+                                System.out.println("Working");
                                 if (AppGlobals.getDatePickerState() || AppGlobals.getDpCurrentMonthExist()) {
-                                    set.add(AppGlobals.getDatePickerValues());
-                                } else {
-                                    set.add(Helpers.getTimeStamp("MMM_yyyy"));
+                                    items.add(AppGlobals.getDatePickerValues());
+                                    System.out.println(AppGlobals.getDatePickerValues());
+                                } else if (AppGlobals.getsCurrentMonthYear() != null) {
+                                    items.add(AppGlobals.getsCurrentMonthYear());
+                                } else if (AppGlobals.getBudgetCleared()) {
+                                    items.add(Helpers.getTimeStamp("MMM_yyyy"));
+                                    System.out.println("that");
                                 }
-
-                                editor.putStringSet("TotalMonths",set); editor.commit();
+                                List<String> listFromSet = new ArrayList<>(totalMonth);
+                                for (String item : listFromSet) {
+                                    items.add(item);
+                                    System.out.println(item);
+                                }
+                                editor.putStringSet("TotalMonths", items);
+                                editor.commit();
                             } else {
-                                totalMonth.add(Helpers.getTimeStamp("MMM_yyyy"));
-                                editor.putStringSet("TotalMonths", totalMonth);
+                                System.out.println("elsePart");
+                                Set<String> set = new HashSet<>();
+                                set.add(Helpers.getTimeStamp("MMM_yyyy"));
+                                editor.putStringSet("TotalMonths", set);
+                                editor.commit();
                             }
-
-                            editor.commit();
                             FragmentTransaction tx = getActivity().getSupportFragmentManager().beginTransaction();
                             tx.replace(R.id.container, new HomeFragment());
                             tx.commit();
