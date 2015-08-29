@@ -33,6 +33,7 @@ import com.byteshaft.mybudget.AppGlobals;
 import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.Utils.Helpers;
 import com.byteshaft.mybudget.activities.AdjustBudgetActivity;
+import com.byteshaft.mybudget.activities.MainActivity;
 import com.byteshaft.mybudget.activities.items.AddItemActivity;
 import com.byteshaft.mybudget.activities.items.ItemHistoryActivity;
 import com.byteshaft.mybudget.adapters.MainAdapter;
