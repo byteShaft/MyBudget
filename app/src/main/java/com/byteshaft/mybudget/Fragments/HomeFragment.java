@@ -348,8 +348,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                             initCards();
                         } else {
                             Log.i(AppGlobals.getLogTag(getClass()), "Found");
-                            Toast.makeText(getActivity(), "This month's budget is already defined" +
-                                    " , set the category", Toast.LENGTH_SHORT).show();
+                            SharedPreferences preferences = getActivity().getSharedPreferences(
+                                    AppGlobals.PREFS_NAME, 0);
+                            float item;
+                            item = preferences.getFloat(databaseName, 0);
+                            if (item == 0) {
+                                Toast.makeText(getActivity(), "please set the budget first ",
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getActivity(), "Add the categories",
+                                        Toast.LENGTH_SHORT).show();
+                            }
                             AppGlobals.setsDatePickerValues(databaseName);
                             String removeUnderScore = databaseName.replace("_", " ");
                             mButton.setText(removeUnderScore);
