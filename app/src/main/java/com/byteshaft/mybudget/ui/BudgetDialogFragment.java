@@ -40,7 +40,7 @@ public class BudgetDialogFragment extends DialogFragment {
                         Dialog myDialog = (Dialog) dialog;
                         EditText myEditText = (EditText) myDialog.findViewById(R.id.budgetDialog);
                         if (TextUtils.isEmpty(myEditText.getText())) {
-                            Toast.makeText(getActivity(), "please enter amount", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Please enter amount", Toast.LENGTH_SHORT).show();
                         } else {
                             budget = Integer.parseInt(myEditText.getText().toString());
                             SharedPreferences preferences = getActivity().getSharedPreferences(AppGlobals.PREFS_NAME, 0);

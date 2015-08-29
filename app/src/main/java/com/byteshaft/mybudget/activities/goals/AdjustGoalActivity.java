@@ -77,12 +77,12 @@ public class AdjustGoalActivity extends AppCompatActivity {
 
         if(myDb.checkGoalExists(newName)) {
 
-            text = "A goal with that name already exists, please try again";
+            text = "A goal with that name already exists";
             Toast.makeText(context, text, duration).show();
 
         } else if (newName.equals("") && newGoalStr.equals("")) {    // no name or amount
 
-            text = "A name or amount must be specified!";
+            text = "A name or amount must be specified";
             Toast.makeText(context, text, duration).show();
 
         } else if(newName.equals("") && !newGoalStr.equals("")) { // amount but no name
@@ -91,7 +91,7 @@ public class AdjustGoalActivity extends AppCompatActivity {
 
             if(newGoal < deposited) {
 
-                text = "New goal amount is less than current amount deposited, please try again";
+                text = "New goal amount is less than current amount deposited";
                 Toast.makeText(context, text, duration).show();
 
             } else {
@@ -121,12 +121,12 @@ public class AdjustGoalActivity extends AppCompatActivity {
 
             if(newGoal < deposited) {
 
-                text = "New goal amount is less than current amount deposited, please try again";
+                text = "New goal amount is less than current amount deposited";
                 Toast.makeText(context, text, duration).show();
 
             } else if(!(newName.replaceAll("\\s+", "")).matches("[a-zA-z]+")) {
 
-                text = "Name can only contain letters, please try again";
+                text = "Name can only contain letters";
                 Toast.makeText(context, text, duration).show();
 
             } else {

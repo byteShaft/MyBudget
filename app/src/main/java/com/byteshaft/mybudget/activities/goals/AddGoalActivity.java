@@ -58,12 +58,12 @@ public class AddGoalActivity extends AppCompatActivity {
 
         if (amountStr.equals("") || name.equals("")) {
 
-            text = "Both a goal name and amount must be entered, please try again";
+            text = "Both a goal name and amount must be entered";
             Toast.makeText(context, text, duration).show();
 
         } else if (!(name.replaceAll("\\s+", "")).matches("[a-zA-z]+")) {
 
-            text = "Goal name can only contain letters, please try again";
+            text = "Goal name can only contain letters";
             Toast.makeText(context, text, duration).show();
 
         } else if (!startingDepositStr.equals("") && Float.valueOf(startingDepositStr) > Float.valueOf(amountStr)) {
@@ -80,7 +80,7 @@ public class AddGoalActivity extends AppCompatActivity {
                 Toast.makeText(context, text, duration).show();
                 finish();
             } else {
-                text = "A goal with that name already exists, please try again";
+                text = "A goal with that name already exists";
                 Toast.makeText(context, text, duration).show();
             }
         }
