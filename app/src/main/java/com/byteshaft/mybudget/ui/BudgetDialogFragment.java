@@ -56,26 +56,31 @@ public class BudgetDialogFragment extends DialogFragment {
                             Set<String> totalMonth = preferences.getStringSet("TotalMonths", null);
                             if (totalMonth != null || AppGlobals.getDpCurrentMonthExist() ||
                                     AppGlobals.getDatePickerState() ||
-                                    AppGlobals.getsCurrentMonthYear() != null || AppGlobals.getBudgetCleared()) {   
-                                System.out.println("Working");
+                                    AppGlobals.getsCurrentMonthYear() != null || AppGlobals.getBudgetCleared()) {
                                 if (AppGlobals.getDatePickerState() || AppGlobals.getDpCurrentMonthExist()) {
                                     items.add(AppGlobals.getDatePickerValues());
-                                    System.out.println(AppGlobals.getDatePickerValues());
                                 } else if (AppGlobals.getsCurrentMonthYear() != null) {
                                     items.add(AppGlobals.getsCurrentMonthYear());
                                 } else if (AppGlobals.getBudgetCleared()) {
                                     items.add(Helpers.getTimeStamp("MMM_yyyy"));
-                                    System.out.println("that");
+                                    editor.putStringSet("TotalMonths", items);
+                                    editor.commit();
                                 }
-                                List<String> listFromSet = new ArrayList<>(totalMonth);
-                                for (String item : listFromSet) {
-                                    items.add(item);
-                                    System.out.println(item);
+                                if (totalMonth != null) {
+                                    System.out.println(totalMonth == null);
+                                    List<String> listFromSet = new ArrayList<>(totalMonth);
+                                    for (String item : listFromSet) {
+                                        items.add(item);
+                                    }
+                                    editor.putStringSet("TotalMonths", items);
+                                    editor.commit();
+                                } else {
+                                    Set<String> set = new HashSet<>();
+                                    set.add(AppGlobals.getDatePickerValues());
+                                    editor.putStringSet("TotalMonths", set);
+                                    editor.commit();
                                 }
-                                editor.putStringSet("TotalMonths", items);
-                                editor.commit();
                             } else {
-                                System.out.println("elsePart");
                                 Set<String> set = new HashSet<>();
                                 set.add(Helpers.getTimeStamp("MMM_yyyy"));
                                 editor.putStringSet("TotalMonths", set);
