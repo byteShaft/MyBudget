@@ -13,6 +13,7 @@ public class AppGlobals extends Application {
     private static boolean sDatePickerState = false;
     private static String sDatePickerValues;
     private static boolean sDpCurrentMonthExist;
+    private static boolean sBudgetCleared;
 
     public static Context getContext() {
         return sContext;
@@ -52,5 +53,13 @@ public class AppGlobals extends Application {
 
     public static boolean getDpCurrentMonthExist() {
         return sDpCurrentMonthExist;
+    }
+
+    public static boolean getBudgetCleared() {
+        return sBudgetCleared;
+    }
+
+    public static void setBudgetCleared(boolean value) {
+        sBudgetCleared = value;
     }
 }

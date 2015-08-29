@@ -56,13 +56,16 @@ public class BudgetDialogFragment extends DialogFragment {
                             Set<String> totalMonth = preferences.getStringSet("TotalMonths", null);
                             if (totalMonth != null || AppGlobals.getDpCurrentMonthExist() ||
                                     AppGlobals.getDatePickerState() ||
-                                    AppGlobals.getsCurrentMonthYear() != null) {
+                                    AppGlobals.getsCurrentMonthYear() != null || AppGlobals.getBudgetCleared()) {
                                 System.out.println("Working");
                                 if (AppGlobals.getDatePickerState() || AppGlobals.getDpCurrentMonthExist()) {
                                     items.add(AppGlobals.getDatePickerValues());
                                     System.out.println(AppGlobals.getDatePickerValues());
                                 } else if (AppGlobals.getsCurrentMonthYear() != null) {
                                     items.add(AppGlobals.getsCurrentMonthYear());
+                                } else if (AppGlobals.getBudgetCleared()) {
+                                    items.add(Helpers.getTimeStamp("MMM_yyyy"));
+                                    System.out.println("that");
                                 }
                                 List<String> listFromSet = new ArrayList<>(totalMonth);
                                 for (String item : listFromSet) {

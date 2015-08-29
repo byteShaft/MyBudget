@@ -207,6 +207,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 db.clearBudget();
+                AppGlobals.setBudgetCleared(true);
                 SharedPreferences preferences = getActivity().getSharedPreferences(AppGlobals.PREFS_NAME, 0);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putFloat(Helpers.getTimeStamp("MMM_yyyy"), 0);
