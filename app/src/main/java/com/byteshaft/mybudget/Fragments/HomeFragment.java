@@ -33,7 +33,6 @@ import com.byteshaft.mybudget.AppGlobals;
 import com.byteshaft.mybudget.R;
 import com.byteshaft.mybudget.Utils.Helpers;
 import com.byteshaft.mybudget.activities.AdjustBudgetActivity;
-import com.byteshaft.mybudget.activities.MainActivity;
 import com.byteshaft.mybudget.activities.items.AddItemActivity;
 import com.byteshaft.mybudget.activities.items.ItemHistoryActivity;
 import com.byteshaft.mybudget.adapters.MainAdapter;
@@ -191,7 +190,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void addLineItem() {
         if (curBudget - db.getTotalAllocated() == 0.0) {
             Toast.makeText(getActivity(),
-                    "please set budget ", Toast.LENGTH_SHORT).show();
+                    "Please set budget", Toast.LENGTH_SHORT).show();
             DialogFragment fragment = new BudgetDialogFragment();
             fragment.show(getFragmentManager(), "budget");
             fragment.setCancelable(false);
@@ -256,7 +255,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void adjustBudget() {
         if (curBudget - db.getTotalAllocated() == 0.0) {
             Toast.makeText(getActivity(),
-                    "please set budget ", Toast.LENGTH_SHORT).show();
+                    "Please set budget ", Toast.LENGTH_SHORT).show();
             DialogFragment fragment = new BudgetDialogFragment();
             fragment.show(getFragmentManager(), "budget");
             fragment.setCancelable(false);
