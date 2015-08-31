@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.annotation.Nullable;
@@ -56,6 +57,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private FloatingActionButton fab;
     private float curBudget = 0;
     private Button mButton;
+    private MenuItem menuItem;
 
     @Nullable
     @Override
@@ -133,7 +135,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             curBudget = preferences.getFloat(AppGlobals.getsCurrentMonthYear(), 0);
         } else if (AppGlobals.getDatePickerState()) {
             curBudget = preferences.getFloat(AppGlobals.getDatePickerValues(), 0);
-        }  else {
+        } else {
             curBudget = preferences.getFloat(Helpers.getTimeStamp("MMM_yyyy"), 0);
         }
         if (curBudget == 0) {
@@ -287,12 +289,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_main, menu);
         if (menu != null) {
-            MenuItem menuItem = menu.findItem(R.id.action_clear);
+            menuItem = menu.findItem(R.id.action_clear);
             if (AppGlobals.getsCurrentMonthYear() != null && !AppGlobals.getsCurrentMonthYear().
                     equals(Helpers.getTimeStamp("MMM_yyyy"))) {
                 menuItem.setVisible(false);
             } else if (AppGlobals.getsCurrentMonthYear() != null && AppGlobals
                     .getsCurrentMonthYear().equals(Helpers.getTimeStamp("MMM_yyyy"))) {
+                menuItem.setVisible(true);
+            }
+            if (AppGlobals.getDatePickerState() && AppGlobals.getDatePickerValues().equals(
+                    Helpers.getTimeStamp("MMM_yyyy"))) {
+                menuItem.setVisible(false);
+            } else {
                 menuItem.setVisible(true);
             }
         }
@@ -305,11 +313,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_clear) {
+        if (id == R.id.action_clear && !AppGlobals.isDrawerOpen()) {
             clearBudget();
+            return true;
+        } else if (id == R.id.action_contact) {
+            openWebsite();
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void openWebsite() {
+        String link = "http://www.amifinancialsolutions.ie/";
+        Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+        startActivity(myIntent);
     }
 
     @Override
@@ -336,6 +353,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         String databaseName = (CustomDatePicker.getMonthName(monthOfYear) + "_" + year).trim();
                         File database = getActivity().
                                 getApplicationContext().getDatabasePath((databaseName + ".db").trim());
+                        if (databaseName.equals(Helpers.getTimeStamp("MMM_yyyy"))) {
+                            menuItem.setVisible(true);
+                        } else {
+                            menuItem.setVisible(false);
+                        }
                         System.out.println(databaseName);
                         if (!database.exists()) {
                             String removeUnderScore = databaseName.replace("_", " ");

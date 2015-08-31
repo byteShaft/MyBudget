@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.byteshaft.mybudget.AppGlobals;
 import com.byteshaft.mybudget.Fragments.BudgetHistory;
 import com.byteshaft.mybudget.Fragments.ContactFragment;
 import com.byteshaft.mybudget.Fragments.GoalsFragment;
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
+                AppGlobals.setIsDrawerOpen(true);
                 getSupportActionBar().setTitle("Menu");
                 invalidateOptionsMenu();
             }
@@ -73,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
+                AppGlobals.setIsDrawerOpen(false);
                 getSupportActionBar().setTitle(mListTitles[mPositionGlobal]);
                 invalidateOptionsMenu();
             }
@@ -133,15 +136,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (!isMainActivityActive) {
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-            isMainActivityActive = true;
-        }
+        System.out.println("onResume");
+//        if (!isMainActivityActive) {
+//            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//            startActivity(intent);
+//            isMainActivityActive = true;
+//        }
     }
 
     @Override
     public void onBackPressed() {
+        System.out.println("backpressed");
         if (!isMainActivityActive) {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
@@ -149,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
     } else if (isMainActivityActive) {
             Intent startMain = new Intent(Intent.ACTION_MAIN);
             startMain.addCategory(Intent.CATEGORY_HOME);
-            startMain.setFlags(Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY);
+            startMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(startMain);
             MainActivity.this.finish();
         }
