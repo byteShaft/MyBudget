@@ -62,4 +62,15 @@ public class AppGlobals extends Application {
     public static void setBudgetCleared(boolean value) {
         sBudgetCleared = value;
     }
+
+    private static boolean isDrawerOpen;
+
+    public static boolean isDrawerOpen() {
+        return isDrawerOpen;
+    }
+
+    public static void setIsDrawerOpen(boolean open) {
+        isDrawerOpen = open;
+    }
+
 }

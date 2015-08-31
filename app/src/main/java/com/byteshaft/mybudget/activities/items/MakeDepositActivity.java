@@ -47,7 +47,7 @@ public class MakeDepositActivity extends AppCompatActivity implements AdapterVie
             spinner.setAdapter(adapter);
         } else {
             Context context = getApplicationContext();
-            CharSequence text = "No goals have been defined yet.";
+            CharSequence text = "No saving have been defined yet.";
             int duration = Toast.LENGTH_SHORT;
             Toast.makeText(context, text, duration).show();
             finish();

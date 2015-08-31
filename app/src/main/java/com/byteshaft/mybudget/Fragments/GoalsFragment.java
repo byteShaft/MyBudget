@@ -42,7 +42,6 @@ public class GoalsFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         MainActivity.isMainActivityActive = false;
         baseView = inflater.inflate(R.layout.activity_goals, container, false);
-
         setHasOptionsMenu(true);
         mRecyclerView = (RecyclerView) baseView.findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);

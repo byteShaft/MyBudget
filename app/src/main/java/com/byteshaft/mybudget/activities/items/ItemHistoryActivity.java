@@ -175,10 +175,8 @@ public class ItemHistoryActivity extends AppCompatActivity {
     }
 
     public float trimExpenseAmount(String str) {
-        String noDollar = str.substring(1);
-        String[] noDecimals = noDollar.split("\\.");
-        float trimmed = Float.parseFloat(noDecimals[0]);
-        return trimmed;
+        String[] noEuro = str.split("€");
+        return Float.parseFloat(noEuro[0].replaceAll("\\s", "").replaceAll(",", ""));
     }
 
     @Override

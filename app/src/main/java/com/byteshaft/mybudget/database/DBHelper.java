@@ -304,7 +304,6 @@ public class DBHelper extends SQLiteOpenHelper {
             }
         }
         myDb.execSQL("DROP TABLE " + getTableName(itemName));
-        res.close();
     }
 
     /*****************************************************************

@@ -31,11 +31,13 @@ public class BudgetHistory extends Fragment implements AdapterView.OnItemClickLi
     private ListView mListBudgets;
     private TextView mTextView;
     private ArrayAdapter<String> modeAdapter;
+    public static boolean sHistoryFragmentOpened = false;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         MainActivity.isMainActivityActive = false;
+        sHistoryFragmentOpened = true;
         mBaseView = inflater.inflate(R.layout.history, container, false);
         mListBudgets = (ListView) mBaseView.findViewById(R.id.listViewBudgets);
         mTextView = (TextView) mBaseView.findViewById(R.id.textView);
@@ -63,7 +65,6 @@ public class BudgetHistory extends Fragment implements AdapterView.OnItemClickLi
     public void onResume() {
         super.onResume();
         mListBudgets.setAdapter(modeAdapter);
-
     }
 
     @Override
