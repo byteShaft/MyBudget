@@ -16,6 +16,6 @@ public class Helpers {
     }
 
     public static String getCurrency(float amount) {
-        return NumberFormat.getCurrencyInstance(new Locale("en", "IRL")).format(amount);
+        return NumberFormat.getCurrencyInstance(Locale.GERMANY).format(amount);
     }
 }
